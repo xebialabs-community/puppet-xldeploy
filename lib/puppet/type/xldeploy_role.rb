@@ -28,7 +28,6 @@ Puppet::Type.newtype(:xldeploy_role) do
 
   newproperty(:granted_permissions ) do
     desc 'The permissions this user has specified as ci => permission'
-
   end
 
   newproperty(:users, :array_matching => :all ) do
