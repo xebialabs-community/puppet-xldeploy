@@ -1,7 +1,7 @@
 require 'pathname'
 
 Puppet::Type.newtype(:xldeploy_role) do
-  @doc = 'Manage a Deployit Role'
+  @doc = 'Manage a XL Deploy Role'
 
   feature :restclient, 'Use REST to update the XL Deploy repository'
 
