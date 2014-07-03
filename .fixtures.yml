@@ -6,5 +6,5 @@ fixtures:
     puppetdbquery: http://github.com/dalen/puppet-puppetdbquery.git
     sshkeys: http://github.com/jtopjian/puppet-sshkeys.git
   symlinks:
-    deployit: "#{source_dir}"
+    xldeploy: "#{source_dir}"
 
