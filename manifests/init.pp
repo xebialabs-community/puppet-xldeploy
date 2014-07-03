@@ -92,9 +92,11 @@ class xldeploy (
   }
 
   if versioncmp($version , '3.9.90') > 0 {
+    $productname         = 'xldeploy'
     $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
     $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
   } else {
+    $productname         = 'deployit'
     $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
     $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
   }
