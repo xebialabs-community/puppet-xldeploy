@@ -65,7 +65,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     # We need to overwrite insync? to verify only the properties that we
-    # manage, because Deployit also returns all properties of a CI, which
+    # manage, because XL Deploy also returns all properties of a CI, which
     # could include properties that are not set by puppet
     def insync?(is)
       compare(is, @should.first) and compare(@should.first, is)
