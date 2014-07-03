@@ -1,0 +1,4 @@
+
+    <% @xldeploy_authentication_providers.each do |id, beanclass| -%>
+    <bean id="<%= id %>" class="<%= beanclass %>" />
+    <% end -%>
