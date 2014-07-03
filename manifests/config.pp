@@ -1,7 +1,7 @@
 # Class deployit::config
 #
 # This class handles the configuration of the deployit server
-class deployit::config (
+class xldeploy::config (
   $version                           = $xldeploy::version,
   $base_dir                          = $xldeploy::base_dir,
   $os_user                           = $xldeploy::os_user,
