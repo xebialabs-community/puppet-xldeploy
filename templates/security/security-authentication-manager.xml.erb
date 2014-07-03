@@ -1,0 +1,30 @@
+
+        <security:authentication-manager alias="authenticationManager">
+          <% if @xldeploy_authentication_providers -%>
+          <% @xldeploy_authentication_providers.each do |id, beanclass| %>
+           <security:authentication-provider ref="<%=id%>" />
+         <% end -%>
+         <% end -%>
+         
+         <% if @ldap_server_id -%>
+         <security:ldap-authentication-provider 
+           server-ref="<%= @ldap_server_id %>"
+           <% if  @ldap_user_search_filter -%>
+           user-search-filter="<%= @ldap_user_search_filter%>"
+           <% end -%>
+           <% if  @ldap_user_search_base -%>
+           user-search-base="<%= @ldap_user_search_base%>"
+           <% end -%>
+           <% if  @ldap_group_search_filter -%>
+           group-search-filter="<%= @ldap_group_search_filter%>"
+           <% end -%>
+           <% if  @ldap_group_search_base -%>
+           group-search-base="<%= @ldap_group_search_base%>"
+           <% end -%>
+           <% if  @ldap_role_prefix -%>
+           role-prefix="<%= @ldap_role_prefix%>"
+           <% end -%>
+        />
+        <% end -%>
+                  
+        </security:authentication-manager>

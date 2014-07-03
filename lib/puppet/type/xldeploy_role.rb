@@ -1,7 +1,7 @@
 require 'pathname'
 
 Puppet::Type.newtype(:xldeploy_role) do
-  @doc = 'Manage a Deployit Role'
+  @doc = 'Manage a XL Deploy Role'
 
   feature :restclient, 'Use REST to update the XL Deploy repository'
 
@@ -28,7 +28,6 @@ Puppet::Type.newtype(:xldeploy_role) do
 
   newproperty(:granted_permissions ) do
     desc 'The permissions this user has specified as ci => permission'
-
   end
 
   newproperty(:users, :array_matching => :all ) do
