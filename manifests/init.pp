@@ -101,6 +101,10 @@ class xldeploy (
     $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
   }
 
+  $base_dir            = "/opt/${productname}"
+  $server_home_dir     = "${base_dir}/${productname}-server"
+  $cli_home_dir        = "${base_dir}/${productname}-cli"
+
   # include validation class to check our input
   include xldeploy::validation
 
