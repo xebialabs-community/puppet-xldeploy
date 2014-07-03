@@ -221,8 +221,8 @@ class xldeploy::install (
                       source          => $license_source,
                     }
                 }
-       }
     }
+  }
 
 
   }

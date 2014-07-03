@@ -3,7 +3,7 @@
 # This class will validate all parameters available in the class xldeploy
 #
 # === Parameters
-# 
+#
 # See below
 #
 # === Copyright
@@ -79,17 +79,17 @@ class xldeploy::validation (
   case $xldeploy::repository_type {
     'standalone' : { }
     'database'   : { }
-    default      : { fail("unsupported repository type specified. Must be one of: [standalone, database]") }
+    default      : { fail('unsupported repository type specified. Must be one of: [standalone, database]') }
   }
 
   # Parameters are required when repository_type == 'database'
   if $xldeploy::repository_type == 'database' {
-    if $xldeploy::datastore_driver       == nil { fail "Database driver must be specified when using database repository type" }
-    if $xldeploy::datastore_url          == nil { fail "Database JDBC url must be specified when using database repository type" }
-    if $xldeploy::datastore_user         == nil { fail "Database user must be specified when using database repository type" }
-    if $xldeploy::datastore_password     == nil { fail "Database password must be specified when using database repository type" }
-    if $xldeploy::datastore_databasetype == nil { fail "Database database type must be specified when using database repository type" }
-    if $xldeploy::datastore_schema       == nil { fail "Database schema must be specified when using database repository type" }
-    if $xldeploy::datastore_persistencemanagerclass == nil { fail "Database persistence manager class must be specified when using database repository type" }
+    if $xldeploy::datastore_driver       == nil { fail 'Database driver must be specified when using database repository type' }
+    if $xldeploy::datastore_url          == nil { fail 'Database JDBC url must be specified when using database repository type' }
+    if $xldeploy::datastore_user         == nil { fail 'Database user must be specified when using database repository type' }
+    if $xldeploy::datastore_password     == nil { fail 'Database password must be specified when using database repository type' }
+    if $xldeploy::datastore_databasetype == nil { fail 'Database database type must be specified when using database repository type' }
+    if $xldeploy::datastore_schema       == nil { fail 'Database schema must be specified when using database repository type' }
+    if $xldeploy::datastore_persistencemanagerclass == nil { fail 'Database persistence manager class must be specified when using database repository type' }
   }
 }

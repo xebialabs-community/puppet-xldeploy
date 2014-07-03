@@ -16,7 +16,7 @@ class xldeploy::config (
   $java_home                         = $xldeploy::java_home,
   $rest_url                          = $xldeploy::rest_url,
   $xldeploy_default_settings         = $xldeploy::xldeploy_default_settings,
-   ) {
+) {
 
   # Variables
 # Variables
@@ -27,7 +27,7 @@ class xldeploy::config (
     $server_dir = "${base_dir}/deployit-${version}-server"
     $cli_dir    = "${base_dir}/deployit-${version}-cli"
   }
-  
+
   # Dependencies
   File["${server_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy cli ext'
     ] -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
