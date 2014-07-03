@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'deployit::install' do
+describe 'xldeploy::install' do
 
   let(:facts) {{ :osfamily => 'RedHat',
                  :concat_basedir => '/var/tmp' }}
