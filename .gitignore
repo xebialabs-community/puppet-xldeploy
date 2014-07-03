@@ -1,0 +1,15 @@
+spec/fixtures/manifests
+spec/fixtures/modules
+.DS_*
+.rspec_system
+vendor/*
+*.zip
+*.zip.*
+.bundle
+.vagrant
+.idea
+.project
+log
+files/keys/*
+files/keys/*.pub
+files/gems/*
