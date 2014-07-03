@@ -1,22 +1,22 @@
 #!/bin/bash
 #
-# deployit  Start/Stop the deployit daemon.
+# <%= @productname %>  Start/Stop the <%= @productname %> daemon.
 #
 # chkconfig: 2345 50 80
-# description: Runs Deployit
+# description: Runs <%= @productname %>
 #
 # Date: 07-02-2012 Version 1.0
 #
-# processname: deployit
+# processname: <%= @productname %>
 # config: <%= @server_dir %>/conf/deployit.conf
-# pidfile: /var/run/deployit.pid
+# pidfile: /var/run/<%= @productname %>.pid
 #
 
 . /etc/init.d/functions
 
 RUNNINGUSER="<%= @os_user %>"
 PROG="jetty"
-PIDFILE="/var/run/deployit.pid"
+PIDFILE="/var/run/<%= @productname %>.pid"
 DEPLOYIT_HOME="<%= @server_home_dir %>"
 JAVA_HOME="<%= @java_home %>"
 
