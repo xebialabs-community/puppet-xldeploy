@@ -9,7 +9,7 @@ class xldeploy::params {
   $os_user         = 'xldeploy'
   $os_group        = 'xldeploy'
   $import_ssh_key  = false
-  $key_path        = "${server_home_dir}/keys"
+  $key_path        = "${xldeploy::server_home_dir}/keys"
 
   $ssl             = false
   $http_bind_address        = '0.0.0.0'
@@ -70,6 +70,5 @@ class xldeploy::params {
   # license stuff
   $install_license              = true
   $license_source               = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
-
 
 }
