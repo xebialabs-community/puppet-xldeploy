@@ -27,7 +27,6 @@ define xldeploy::client::config_dictionary_entry(
   if str2bool($use_exported_resources) {
     @@xldeploy::client::exported_dictionary_entry{"${::hostname}_${key}":
       value                => $value,
-      remove_when_expired  => $remove_when_expired,
       rest_url             => $rest_url
     }
 

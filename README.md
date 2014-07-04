@@ -61,6 +61,7 @@ For a more comprehensive setup
      }
 
 Basic client setup
+
     class{xldeploy:
         server => false
      }

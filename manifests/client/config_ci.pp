@@ -32,8 +32,7 @@ define xldeploy::client::config_ci(
       properties           => $properties,
       rest_url             => $rest_url,
       discovery            => $discovery,
-      discovery_max_wait   => $discovery_max_wait,
-      export_maxage        => $export_maxage,
+      discovery_max_wait   => $discovery_max_wait
     }
 
   }else{

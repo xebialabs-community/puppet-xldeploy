@@ -75,42 +75,42 @@ describe 'xldeploy::config' do
 
     it { should contain_ini_setting('xldeploy.admin.password').with({
                                                                         :ensure => 'present',
-                                                                        :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                                        :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                                         :section => '',
                                                                         :setting => 'admin.password',
                                                                         :value => 'admin'
                                                                     }) }
     it { should contain_ini_setting('xldeploy.http.port').with({
                                                                    :ensure => 'present',
-                                                                   :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                                   :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                                    :section => '',
                                                                    :setting => 'http.port',
                                                                    :value => '4516'
                                                                }) }
     it { should contain_ini_setting('xldeploy.jcr.repository.path').with({
                                                                              :ensure => 'present',
-                                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                                              :section => '',
                                                                              :setting => 'jcr.repository.path',
                                                                              :value => 'repository'
                                                                          }) }
     it { should contain_ini_setting('xldeploy.ssl').with({
                                                              :ensure => 'present',
-                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                              :section => '',
                                                              :setting => 'ssl',
                                                              :value => 'false'
                                                          }) }
     it { should contain_ini_setting('xldeploy.http.bind.address').with({
                                                                            :ensure => 'present',
-                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                                            :section => '',
                                                                            :setting => 'http.bind.address',
                                                                            :value => '192.168.0.1'
                                                                        }) }
     it { should contain_ini_setting('xldeploy.http.context.root').with({
                                                                            :ensure => 'present',
-                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/xldeploy.conf',
+                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
                                                                            :section => '',
                                                                            :setting => 'http.context.root',
                                                                            :value => '/xldeploy'

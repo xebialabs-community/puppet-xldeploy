@@ -28,7 +28,6 @@ describe 'xldeploy' do
 
       it { should contain_anchor('xldeploy::begin') }
       it { should contain_class('xldeploy::install') }
-      it { should contain_class('xldeploy::utils')}
       it { should contain_class('xldeploy::config')}
       it { should contain_class('xldeploy::security')}
       it { should contain_class('xldeploy::service')}

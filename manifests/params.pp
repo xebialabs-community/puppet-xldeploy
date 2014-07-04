@@ -10,7 +10,7 @@ class xldeploy::params {
   $os_group        = 'xldeploy'
   $import_ssh_key  = false
   $key_path        = "${xldeploy::server_home_dir}/keys"
-
+  $xldeploy_base_dir = '/opt'
   $ssl             = false
   $http_bind_address        = '0.0.0.0'
   $http_server_address      = $::fqdn

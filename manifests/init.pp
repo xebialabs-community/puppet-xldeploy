@@ -17,9 +17,7 @@
 #
 class xldeploy (
   $version                           = $xldeploy::params::version,
-  $base_dir                          = $xldeploy::params::base_dir,
-  $server_home_dir                   = $xldeploy::params::server_home_dir,
-  $cli_home_dir                      = $xldeploy::params::cli_home_dir,
+  $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $tmp_dir                           = $xldeploy::params::tmp_dir,
   $server                            = $xldeploy::params::server,
   $os_user                           = $xldeploy::params::os_user,
@@ -101,7 +99,7 @@ class xldeploy (
     $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
   }
 
-  $base_dir            = "/opt/${productname}"
+  $base_dir            = "/${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"
   $cli_home_dir        = "${base_dir}/${productname}-cli"
 
@@ -113,7 +111,6 @@ class xldeploy (
     anchor    { 'xldeploy::begin': }
     -> class  { 'xldeploy::install': }
     -> class  { 'xldeploy::install_sshkey': }
-    -> class  { 'xldeploy::utils': }
     -> class  { 'xldeploy::config': }
     -> class  { 'xldeploy::repository': }
     ~> class  { 'xldeploy::security': }

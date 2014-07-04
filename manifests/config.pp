@@ -21,8 +21,8 @@ class xldeploy::config (
   # Variables
 # Variables
   if versioncmp($version , '3.9.90') > 0 {
-    $server_dir = "${base_dir}/xl-deploy-${version}-server"
-    $cli_dir    = "${base_dir}/xl-deploy-${version}-cli"
+    $server_dir = "${base_dir}/xldeploy-${version}-server"
+    $cli_dir    = "${base_dir}/xldeploy-${version}-cli"
   }else{
     $server_dir = "${base_dir}/deployit-${version}-server"
     $cli_dir    = "${base_dir}/deployit-${version}-cli"

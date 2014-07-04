@@ -20,7 +20,8 @@ define xldeploy::client::config_role(
   $id                     = $name,
   $granted_permissions    = {},
   $users                  = [ ],
-  $rest_url               = $xldeploy::rest_url
+  $rest_url               = $xldeploy::rest_url,
+  $use_exported_resources = $xldeploy::use_exported_resources
 ){
 
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent

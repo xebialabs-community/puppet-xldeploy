@@ -16,7 +16,9 @@ describe 'xldeploy::install' do
                       :cli_home_dir                => '/opt/deployit/deployit-cli',
                       :install_java                => 'false',
                       :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                      :puppetfiles_deployit_source => 'modules/deployit/sources' }}
+                      :puppetfiles_xldeploy_source => 'modules/deployit/sources',
+                      :productname                 => 'deployit'
+      }}
 
       it {should contain_group('deployit').with_ensure('present')}
       it {should contain_user('deployit').with_ensure('present').with_gid('deployit')}
@@ -40,7 +42,9 @@ describe 'xldeploy::install' do
                     :cli_home_dir                => '/opt/deployit/deployit-cli',
                     :install_java                => 'true',
                     :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                    :puppetfiles_deployit_source => 'modules/deployit/sources'}}
+                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
+                    :productname                 => 'deployit'
+     }}
 
      it {should contain_package('java-1.7.0-openjdk').with_ensure('present')}
    end
@@ -56,7 +60,8 @@ describe 'xldeploy::install' do
                    :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                   :puppetfiles_deployit_source => 'modules/deployit/sources'}}
+                   :puppetfiles_xldeploy_source => 'modules/deployit/sources',
+                   :productname                 => 'deployit'}}
 
     it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-server.zip')}
     it {should contain_file('/var/tmp/deployit-3.9.4-cli.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-cli.zip')}
@@ -76,22 +81,7 @@ describe 'xldeploy::install' do
                     :user    => 'deployit'
             }) }
   end
-  context 'with install_type set to packages' do
-    let(:params) {{:version                     => '3.9.4',
-                   :base_dir                    => '/opt/deployit',
-                   :tmp_dir                     => '/var/tmp',
-                   :os_user                     => 'deployit',
-                   :os_group                    => 'deployit',
-                   :install_type                => 'packages',
-                   :server_home_dir             => '/opt/deployit/deployit-server',
-                   :cli_home_dir                => '/opt/deployit/deployit-cli',
-                   :install_java                => 'true',
-                   :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                   :puppetfiles_deployit_source => 'modules/deployit/sources'}}
 
-    it {should contain_package('deployit-server').with_ensure('3.9.4-jep')}
-    it {should contain_package('deployit-cli').with_ensure('3.9.4-jep')}
-  end
   context 'with install_type set to downloads' do
     let(:params) {{:version                     => '3.9.4',
                    :base_dir                    => '/opt/deployit',
@@ -107,10 +97,12 @@ describe 'xldeploy::install' do
                    :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                   :puppetfiles_deployit_source => 'modules/deployit/sources'}}
+                   :puppetfiles_xldeploy_source => 'modules/deployit/sources',
+                   :productname                 => 'deployit'
+    }}
 
-    it {should contain_deployit_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip')}
-    it {should contain_deployit_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip')}
+    it {should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip')}
+    it {should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip')}
   end
   context 'with install_license set to true and puppet file given' do
     let(:params) {{:version                     => '3.9.4',
@@ -127,9 +119,11 @@ describe 'xldeploy::install' do
                    :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                   :puppetfiles_deployit_source => 'modules/deployit/sources',
+                   :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
-                   :license_source              => 'puppet:///modules/deployit/file/deployit-license.lic'}}
+                   :license_source              => 'puppet:///modules/deployit/file/deployit-license.lic',
+                   :productname                 => 'deployit'
+    }}
 
     it {should contain_file('/opt/deployit/deployit-server/conf/deployit-license.lic').with_source('puppet:///modules/deployit/file/deployit-license.lic')}
   end
@@ -148,11 +142,12 @@ describe 'xldeploy::install' do
                    :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
-                   :puppetfiles_deployit_source => 'modules/deployit/sources',
+                   :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
-                   :license_source              => 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'}}
+                   :license_source              => 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic',
+                   :productname                 => 'deployit'}}
 
-    it {should contain_deployit_license_install('https://tech.xebialabs.com/download/licenses/download/deployit-license.lic').with_destinationdirectory('/opt/deployit/deployit-server/conf')}
+    it {should contain_xldeploy_license_install('https://tech.xebialabs.com/download/licenses/download/deployit-license.lic').with_destinationdirectory('/opt/deployit/deployit-server/conf')}
   end
 
 end

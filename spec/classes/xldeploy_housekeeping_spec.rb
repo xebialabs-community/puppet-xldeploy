@@ -17,7 +17,7 @@ describe 'xldeploy::housekeeping' do
 
     it { should contain_file('/opt/xldeploy/server/scripts/xldeploy-housekeeping.sh').with_ensure('present')}
     it { should contain_file('/opt/xldeploy/server/scripts/garbage-collector.py').with_ensure('absent')}
-    it { should contain_cron('xldeploy-housekeeping').with_ensure('persent').with_command('/opt/xldeploy/server/scripts/xldeploy-housekeeping.py')}
+    it { should contain_cron('xldeploy-housekeeping').with_ensure('present').with_command('/opt/xldeploy/server/scripts/xldeploy-housekeeping.sh')}
 
   end
 end

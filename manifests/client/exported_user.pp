@@ -22,7 +22,7 @@ define xldeploy::client::exported_user(
 
   if !defined(Xldeploy_user[$user_name[1]]) {
     xldeploy_user{$user_name[1]:
-      ensure             => $ensure,
+      ensure             => present,
       password           => $password,
       rest_url           => $rest_url
     }
