@@ -3,7 +3,7 @@ require 'uri'
 require 'etc'
 require "digest/md5"
 
-class Puppet::Provider::Zip < Puppet::Provider
+class Puppet::Provider::Xldeploy_zip < Puppet::Provider
   def exists?
     File.directory?(target_dir)
   end

@@ -1,10 +1,10 @@
 require 'uri'
 require 'etc'
 require "digest/md5"
-require File.expand_path(File.join(File.dirname(__FILE__), '..','zip.rb'))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'xldeploy_zip.rb'))
 
 
-Puppet::Type.type(:xldeploy_netinstall).provide(:curl, :parent => Puppet::Provider::Zip) do
+Puppet::Type.type(:xldeploy_netinstall).provide(:curl, :parent => Puppet::Provider::Xldeploy_zip) do
 
   confine :osfamily => [:redhat]
 
