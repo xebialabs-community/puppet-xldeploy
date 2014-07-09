@@ -7,12 +7,16 @@ Puppet::Type.type(:xldeploy_license_install).provide(:curl)  do
 
   confine :osfamily => [:redhat]
 
+
   commands  :curl     => '/usr/bin/curl',
             :rm       => '/bin/rm',
             :chown    => '/bin/chown',
             :chgrp    => '/bin/chgrp'
 
+
+
   def create
+
     set_proxy_url
 
     begin
@@ -24,6 +28,7 @@ Puppet::Type.type(:xldeploy_license_install).provide(:curl)  do
     rescue Exception => e
       self.fail e.message
     end
+
   end
 
   def destroy
@@ -39,16 +44,16 @@ Puppet::Type.type(:xldeploy_license_install).provide(:curl)  do
     Etc.getpwuid(uid).name
   end
 
-  def owner=
+  def owner=(value)
     chown("#{resource[:owner]}", "#{resource[:destinationdirectory]}/deployit-license.lic")
   end
 
   def group
-    uid = File.stat("#{resource[:destinationdirectory]}/deployit-license.lic").gid
-    Etc.getpwgid(gid).name
+    gid = File.stat("#{resource[:destinationdirectory]}/deployit-license.lic").gid
+    Etc.getgrgid(gid).name
   end
 
-  def owner=
+  def group=(value)
     chgrp("#{resource[:group]}", "#{resource[:destinationdirectory]}/deployit-license.lic")
   end
 
@@ -58,4 +63,5 @@ Puppet::Type.type(:xldeploy_license_install).provide(:curl)  do
       ENV['https_proxy'] = resource[:proxy_url]
     end
   end
+
 end
