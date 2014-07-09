@@ -233,7 +233,7 @@ class xldeploy::install (
     proxy_url       => $download_proxy_url
   }
 
-  create_resources(xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
+  create_resources( xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
 
 
 }

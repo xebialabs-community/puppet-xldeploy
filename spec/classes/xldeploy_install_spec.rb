@@ -17,7 +17,8 @@ describe 'xldeploy::install' do
                       :install_java                => 'false',
                       :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
                       :puppetfiles_xldeploy_source => 'modules/deployit/sources',
-                      :productname                 => 'deployit'
+                      :productname                 => 'deployit',
+                      :server_plugins              => { }
       }}
 
       it {should contain_group('deployit').with_ensure('present')}
@@ -43,7 +44,8 @@ describe 'xldeploy::install' do
                     :install_java                => 'true',
                     :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
                     :puppetfiles_xldeploy_source => 'modules/deployit/sources',
-                    :productname                 => 'deployit'
+                    :productname                 => 'deployit',
+                    :server_plugins              => { }
      }}
 
      it {should contain_package('java-1.7.0-openjdk').with_ensure('present')}
@@ -61,7 +63,9 @@ describe 'xldeploy::install' do
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
-                   :productname                 => 'deployit'}}
+                   :productname                 => 'deployit',
+                   :server_plugins              => { }
+    }}
 
     it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-server.zip')}
     it {should contain_file('/var/tmp/deployit-3.9.4-cli.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-cli.zip')}
@@ -98,7 +102,8 @@ describe 'xldeploy::install' do
                    :install_java                => 'true',
                    :java_home                   => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
-                   :productname                 => 'deployit'
+                   :productname                 => 'deployit',
+                   :server_plugins              => { }
     }}
 
     it {should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip')}
@@ -122,7 +127,8 @@ describe 'xldeploy::install' do
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
                    :license_source              => 'puppet:///modules/deployit/file/deployit-license.lic',
-                   :productname                 => 'deployit'
+                   :productname                 => 'deployit',
+                   :server_plugins              => { }
     }}
 
     it {should contain_file('/opt/deployit/deployit-server/conf/deployit-license.lic').with_source('puppet:///modules/deployit/file/deployit-license.lic')}
@@ -145,7 +151,9 @@ describe 'xldeploy::install' do
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
                    :license_source              => 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic',
-                   :productname                 => 'deployit'}}
+                   :productname                 => 'deployit',
+                   :server_plugins              => { }
+    }}
 
     it {should contain_xldeploy_license_install('https://tech.xebialabs.com/download/licenses/download/deployit-license.lic').with_destinationdirectory('/opt/deployit/deployit-server/conf')}
   end
