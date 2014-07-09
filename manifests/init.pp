@@ -66,6 +66,7 @@ class xldeploy (
   $datastore_databasetype            = $xldeploy::params::datastore_databasetype,
   $datastore_schema                  = $xldeploy::params::datastore_schema,
   $datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
+  $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
   $users                             = { } ,

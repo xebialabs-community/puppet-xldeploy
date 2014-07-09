@@ -20,7 +20,8 @@ class xldeploy::install (
   $download_cli_url            = $xldeploy::download_cli_url,
   $install_license             = $xldeploy::install_license,
   $license_source              = $xldeploy::license_source,
-  $productname                 = $xldeploy::productname
+  $productname                 = $xldeploy::productname,
+  $server_plugins              = $xldeploy::server_plugins
 ) {
 
   # Variables
@@ -224,5 +225,15 @@ class xldeploy::install (
     }
   }
 
-
+  $xldeploy_plugin_netinstall_defaults = {
+    owner           => $os_user,
+    group           => $os_group,
+    user            => $download_user,
+    password        => $download_password,
+    proxy_url       => $download_proxy_url
   }
+
+  create_resources(xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
+
+
+}
