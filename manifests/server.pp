@@ -92,7 +92,7 @@ class xldeploy::server (
 
   #we need to support the two different productnames being xldeploy and deployit
   if versioncmp($version , '3.9.90') > 0 {
-    $productname         = 'xldeploy'
+    $productname         = 'xl-deploy'
     $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
     $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
   } else {
