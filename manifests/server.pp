@@ -101,7 +101,7 @@ class xldeploy::server (
     $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
   }
 
-  $base_dir            = "/${xldeploy_base_dir}/${productname}"
+  $base_dir            = "${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"
   $cli_home_dir        = "${base_dir}/${productname}-cli"
   $key_path            = "${server_home_dir}/keys"

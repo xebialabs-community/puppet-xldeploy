@@ -205,9 +205,9 @@ class xldeploy::server::install (
     group  => $os_group
   }
 
-
-  if str2bool($install_license) {
-    case $license_source {
+  if versioncmp($version , '3.9.90') > 0 {
+    if str2bool($install_license) {
+      case $license_source {
       /^https/ : { xldeploy_license_install{$license_source:
                       owner                => $os_user,
                       group                => $os_group,
@@ -215,15 +215,18 @@ class xldeploy::server::install (
                       password             => $download_password,
                       destinationdirectory => "${server_home_dir}/conf"
                     }
-                }
-      default : { file{"${server_home_dir}/conf/deployit-license.lic":
+            }
+      default : {
+                  file{"${server_home_dir}/conf/deployit-license.lic":
                       owner           => $os_user,
                       group           => $os_group,
                       source          => $license_source,
-                    }
-                }
+                     }
+            }
+      }
     }
   }
+
 
   $xldeploy_plugin_netinstall_defaults = {
     owner           => $os_user,
