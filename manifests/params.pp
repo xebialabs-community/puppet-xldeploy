@@ -9,7 +9,6 @@ class xldeploy::params {
   $os_user         = 'xldeploy'
   $os_group        = 'xldeploy'
   $import_ssh_key  = false
-  $key_path        = "${xldeploy::server_home_dir}/keys"
   $xldeploy_base_dir = '/opt'
   $ssl             = false
   $http_bind_address        = '0.0.0.0'
@@ -61,7 +60,7 @@ class xldeploy::params {
 
 
   # installation related params
-  $install_type                 = 'puppetfiles'
+  $install_type                 = 'download'
   $puppetfiles_xldeploy_source  = 'modules/xldeploy/sources'
   $download_user                = undef
   $download_password            = undef

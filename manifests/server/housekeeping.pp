@@ -1,12 +1,12 @@
-# Class xldeploy::install
+# Class xldeploy::server::server::install
 #
-# Install the xldeploy server
-class xldeploy::housekeeping (
-  $os_user         = $xldeploy::os_user,
-  $os_group        = $xldeploy::os_group,
-  $server_home_dir = $xldeploy::server_home_dir,
-  $cli_home_dir    = $xldeploy::cli_home_dir,
-  $http_port       = $xldeploy::http_port,
+# Install the xldeploy::server::server server
+class xldeploy::server::housekeeping (
+  $os_user         = $xldeploy::server::os_user,
+  $os_group        = $xldeploy::server::os_group,
+  $server_home_dir = $xldeploy::server::server_home_dir,
+  $cli_home_dir    = $xldeploy::server::cli_home_dir,
+  $http_port       = $xldeploy::server::http_port,
   $admin_password  = $xldeploy::server::admin_password) {
 
   file { "${server_home_dir}/scripts/xldeploy-housekeeping.sh":

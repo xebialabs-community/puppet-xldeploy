@@ -56,6 +56,7 @@ class xldeploy::validation (
   validate_hash($xldeploy::memberships)
   validate_hash($xldeploy::roles)
   validate_hash($xldeploy::users)
+  validate_hash($xldeploy::server_plugins)
 
   ## content validation
   # check validity of this module on the specific system

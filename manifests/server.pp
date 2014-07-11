@@ -15,11 +15,10 @@
 #
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
-class xldeploy (
+class xldeploy::server (
   $version                           = $xldeploy::params::version,
   $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $tmp_dir                           = $xldeploy::params::tmp_dir,
-  $server                            = $xldeploy::params::server,
   $os_user                           = $xldeploy::params::os_user,
   $os_group                          = $xldeploy::params::os_group,
   $import_ssh_key                    = $xldeploy::params::import_ssh_key,
@@ -77,6 +76,8 @@ class xldeploy (
   # composed variables
 
 
+
+  # form the rest url for use throughout the rest of the module
   if str2bool($::ssl) {
     $rest_protocol = 'https://'
   } else {
@@ -89,6 +90,7 @@ class xldeploy (
     $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
   }
 
+  #we need to support the two different productnames being xldeploy and deployit
   if versioncmp($version , '3.9.90') > 0 {
     $productname         = 'xldeploy'
     $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
@@ -104,28 +106,23 @@ class xldeploy (
   $cli_home_dir        = "${base_dir}/${productname}-cli"
   $key_path            = "${server_home_dir}/keys"
 
-
-# include validation class to check our input
-  include xldeploy::validation
+  # include validation class to check our input
+  include xldeploy::server::validation
 
   # to serve or not to server
-  if str2bool($server) {
-    anchor    { 'xldeploy::begin': }
-    -> class  { 'xldeploy::install': }
-    -> class  { 'xldeploy::install_sshkey': }
-    -> class  { 'xldeploy::config': }
-    -> class  { 'xldeploy::repository': }
-    ~> class  { 'xldeploy::security': }
-    ~> class  { 'xldeploy::service': }
-    -> class  { 'xldeploy::post_config': }
-    -> anchor { 'xldeploy::end': }
 
-    if str2bool($enable_housekeeping) {
-      Class['xldeploy::service'] -> class { 'xldeploy::housekeeping': } -> Class['xldeploy::post_config']
-    }
+  anchor    { 'xldeploy::server::begin': }
+  -> class  { 'xldeploy::server::install': }
+  -> class  { 'xldeploy::server::install_sshkey': }
+  -> class  { 'xldeploy::server::config': }
+  -> class  { 'xldeploy::server::repository': }
+  ~> class  { 'xldeploy::server::security': }
+  ~> class  { 'xldeploy::server::service': }
+  -> class  { 'xldeploy::server::post_config': }
+  -> anchor { 'xldeploy::server::end': }
 
-  } else {
-    anchor { 'xldeploy::begin': } -> class { 'xldeploy::client::user': } -> class { 'xldeploy::client::config': } -> anchor { 'xldeploy::end': }
-
+  if str2bool($enable_housekeeping) {
+    Class['xldeploy::server::service'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
   }
+
 }

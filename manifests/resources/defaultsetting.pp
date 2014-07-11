@@ -7,10 +7,10 @@
 define xldeploy::resources::defaultsetting (
   $value,
   $key = $name,
-  $ensure = present
+  $ensure = present,
+  $server_home_dir = $xldeploy::server::server_home_dir
   ) {
 
-  $server_home_dir = $xldeploy::server_home_dir
   $defaultFile = "${server_home_dir}/conf/deployit-defaults.properties"
 
   ini_setting { $name:
