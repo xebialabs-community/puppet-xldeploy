@@ -37,7 +37,7 @@ Puppet::Type.newtype(:xldeploy_plugin_netinstall) do
   newparam(:plugin_dir) do
     desc 'xldeploy_plugin dir'
 
-    defaultto '/opt/xldeploy/xldeploy-server/plugins'
+    defaultto '/opt/xl-deploy/xl-deploy-server/plugins'
 
     validate do |value|
 

@@ -233,7 +233,8 @@ class xldeploy::server::install (
     group           => $os_group,
     user            => $download_user,
     password        => $download_password,
-    proxy_url       => $download_proxy_url
+    proxy_url       => $download_proxy_url,
+    plugin_dir      => "${server_home_dir}/plugins" 
   }
 
   create_resources( xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
