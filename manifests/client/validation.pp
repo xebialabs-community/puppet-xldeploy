@@ -18,25 +18,11 @@ class xldeploy::client::validation (
   validate_string($xldeploy::os_user)
   validate_string($xldeploy::os_group)
   validate_string($xldeploy::admin_password)
-  validate_string($xldeploy::jcr_repository_path)
   validate_string($xldeploy::importable_packages_path)
   validate_string($xldeploy::client_user_password)
   validate_string($xldeploy::client_user_password_salt)
-  validate_string($xldeploy::repository_type)
-  validate_string($xldeploy::datastore_driver)
-  validate_string($xldeploy::datastore_url)
-  validate_string($xldeploy::datastore_user)
-  validate_string($xldeploy::datastore_password)
-  validate_string($xldeploy::datastore_databasetype)
-  validate_string($xldeploy::datastore_schema)
-  validate_string($xldeploy::datastore_persistencemanagerclass)
 
-  # path validation
-  validate_absolute_path($xldeploy::base_dir)
-  validate_absolute_path($xldeploy::server_home_dir)
-  validate_absolute_path($xldeploy::cli_home_dir)
-  validate_absolute_path($xldeploy::tmp_dir)
-  validate_absolute_path($xldeploy::http_context_root)
+
 
   # ipadress validation
   validate_ipv4_address($xldeploy::http_bind_address)
@@ -65,32 +51,7 @@ class xldeploy::client::validation (
     default  : { fail("operating system ${::operatingsystem} not supported") }
   }
 
-  # install_type should be valid
-  case $xldeploy::install_type {
-    'puppetfiles' : {
-    }
-    'packages'    : {
-    }
-    default       : {
-      fail("unsupported install_type parameter ${xldeploy::install_type} specified, should be one of: [puppetfiles, packages]")
-    }
-  }
+  
 
-  # repository_type should be valid
-  case $xldeploy::repository_type {
-    'standalone' : { }
-    'database'   : { }
-    default      : { fail('unsupported repository type specified. Must be one of: [standalone, database]') }
-  }
 
-  # Parameters are required when repository_type == 'database'
-  if $xldeploy::repository_type == 'database' {
-    if $xldeploy::datastore_driver       == nil { fail 'Database driver must be specified when using database repository type' }
-    if $xldeploy::datastore_url          == nil { fail 'Database JDBC url must be specified when using database repository type' }
-    if $xldeploy::datastore_user         == nil { fail 'Database user must be specified when using database repository type' }
-    if $xldeploy::datastore_password     == nil { fail 'Database password must be specified when using database repository type' }
-    if $xldeploy::datastore_databasetype == nil { fail 'Database database type must be specified when using database repository type' }
-    if $xldeploy::datastore_schema       == nil { fail 'Database schema must be specified when using database repository type' }
-    if $xldeploy::datastore_persistencemanagerclass == nil { fail 'Database persistence manager class must be specified when using database repository type' }
-  }
 }
