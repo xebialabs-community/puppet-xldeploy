@@ -22,11 +22,6 @@ class xldeploy::client::validation (
   validate_string($xldeploy::client_user_password)
   validate_string($xldeploy::client_user_password_salt)
 
-
-
-  # ipadress validation
-  validate_ipv4_address($xldeploy::http_bind_address)
-
   # boolean validation
   validate_bool(str2bool($xldeploy::server))
   validate_bool(str2bool($xldeploy::ssl))
