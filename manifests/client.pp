@@ -15,7 +15,7 @@
 #
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
-class xldeploy::client {
+class xldeploy::client (
   $os_user                           = $xldeploy::params::os_user,
   $os_group                          = $xldeploy::params::os_group,
   $http_bind_address                 = $xldeploy::params::http_bind_address,
