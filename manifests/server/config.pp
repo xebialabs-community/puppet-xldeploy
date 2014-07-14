@@ -4,6 +4,8 @@
 class xldeploy::server::config (
   $version                           = $xldeploy::server::version,
   $base_dir                          = $xldeploy::server::base_dir,
+  $server_home_dir                   = $xldeploy::server::server_home_dir,
+  $cli_home_dir                      = $xldeploy::server::cli_home_dir,
   $os_user                           = $xldeploy::server::os_user,
   $os_group                          = $xldeploy::server::os_group,
   $ssl                               = $xldeploy::server::ssl,
@@ -18,18 +20,9 @@ class xldeploy::server::config (
   $xldeploy_default_settings         = $xldeploy::server::xldeploy_default_settings,
 ) {
 
-  # Variables
-# Variables
-  if versioncmp($version , '3.9.90') > 0 {
-    $server_dir = "${base_dir}/xldeploy-${version}-server"
-    $cli_dir    = "${base_dir}/xldeploy-${version}-cli"
-  }else{
-    $server_dir = "${base_dir}/deployit-${version}-server"
-    $cli_dir    = "${base_dir}/deployit-${version}-cli"
-  }
 
   # Dependencies
-  File["${server_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy cli ext'
+  File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy cli ext'
     ] -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
     ] -> Exec['init xldeploy']
 
@@ -43,13 +36,13 @@ class xldeploy::server::config (
   }
 
   Ini_setting {
-    path    => "${server_dir}/conf/deployit.conf",
+    path    => "${server_home_dir}/conf/deployit.conf",
     ensure  => present,
     section => '',
   }
 
   # Resources
-  file { "${server_dir}/conf/deployit.conf": }
+  file { "${server_home_dir}/conf/deployit.conf": }
 
 
 
@@ -58,29 +51,29 @@ class xldeploy::server::config (
     source       => [
       'puppet:///modules/xldeploy/plugins/generic',
       'puppet:///modules/xldeploy/plugins/customer',
-      "${server_dir}/available-plugins"],
+      "${server_home_dir}/available-plugins"],
     sourceselect => 'all',
     recurse      => true,
-    path         => "${server_dir}/plugins",
+    path         => "${server_home_dir}/plugins",
   }
 
   file { 'xldeploy server hotfix':
     source  => 'puppet:///modules/xldeploy/hotfix/',
     recurse => true,
     purge   => true,
-    path    => "${server_dir}/hotfix",
+    path    => "${server_home_dir}/hotfix",
   }
 
   file { 'xldeploy server ext':
     source  => 'puppet:///modules/xldeploy/server-ext/',
     recurse => 'remote',
-    path    => "${server_dir}/ext",
+    path    => "${server_home_dir}/ext",
   }
 
   file { 'xldeploy cli ext':
     source  => 'puppet:///modules/xldeploy/cli-ext/',
     recurse => 'remote',
-    path    => "${cli_dir}/ext",
+    path    => "${cli_home_dir}/ext",
   }
 
 
@@ -117,8 +110,8 @@ class xldeploy::server::config (
   }
 
   exec { 'init xldeploy':
-    creates     => "${server_dir}/repository",
-    command     => "${server_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_dir}/conf/deployit.conf",
+    creates     => "${server_home_dir}/repository",
+    command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
     user        => $os_user,
     environment => ["JAVA_HOME=${java_home}"]
   }
