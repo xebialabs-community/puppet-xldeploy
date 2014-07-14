@@ -32,6 +32,8 @@ class xldeploy::client::validation (
   validate_bool(str2bool($xldeploy::install_java))
   validate_bool(str2bool($xldeploy::client_propagate_key))
 
+  notify($xldeploy::cis)
+
   # hash validation
   validate_hash($xldeploy::cis)
   validate_hash($xldeploy::memberships)
