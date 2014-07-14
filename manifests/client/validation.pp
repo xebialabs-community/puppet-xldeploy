@@ -51,7 +51,7 @@ class xldeploy::client::validation (
     default  : { fail("operating system ${::operatingsystem} not supported") }
   }
 
-  
+
 
 
 }

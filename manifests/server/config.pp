@@ -77,6 +77,7 @@ class xldeploy::server::config (
   }
 
   file { 'xldeploy default properties':
+    path   => "${server_home_dir}/conf/deployit-default.properties",
     ensure => present,
   }
 
