@@ -10,7 +10,7 @@
 #
 # Copyright (c) 2014, Xebia Nederland b.v., All rights reserved.
 #
-class xldeploy::validation (
+class xldeploy::client::validation (
 ) {
   ## type validation
   # string validation

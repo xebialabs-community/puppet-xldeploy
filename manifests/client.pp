@@ -38,7 +38,7 @@ class xldeploy::client (
   ) inherits xldeploy::params {
 
   # include validation class to check our input
-  include xldeploy::validation
+  include xldeploy::client::validation
 
   # composed variables
 
