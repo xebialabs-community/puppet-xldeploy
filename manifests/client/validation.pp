@@ -28,8 +28,6 @@ class xldeploy::client::validation (
   validate_bool(str2bool($xldeploy::client::client_sudo))
   validate_bool(str2bool($xldeploy::client::use_exported_resources))
   validate_bool(str2bool($xldeploy::client::use_exported_keys))
-  validate_bool(str2bool($xldeploy::client::enable_housekeeping))
-  validate_bool(str2bool($xldeploy::client::install_java))
   validate_bool(str2bool($xldeploy::client::client_propagate_key))
 
   notice($xldeploy::client::cis)
@@ -39,7 +37,6 @@ class xldeploy::client::validation (
   validate_hash($xldeploy::client::memberships)
   validate_hash($xldeploy::client::roles)
   validate_hash($xldeploy::client::users)
-  validate_hash($xldeploy::client::server_plugins)
 
   ## content validation
   # check validity of this module on the specific system
