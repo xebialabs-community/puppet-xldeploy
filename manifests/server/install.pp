@@ -26,9 +26,8 @@ class xldeploy::server::install (
 
   # Variables
 
-    $server_dir = "${base_dir}/${productname}-${version}-server"
-    $cli_dir    = "${base_dir}/${productname}-${version}-cli"
-
+    $server_dir   = "${base_dir}/${productname}-${version}-server"
+    $cli_dir      = "${base_dir}/${productname}-${version}-cli"
 
   # Dependencies
   Group[$os_group]
@@ -234,7 +233,8 @@ class xldeploy::server::install (
     user            => $download_user,
     password        => $download_password,
     proxy_url       => $download_proxy_url,
-    plugin_dir      => "${server_home_dir}/plugins" 
+    plugin_dir      => "${server_home_dir}/plugins",
+    require         => File[$server_home_dir]
   }
 
   create_resources( xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
