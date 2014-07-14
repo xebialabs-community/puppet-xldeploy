@@ -13,16 +13,16 @@
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
 class xldeploy::client::config(
-  $rest_url               = $xldeploy::rest_url,
-  $cis                    = $xldeploy::cis,
-  $memberships            = $xldeploy::memberships,
-  $users                  = $xldeploy::users,
-  $roles                  = $xldeploy::roles,
-  $dictionary_settings    = $xldeploy::dictionary_settings,
-  $role_permissions       = $xldeploy::role_permissions,
-  $use_exported_resources = $xldeploy::use_exported_resources,
-  $use_exported_keys      = $xldeploy::use_exported_keys,
-  $os_user                = $xldeploy::os_user,){
+  $rest_url               = $xldeploy::client::rest_url,
+  $cis                    = $xldeploy::client::cis,
+  $memberships            = $xldeploy::client::memberships,
+  $users                  = $xldeploy::client::users,
+  $roles                  = $xldeploy::client::roles,
+  $dictionary_settings    = $xldeploy::client::dictionary_settings,
+  $role_permissions       = $xldeploy::client::role_permissions,
+  $use_exported_resources = $xldeploy::client::use_exported_resources,
+  $use_exported_keys      = $xldeploy::client::use_exported_keys,
+  $os_user                = $xldeploy::client::os_user,){
 
 
   create_resources(xldeploy::client::config_ci, $cis)

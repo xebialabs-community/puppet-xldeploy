@@ -13,13 +13,13 @@
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
 class xldeploy::client::user(
-  $os_user                   = $xldeploy::os_user,
-  $os_group                  = $xldeploy::os_group,
-  $http_server_address       = $xldeploy::http_server_address,
-  $client_sudo               = $xldeploy::client_sudo,
-  $client_user_password      = $xldeploy::client_user_password,
-  $client_user_password_salt = $xldeploy::client_user_password_salt,
-  $import_ssh_key            = $xldeploy::import_ssh_key){
+  $os_user                   = $xldeploy::client::os_user,
+  $os_group                  = $xldeploy::client::os_group,
+  $http_server_address       = $xldeploy::client::http_server_address,
+  $client_sudo               = $xldeploy::client::client_sudo,
+  $client_user_password      = $xldeploy::client::client_user_password,
+  $client_user_password_salt = $xldeploy::client::client_user_password_salt,
+  $import_ssh_key            = $xldeploy::client::import_ssh_key){
 
   # Resources
 
