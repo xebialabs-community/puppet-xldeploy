@@ -1,8 +1,8 @@
 # class xldeploy::gems
-class xldeploy::gems (
-  $gem_hash      = $xldeploy::gem_hash,
-  $gem_array     = $xldeploy::gem_array,
-  $gem_use_local = $xldeploy::gem_use_local) {
+class xldeploy::server::gems (
+  $gem_hash      = $xldeploy::server::gem_hash,
+  $gem_array     = $xldeploy::server::gem_array,
+  $gem_use_local = $xldeploy::server::gem_use_local) {
   if $::pe_version != undef {
     $gem_provider = 'pe_gem'
   } else {

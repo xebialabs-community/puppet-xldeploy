@@ -121,7 +121,7 @@ class xldeploy::server (
   -> class  { 'xldeploy::server::repository': }
   ~> class  { 'xldeploy::server::security': }
   ~> class  { 'xldeploy::server::service': }
-  -> class  { 'xldeploy::gems': }
+  -> class  { 'xldeploy::server::gems': }
   -> class  { 'xldeploy::server::post_config': }
   -> anchor { 'xldeploy::server::end': }
 

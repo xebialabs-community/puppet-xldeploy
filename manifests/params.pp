@@ -71,7 +71,6 @@ class xldeploy::params {
   $license_source               = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
 
   # gem stuff .. will be removed when we get around to refactoring the gems
-  $install_gems    = true
   $gem_use_local   = true
 
   $gem_hash        = {
@@ -91,7 +90,7 @@ class xldeploy::params {
   }
   }
 
-$gem_array       = ['xml-simple', 'rest-client']
+  $gem_array       = ['xml-simple', 'rest-client']
 
 
 }

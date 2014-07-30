@@ -59,7 +59,7 @@ class xldeploy::client (
 
   anchor    { 'xldeploy::client::begin': }
   -> class  { 'xldeploy::client::user': }
-  -> class  { 'xldeploy::gems':}
+  -> class  { 'xldeploy::client::gems':}
   -> class  { 'xldeploy::client::config': }
   -> anchor { 'xldeploy::client::end': }
 
