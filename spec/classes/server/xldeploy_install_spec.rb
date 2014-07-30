@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'xldeploy::install' do
+describe 'xldeploy::server::install' do
 
   let(:facts) {{ :osfamily => 'RedHat',
                  :concat_basedir => '/var/tmp' }}
@@ -134,7 +134,7 @@ describe 'xldeploy::install' do
     it {should contain_file('/opt/deployit/deployit-server/conf/deployit-license.lic').with_source('puppet:///modules/deployit/file/deployit-license.lic')}
   end
   context 'with install_license set to true and url given' do
-    let(:params) {{:version                     => '3.9.4',
+    let(:params) {{:version                     => '4.0.1',
                    :base_dir                    => '/opt/deployit',
                    :tmp_dir                     => '/var/tmp',
                    :os_user                     => 'deployit',

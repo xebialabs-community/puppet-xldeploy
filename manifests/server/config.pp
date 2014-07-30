@@ -122,7 +122,7 @@ class xldeploy::server::config (
 
 
 
-  create_resources('xldeploy::server::resources::defaultsetting', $xldeploy_default_settings)
+  create_resources('xldeploy::resources::defaultsetting', $xldeploy_default_settings)
 
 }
 

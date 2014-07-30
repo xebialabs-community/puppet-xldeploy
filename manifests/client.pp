@@ -29,6 +29,9 @@ class xldeploy::client (
   $use_exported_resources            = $xldeploy::params::use_exported_resources,
   $use_exported_keys                 = $xldeploy::params::use_exported_keys,
   $client_propagate_key              = $xldeploy::params::client_propagate_key,
+  $gem_use_local                     = $xldeploy::params::gem_use_local,
+  $gem_hash                          = $xldeploy::params::gem_hash,
+  $gem_array                         = $xldeploy::params::gem_array,
   $cis                               = { } ,
   $memberships                       = { } ,
   $users                             = { } ,
@@ -56,6 +59,7 @@ class xldeploy::client (
 
   anchor    { 'xldeploy::client::begin': }
   -> class  { 'xldeploy::client::user': }
+  -> class  { 'xldeploy::gems':}
   -> class  { 'xldeploy::client::config': }
   -> anchor { 'xldeploy::client::end': }
 

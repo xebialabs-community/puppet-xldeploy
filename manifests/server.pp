@@ -64,6 +64,9 @@ class xldeploy::server (
   $datastore_databasetype            = $xldeploy::params::datastore_databasetype,
   $datastore_schema                  = $xldeploy::params::datastore_schema,
   $datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
+  $gem_use_local                     = $xldeploy::params::gem_use_local,
+  $gem_hash                          = $xldeploy::params::gem_hash,
+  $gem_array                         = $xldeploy::params::gem_array,
   $server_plugins                    = { },
   $cis                               = { } ,
   $memberships                       = { } ,
@@ -118,6 +121,7 @@ class xldeploy::server (
   -> class  { 'xldeploy::server::repository': }
   ~> class  { 'xldeploy::server::security': }
   ~> class  { 'xldeploy::server::service': }
+  -> class  { 'xldeploy::gems': }
   -> class  { 'xldeploy::server::post_config': }
   -> anchor { 'xldeploy::server::end': }
 

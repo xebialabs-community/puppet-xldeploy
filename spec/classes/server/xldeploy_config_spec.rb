@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'xldeploy::config' do
+describe 'xldeploy::server::config' do
 
   context 'with default parameters' do
     let(:facts) { {:osfamily => 'RedHat',
@@ -8,7 +8,9 @@ describe 'xldeploy::config' do
 
     let(:params) { {
         :version => '4.0.1',
-        :base_dir => '/opt/xldeploy',
+        :base_dir => '/opt/xl-deploy',
+        :server_home_dir => "/opt/xl-deploy/xl-deploy-4.0.1-server",
+        :cli_home_dir => "/opt/xl-deploy/xl-deploy-4.0.1-cli",
         :os_user => 'xldeploy',
         :os_group => 'xldeploy',
         :ssl => false,
@@ -22,7 +24,7 @@ describe 'xldeploy::config' do
         :rest_url => 'http://localhost:4516/xldeploy',
         :xldeploy_default_settings => {}
     } }
-    it { should contain_file('/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf').with({
+    it { should contain_file('/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf').with({
                                                                                                 :ensure => 'present',
                                                                                                 :owner => 'xldeploy',
                                                                                                 :group => 'xldeploy',
@@ -37,7 +39,7 @@ describe 'xldeploy::config' do
                                                                  :ignore => '.gitkeep',
                                                                  :recurse => 'true',
                                                                  :sourceselect => 'all',
-                                                                 :source => ['puppet:///modules/xldeploy/plugins/generic', 'puppet:///modules/xldeploy/plugins/customer', "/opt/xldeploy/xldeploy-4.0.1-server/available-plugins"]
+                                                                 :source => ['puppet:///modules/xldeploy/plugins/generic', 'puppet:///modules/xldeploy/plugins/customer', "/opt/xl-deploy/xl-deploy-4.0.1-server/available-plugins"]
                                                              }) }
     it { should contain_file('xldeploy server hotfix').with({
                                                                 :ensure => 'present',
@@ -48,7 +50,7 @@ describe 'xldeploy::config' do
                                                                 :recurse => 'true',
                                                                 :purge => 'true',
                                                                 :source => ['puppet:///modules/xldeploy/hotfix/'],
-                                                                :path => '/opt/xldeploy/xldeploy-4.0.1-server/hotfix'
+                                                                :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/hotfix'
                                                             }) }
     it { should contain_file('xldeploy server ext').with({
                                                              :ensure => 'present',
@@ -58,7 +60,7 @@ describe 'xldeploy::config' do
                                                              :ignore => '.gitkeep',
                                                              :recurse => 'remote',
                                                              :source => ['puppet:///modules/xldeploy/server-ext/'],
-                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/ext'
+                                                             :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/ext'
                                                          }) }
 
 
@@ -70,61 +72,61 @@ describe 'xldeploy::config' do
                                                           :ignore => '.gitkeep',
                                                           :recurse => 'remote',
                                                           :source => ['puppet:///modules/xldeploy/cli-ext/'],
-                                                          :path => '/opt/xldeploy/xldeploy-4.0.1-cli/ext'
+                                                          :path => '/opt/xl-deploy/xl-deploy-4.0.1-cli/ext'
                                                       }) }
 
     it { should contain_ini_setting('xldeploy.admin.password').with({
                                                                         :ensure => 'present',
-                                                                        :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                        :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                         :section => '',
                                                                         :setting => 'admin.password',
                                                                         :value => 'admin'
                                                                     }) }
     it { should contain_ini_setting('xldeploy.http.port').with({
                                                                    :ensure => 'present',
-                                                                   :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                   :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                    :section => '',
                                                                    :setting => 'http.port',
                                                                    :value => '4516'
                                                                }) }
     it { should contain_ini_setting('xldeploy.jcr.repository.path').with({
                                                                              :ensure => 'present',
-                                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                             :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                              :section => '',
                                                                              :setting => 'jcr.repository.path',
                                                                              :value => 'repository'
                                                                          }) }
     it { should contain_ini_setting('xldeploy.ssl').with({
                                                              :ensure => 'present',
-                                                             :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                             :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                              :section => '',
                                                              :setting => 'ssl',
                                                              :value => 'false'
                                                          }) }
     it { should contain_ini_setting('xldeploy.http.bind.address').with({
                                                                            :ensure => 'present',
-                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                           :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                            :section => '',
                                                                            :setting => 'http.bind.address',
                                                                            :value => '192.168.0.1'
                                                                        }) }
     it { should contain_ini_setting('xldeploy.http.context.root').with({
                                                                            :ensure => 'present',
-                                                                           :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                           :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                            :section => '',
                                                                            :setting => 'http.context.root',
                                                                            :value => '/xldeploy'
                                                                        }) }
     it { should contain_ini_setting('xldeploy.importable.packages.path').with({
                                                                                   :ensure => 'present',
-                                                                                  :path => '/opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf',
+                                                                                  :path => '/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf',
                                                                                   :section => '',
                                                                                   :setting => 'importable.packages.path',
                                                                                   :value => 'importablePackages'
                                                                               }) }
     it { should contain_exec('init xldeploy').with({
-                                                       :creates => "/opt/xldeploy/xldeploy-4.0.1-server/repository",
-                                                       :command => "/opt/xldeploy/xldeploy-4.0.1-server/bin/server.sh -setup -reinitialize -force -setup-defaults /opt/xldeploy/xldeploy-4.0.1-server/conf/deployit.conf",
+                                                       :creates => "/opt/xl-deploy/xl-deploy-4.0.1-server/repository",
+                                                       :command => "/opt/xl-deploy/xl-deploy-4.0.1-server/bin/server.sh -setup -reinitialize -force -setup-defaults /opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf",
                                                        :user => 'xldeploy',
                                                        :environment => ["JAVA_HOME=/usr/lib/jvm/jre-1.6.0-openjdk.x86_64"]
                                                    }) }
@@ -133,7 +135,9 @@ describe 'xldeploy::config' do
   context "with xldeploy_default_settings containing valid settings" do
     let (:params) { {
         :version => '4.0.1',
-        :base_dir => '/opt/xldeploy',
+        :base_dir => '/opt/xl-deploy',
+        :server_home_dir => "/opt/xl-deploy/xl-deploy-4.0.1-server",
+        :cli_home_dir => "/opt/xl-deploy/xl-deploy-4.0.1-cli",
         :os_user => 'xldeploy',
         :os_group => 'xldeploy',
         :ssl => false,

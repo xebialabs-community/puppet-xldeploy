@@ -26,8 +26,9 @@ class xldeploy::server::install (
 
   # Variables
 
-    $server_dir   = "${base_dir}/${productname}-${version}-server"
-    $cli_dir      = "${base_dir}/${productname}-${version}-cli"
+    $server_install_dir   = "${base_dir}/${productname}-${version}-server"
+    $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
+
 
   # Dependencies
   Group[$os_group]
@@ -110,26 +111,26 @@ class xldeploy::server::install (
 
       file { $base_dir: ensure => directory }
 
-      file { $server_dir: ensure => directory }
+      file { $server_install_dir: ensure => directory }
 
-      file { $cli_dir: ensure => directory }
+      file { $cli_install_dir: ensure => directory }
 
       exec { 'unpack server file':
-        command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_dir}",
-        creates => "${server_dir}/bin",
+        command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
+        creates => "${server_install_dir}/bin",
         cwd     => $tmp_dir,
         user    => $os_user
       }
 
       # ... and cli packages
       exec { 'unpack cli file':
-        command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_dir}",
-        creates => "${cli_dir}/bin",
+        command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
+        creates => "${cli_install_dir}/bin",
         cwd     => $tmp_dir,
         user    => $os_user
       }
 
-      File[$base_dir] -> File[$cli_dir, $server_dir] -> File["${tmp_dir}/${server_zipfile}", "${tmp_dir}/${cli_zipfile}"
+      File[$base_dir] -> File[$cli_install_dir, $server_install_dir] -> File["${tmp_dir}/${server_zipfile}", "${tmp_dir}/${cli_zipfile}"
         ] -> Exec['unpack server file', 'unpack cli file'] -> File["/etc/${productname}", "/var/log/${productname}"]
     }
     'download'    : {
@@ -164,18 +165,18 @@ class xldeploy::server::install (
 
   file { "/var/log/${productname}":
     ensure => link,
-    target => "${server_dir}/log";
+    target => "${server_install_dir}/log";
   }
 
   file { "/etc/${productname}":
     ensure => link,
-    target => "${server_dir}/conf"
+    target => "${server_install_dir}/conf"
   }
 
   # put the init script in place
   # the template uses the following variables:
   # @os_user
-  # @server_dir
+  # @server_install_dir
   file { "/etc/init.d/${productname}":
     content => template('xldeploy/xldeploy.initd.erb'),
     owner   => 'root',
@@ -186,14 +187,14 @@ class xldeploy::server::install (
   # setup homedir
   file { $server_home_dir:
     ensure => link,
-    target => $server_dir,
+    target => $server_install_dir,
     owner  => $os_user,
     group  => $os_group
   }
 
   file { $cli_home_dir:
     ensure => link,
-    target => $cli_dir,
+    target => $cli_install_dir,
     owner  => $os_user,
     group  => $os_group
   }
@@ -235,6 +236,7 @@ class xldeploy::server::install (
     proxy_url       => $download_proxy_url,
     plugin_dir      => "${server_home_dir}/plugins",
     require         => File[$server_home_dir]
+  
   }
 
   create_resources( xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
