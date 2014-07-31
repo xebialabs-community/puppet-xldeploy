@@ -75,17 +75,17 @@ class xldeploy::params {
 
   $gem_hash        = {
     'mime-types'  => {
-      'source'  => 'puppet:///modules/deployit/gems/mime-types-1.25.1.gem',
+      'source'  => 'puppet:///modules/xldeploy/gems/mime-types-1.25.1.gem',
       'version' => '1.25.1'
   }
   ,
     'xml-simple'  => {
-      'source'  => 'puppet:///modules/deployit/gems/xml-simple-1.1.2.gem',
+      'source'  => 'puppet:///modules/xldeploy/gems/xml-simple-1.1.2.gem',
       'version' => '1.1.2'
   }
   ,
     'rest-client' => {
-      'source'  => 'puppet:///modules/deployit/gems/rest-client-1.6.7.gem',
+      'source'  => 'puppet:///modules/xldeploy/gems/rest-client-1.6.7.gem',
       'version' => '1.6.7'
   }
   }
