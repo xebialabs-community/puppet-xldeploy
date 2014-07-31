@@ -19,7 +19,7 @@ define xldeploy::client::exported_role_permission(
   $role,
   $cis,
   $granted_permissions,
-  $rest_url            = $xldeploy::rest_url,
+  $rest_url            = $xldeploy::client::rest_url,
 ){
 
 

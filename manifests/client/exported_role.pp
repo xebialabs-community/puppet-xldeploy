@@ -18,7 +18,7 @@
 define xldeploy::client::exported_role(
   $granted_permissions = {},
   $users               = {},
-  $rest_url            = $xldeploy::rest_url
+  $rest_url            = $xldeploy::client::rest_url
 ){
 
 

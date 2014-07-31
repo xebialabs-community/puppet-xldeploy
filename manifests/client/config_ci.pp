@@ -19,10 +19,10 @@ define xldeploy::client::config_ci(
   $type,
   $ensure                 = 'present',
   $properties             = {},
-  $rest_url               = $xldeploy::rest_url,
+  $rest_url               = $xldeploy::client::rest_url,
   $discovery              = false,
   $discovery_max_wait     = '120',
-  $use_exported_resources = $xldeploy::use_exported_resources
+  $use_exported_resources = $xldeploy::client::use_exported_resources
 ){
 
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent

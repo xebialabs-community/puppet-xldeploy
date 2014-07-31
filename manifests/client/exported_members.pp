@@ -19,7 +19,7 @@ define xldeploy::client::exported_members(
   $env,
   $members             = {},
   $dictionaries        = {},
-  $rest_url            = $xldeploy::rest_url
+  $rest_url            = $xldeploy::client::rest_url
 ){
 
 

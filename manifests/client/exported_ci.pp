@@ -18,7 +18,7 @@
 define xldeploy::client::exported_ci(
   $type,
   $properties          = {},
-  $rest_url            = $xldeploy::rest_url,
+  $rest_url            = $xldeploy::client::rest_url,
   $discovery           = false,
   $discovery_max_wait  = '120',
 ){

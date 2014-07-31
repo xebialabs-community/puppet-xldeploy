@@ -14,7 +14,7 @@
 # [*id*]
 define xldeploy::client::exported_dictionary_entry(
   $value,
-  $rest_url            = $xldeploy::rest_url,
+  $rest_url            = $xldeploy::client::rest_url,
 ){
 
 

@@ -13,7 +13,7 @@
 # [*export_maxage*]
 define xldeploy::client::exported_user(
   $password,
-  $rest_url            = $xldeploy::rest_url
+  $rest_url            = $xldeploy::client::rest_url
 ){
 
 
