@@ -12,4 +12,3 @@ vendor/*
 log
 files/keys/*
 files/keys/*.pub
-files/gems/*
