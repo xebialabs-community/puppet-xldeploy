@@ -221,7 +221,7 @@ class xldeploy::server::install (
                       owner           => $os_user,
                       group           => $os_group,
                       source          => $license_source,
-                     }
+                      }
             }
       }
     }
@@ -236,7 +236,6 @@ class xldeploy::server::install (
     proxy_url       => $download_proxy_url,
     plugin_dir      => "${server_home_dir}/plugins",
     require         => File[$server_home_dir]
-  
   }
 
   create_resources( xldeploy_plugin_netinstall, $server_plugins, $xldeploy_plugin_netinstall_defaults )
