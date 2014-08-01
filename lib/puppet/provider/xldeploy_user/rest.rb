@@ -22,7 +22,7 @@ Puppet::Type.type(:xldeploy_user).provide :rest, :parent => Puppet::Provider::XL
 
   def exists?
     response = rest_get "security/user/#{resource[:id]}"
-    if response =~ /No such user/
+    if response =~ /Not found/
       return false
     else
       return true

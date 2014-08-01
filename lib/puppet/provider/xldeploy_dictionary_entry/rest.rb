@@ -19,7 +19,7 @@ Puppet::Type.type(:xldeploy_dictionary_entry).provide :rest, :parent => Puppet::
   def exists?
 
     get_dictionary
-
+    p @property_hash
     entries = @property_hash['dictionary'].values[0]['entries']
     entries.each do |a|
       return true if a['@key'] == key
@@ -76,5 +76,40 @@ Puppet::Type.type(:xldeploy_dictionary_entry).provide :rest, :parent => Puppet::
 
   def key
     Pathname.new(resource[:key]).basename.to_s
+  end
+
+  def to_hash(xml)
+    XmlSimple.xml_in(
+        xml,
+        {
+            'ForceArray' => false,
+            'KeepRoot'   => true,
+            'AttrPrefix' => true,
+            'GroupTags'  => {
+                'tags'         => 'value',
+                'servers'      => 'ci',
+                'members'      => 'ci',
+                'dictionaries' => 'ci',
+                'entries'      => 'entry'
+            },
+        }
+    )
+  end
+  def to_xml(hash)
+    XmlSimple.xml_out(
+        hash,
+        {
+            'KeepRoot'   => true,
+            'AttrPrefix' => true,
+            'GroupTags'  => {
+                'tags'         => 'value',
+                'servers'      => 'ci',
+                'members'      => 'ci',
+                'dictionaries' => 'ci',
+                'entries'      => 'entry'
+
+            },
+        }
+    )
   end
 end

@@ -4,14 +4,18 @@ require 'puppet'
 class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
   def rest_get(service)
-    RestClient.get "#{resource[:rest_url]}/#{service}", {:accept => :xml, :content_type => :xml }
+    begin
+      response = RestClient.get "#{resource[:rest_url]}/#{service}", {:accept => :xml, :content_type => :xml }
+    rescue Exception => e
+      return e.message
+    end
   end
 
   def rest_post(service, body='')
     RestClient.post "#{resource[:rest_url]}/#{service}", body, {:content_type => :xml }
   end
 
-  def rest_put(service, body)
+  def rest_put(service, body='')
     RestClient.put "#{resource[:rest_url]}/#{service}", body, {:content_type => :xml }
   end
 
