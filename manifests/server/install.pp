@@ -105,9 +105,9 @@ class xldeploy::server::install (
       $server_zipfile = "${productname}-${version}-server.zip"
       $cli_zipfile    = "${productname}-${version}-cli.zip"
 
-      file { "${tmp_dir}/${server_zipfile}": source => "puppet:///${puppetfiles_xldeploy_source}/${server_zipfile}" }
+      file { "${tmp_dir}/${server_zipfile}": source => "${puppetfiles_xldeploy_source}/${server_zipfile}" }
 
-      file { "${tmp_dir}/${cli_zipfile}": source => "puppet:///${puppetfiles_xldeploy_source}/${cli_zipfile}" }
+      file { "${tmp_dir}/${cli_zipfile}": source => "${puppetfiles_xldeploy_source}/${cli_zipfile}" }
 
       file { $base_dir: ensure => directory }
 
