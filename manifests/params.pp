@@ -30,7 +30,7 @@ class xldeploy::params {
   $enable_housekeeping        = true
   $java_home                  = '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64'
   $install_java               = false
-
+  $disable_firewall           = true
 
   #security settings
   $xldeploy_authentication_providers = {'rememberMeAuthenticationProvider' => 'com.xebialabs.deployit.security.authentication.RememberMeAuthenticationProvider',
