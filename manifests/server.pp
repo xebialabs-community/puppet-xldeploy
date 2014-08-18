@@ -67,6 +67,7 @@ class xldeploy::server (
   $gem_use_local                     = $xldeploy::params::gem_use_local,
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
+  $disable_firewall                  = $xldeploy::params::disable_firewall,
   $server_plugins                    = { },
   $cis                               = { } ,
   $memberships                       = { } ,

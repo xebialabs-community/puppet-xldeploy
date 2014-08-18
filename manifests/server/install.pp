@@ -21,7 +21,8 @@ class xldeploy::server::install (
   $install_license             = $xldeploy::server::install_license,
   $license_source              = $xldeploy::server::license_source,
   $productname                 = $xldeploy::server::productname,
-  $server_plugins              = $xldeploy::server::server_plugins
+  $server_plugins              = $xldeploy::server::server_plugins,
+  $disable_firewall            = $xldeploy::server::disable_firewall
 ) {
 
   # Variables
@@ -88,13 +89,16 @@ class xldeploy::server::install (
   }
 
   # check to see if where on a redhatty system and shut iptables down quicker than you can say wtf
-  if !defined(Service[iptables]) {
-    case $::osfamily {
-      'RedHat' : {
-        service { 'iptables': ensure => stopped }
-        Service['iptables'] -> File["/etc/${productname}", "/var/log/${productname}"]
-      }
-      default  : {
+  # only when disable_fireall is true 
+  if str2bool($disable_firewall) {
+    if !defined(Service[iptables]) {
+      case $::osfamily {
+        'RedHat' : {
+          service { 'iptables': ensure => stopped }
+          Service['iptables'] -> File["/etc/${productname}", "/var/log/${productname}"]
+        }
+        default  : {
+        }
       }
     }
   }
