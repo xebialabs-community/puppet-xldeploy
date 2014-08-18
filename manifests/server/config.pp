@@ -94,7 +94,7 @@ class xldeploy::server::config (
 
     'xldeploy.jcr.repository.path':
       setting => 'jcr.repository.path',
-      value   => $jcr_repository_path;
+      value   => regsubst($jcr_repository_path, '^/', 'file:///');
 
     'xldeploy.ssl':
       setting => 'ssl',
@@ -114,7 +114,7 @@ class xldeploy::server::config (
   }
 
   exec { 'init xldeploy':
-    creates     => "${server_home_dir}/repository",
+    creates     => $jcr_repository_path,
     command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
     user        => $os_user,
     environment => ["JAVA_HOME=${java_home}"]
