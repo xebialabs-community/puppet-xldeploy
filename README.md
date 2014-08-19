@@ -1,2 +1,2 @@
-xebialabs-puppet-xldeploy
+puppet-xldeploy
 =========================
