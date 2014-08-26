@@ -34,6 +34,9 @@ class xldeploy::server (
   $client_user_password_salt         = $xldeploy::params::client_user_password_salt,
   $install_type                      = $xldeploy::params::install_type,
   $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
+  $productname                       = $xldeploy::params::productname,
+  $download_server_url               = $xldeploy::params::download_server_url,
+  $download_cli_url                  = $xldeploy::params::download_cli_url,
   $download_user                     = $xldeploy::params::download_user,
   $download_password                 = $xldeploy::params::download_password,
   $download_proxy_url                = $xldeploy::params::download_proxy_url,
@@ -95,14 +98,16 @@ class xldeploy::server (
   }
 
   #we need to support the two different productnames being xldeploy and deployit
-  if versioncmp($version , '3.9.90') > 0 {
-    $productname         = 'xl-deploy'
-    $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
-    $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
-  } else {
-    $productname         = 'deployit'
-    $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
-    $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+  if ($download_server_url == undef) or ($download_cli_url == undef) or ($productname == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $productname         = 'xl-deploy'
+      $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
+      $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+    } else {
+      $productname         = 'deployit'
+      $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
+      $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+    }
   }
 
   $base_dir            = "${xldeploy_base_dir}/${productname}"

@@ -62,6 +62,9 @@ class xldeploy::params {
   # installation related params
   $install_type                 = 'download'
   $puppetfiles_xldeploy_source  = 'puppet:///modules/xldeploy/sources'
+  $productname                  = 'xl-deploy'
+  $download_server_url          = undef
+  $download_cli_url             = undef
   $download_user                = undef
   $download_password            = undef
   $download_proxy_url           = undef

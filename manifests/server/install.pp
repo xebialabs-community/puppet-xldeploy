@@ -212,7 +212,7 @@ class xldeploy::server::install (
   if versioncmp($version , '3.9.90') > 0 {
     if str2bool($install_license) {
       case $license_source {
-      /^https/ : { xldeploy_license_install{$license_source:
+      /^http/ : { xldeploy_license_install{$license_source:
                       owner                => $os_user,
                       group                => $os_group,
                       user                 => $download_user,
