@@ -97,16 +97,23 @@ class xldeploy::server (
     $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
   }
 
-  #we need to support the two different productnames being xldeploy and deployit
+  #we need to support the two different download urls for xldeploy and deployit
   if ($download_server_url == undef) or ($download_cli_url == undef) or ($productname == undef) {
     if versioncmp($version , '3.9.90') > 0 {
-      $productname         = 'xl-deploy'
       $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
       $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
     } else {
-      $productname         = 'deployit'
       $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
       $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+    }
+  }
+
+  # we need to support two different productnames
+  if ($productname == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $productname         = 'xl-deploy'
+    } else {
+      $productname         = 'deployit'
     }
   }
 
