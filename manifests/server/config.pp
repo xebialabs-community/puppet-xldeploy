@@ -114,7 +114,7 @@ class xldeploy::server::config (
   }
 
   exec { 'init xldeploy':
-    creates     => $jcr_repository_path,
+    creates     => "${server_home_dir}/${jcr_repository_path}",
     command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
     user        => $os_user,
     environment => ["JAVA_HOME=${java_home}"]
