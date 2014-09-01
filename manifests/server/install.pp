@@ -89,7 +89,7 @@ class xldeploy::server::install (
   }
 
   # check to see if where on a redhatty system and shut iptables down quicker than you can say wtf
-  # only when disable_fireall is true 
+  # only when disable_fireall is true
   if str2bool($disable_firewall) {
     if !defined(Service[iptables]) {
       case $::osfamily {
@@ -106,7 +106,9 @@ class xldeploy::server::install (
   # check the install_type and act accordingly
   case $install_type {
     'puppetfiles' : {
+
       $server_zipfile = "${productname}-${version}-server.zip"
+
       $cli_zipfile    = "${productname}-${version}-cli.zip"
 
       file { "${tmp_dir}/${server_zipfile}": source => "${puppetfiles_xldeploy_source}/${server_zipfile}" }
@@ -135,7 +137,7 @@ class xldeploy::server::install (
       }
 
       File[$base_dir] -> File[$cli_install_dir, $server_install_dir] -> File["${tmp_dir}/${server_zipfile}", "${tmp_dir}/${cli_zipfile}"
-        ] -> Exec['unpack server file', 'unpack cli file'] -> File["/etc/${productname}", "/var/log/${productname}"]
+        ] -> Exec['unpack server file', 'unpack cli file'] -> File['conf dir link', 'log dir link']
     }
     'download'    : {
 
@@ -158,7 +160,8 @@ class xldeploy::server::install (
         destinationdir  => $base_dir,
         proxy_url       => $download_proxy_url
       }
-      -> File["/etc/${productname}", "/var/log/${productname}"]
+      -> File[$server_home_dir, $cli_home_dir]
+      -> File['conf dir link', 'log dir link']
     }
     default       : {
     }
@@ -166,14 +169,15 @@ class xldeploy::server::install (
 
   # convenience links
 
-
-  file { "/var/log/${productname}":
+  file { 'log dir link':
     ensure => link,
+    path   => "/var/log/${productname}",
     target => "${server_install_dir}/log";
   }
 
-  file { "/etc/${productname}":
+  file { 'conf dir link':
     ensure => link,
+    path   => "/etc/${productname}",
     target => "${server_install_dir}/conf"
   }
 
@@ -212,7 +216,9 @@ class xldeploy::server::install (
   if versioncmp($version , '3.9.90') > 0 {
     if str2bool($install_license) {
       case $license_source {
-      /^http/ : { 
+      /^http/ : {
+                  File['conf dir link', 'log dir link'] ->
+
                   file { 'xldeploy conf folder':
                     ensure => directory,
                     path   => "${server_install_dir}/conf",
@@ -227,6 +233,8 @@ class xldeploy::server::install (
                     }
             }
       default : {
+                  File['conf dir link', 'log dir link'] ->
+
                   file{"${server_home_dir}/conf/deployit-license.lic":
                       owner           => $os_user,
                       group           => $os_group,
