@@ -68,9 +68,9 @@ class xldeploy::server (
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
-  $productname                       = undef,
-  $download_server_url               = undef,
-  $download_cli_url                  = undef
+  $custom_productname                = undef,
+  $custom download_server_url        = undef,
+  $custom_download_cli_url           = undef
   $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
@@ -98,7 +98,7 @@ class xldeploy::server (
   }
 
   #we need to support the two different download urls for xldeploy and deployit
-  if ($download_server_url == undef) or ($download_cli_url == undef) {
+  if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
     if versioncmp($version , '3.9.90') > 0 {
       $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
       $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
@@ -106,15 +106,20 @@ class xldeploy::server (
       $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
       $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
     }
+  } else {
+      $download_server_url = $custom_download_server_url
+      $download_cli_url    = $custom_download_cli_url
   }
 
   # we need to support two different productnames
-  if ($productname == undef) {
+  if ($custom_productname == undef) {
     if versioncmp($version , '3.9.90') > 0 {
       $productname         = 'xl-deploy'
     } else {
       $productname         = 'deployit'
     }
+  } else {
+    $productname = $custom_productname
   }
 
   $base_dir            = "${xldeploy_base_dir}/${productname}"
