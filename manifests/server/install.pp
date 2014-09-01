@@ -34,8 +34,7 @@ class xldeploy::server::install (
   # Dependencies
   Group[$os_group]
     -> User[$os_user]
-    -> File["/var/log/${productname}"]
-    -> File["/etc/${productname}"]
+    -> File['conf dir link', 'log dir link']
     -> File["/etc/init.d/${productname}"]
     -> File[$server_home_dir]
     -> File[$cli_home_dir]
