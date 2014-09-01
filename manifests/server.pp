@@ -69,7 +69,7 @@ class xldeploy::server (
   $gem_array                         = $xldeploy::params::gem_array,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
   $custom_productname                = undef,
-  $custom download_server_url        = undef,
+  $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef
   $server_plugins                    = { } ,
   $cis                               = { } ,
