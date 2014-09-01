@@ -34,9 +34,6 @@ class xldeploy::server (
   $client_user_password_salt         = $xldeploy::params::client_user_password_salt,
   $install_type                      = $xldeploy::params::install_type,
   $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
-  $productname                       = $xldeploy::params::productname,
-  $download_server_url               = $xldeploy::params::download_server_url,
-  $download_cli_url                  = $xldeploy::params::download_cli_url,
   $download_user                     = $xldeploy::params::download_user,
   $download_password                 = $xldeploy::params::download_password,
   $download_proxy_url                = $xldeploy::params::download_proxy_url,
@@ -71,7 +68,10 @@ class xldeploy::server (
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
-  $server_plugins                    = { },
+  $productname                       = undef,
+  $download_server_url               = undef,
+  $download_cli_url                  = undef
+  $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
   $users                             = { } ,
@@ -98,7 +98,7 @@ class xldeploy::server (
   }
 
   #we need to support the two different download urls for xldeploy and deployit
-  if ($download_server_url == undef) or ($download_cli_url == undef) or ($productname == undef) {
+  if ($download_server_url == undef) or ($download_cli_url == undef) {
     if versioncmp($version , '3.9.90') > 0 {
       $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
       $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
