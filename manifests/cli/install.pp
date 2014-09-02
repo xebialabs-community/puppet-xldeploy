@@ -16,6 +16,8 @@ class xldeploy::cli::install (
   $download_password           = $xldeploy::cli::download_password,
   $download_proxy_url          = $xldeploy::cli::download_proxy_url,
   $download_cli_url            = $xldeploy::cli::download_cli_url,
+  $productname                 = $xldeploy::cli::productname
+
 ){
 
   # Refactor .. stuff getting out of hand
