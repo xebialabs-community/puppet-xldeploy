@@ -31,7 +31,7 @@ $custom_download_cli_url           = undef,
 ) inherits xldeploy::params {
 
 # this class is not compatible with the xldeploy::server class so let's check for that
-if defined('xldeploy::server'){fail('using xldeploy::cli in conjunction with xldeploy::server is not supported')}
+if defined(Class['xldeploy::server']){fail('using xldeploy::cli in conjunction with xldeploy::server is not supported')}
 
 # composed variables
 
@@ -64,7 +64,7 @@ $cli_home_dir        = "${base_dir}/${productname}-cli"
 
 anchor    { 'xldeploy::cli::begin': }
 -> class  { 'xldeploy::cli::install': }
--> anchor { 'xldeploy::server::end': }
+-> anchor { 'xldeploy::cli::end': }
 
 
 }
