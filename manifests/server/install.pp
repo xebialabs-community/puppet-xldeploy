@@ -37,7 +37,7 @@ class xldeploy::server::install (
   -> User[$os_user]
   -> anchor{'userandgroup':}
   -> anchor{'preinstall':}
-  -> File[$basedir]
+  -> File[$base_dir]
   -> anchor{'install':}
   -> anchor{'postinstall':}
   -> File['conf dir link', 'log dir link']
