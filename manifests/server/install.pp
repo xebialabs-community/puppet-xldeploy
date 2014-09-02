@@ -53,7 +53,7 @@ class xldeploy::server::install (
     'RedHat' : {
       #TODO: build a better solution for this
       $xtra_packages = ['']
-      #User[$os_user] -> Package[$xtra_packages] -> File["/var/log/${productname}"]
+      #User[$os_user] -> Package[$xtra_packages] -> File["log dir link"]
 
       #package { $xtra_packages: ensure => present }
     }
@@ -66,7 +66,7 @@ class xldeploy::server::install (
     case $::osfamily {
       'RedHat' : {
         $java_packages = ['java-1.7.0-openjdk']
-        User[$os_user] -> Package[$java_packages] -> File["/var/log/${productname}"]
+        User[$os_user] -> Package[$java_packages] -> File["log dir link"]
 
         package { $java_packages: ensure => present }
       }
@@ -94,7 +94,7 @@ class xldeploy::server::install (
       case $::osfamily {
         'RedHat' : {
           service { 'iptables': ensure => stopped }
-          Service['iptables'] -> File["/etc/${productname}", "/var/log/${productname}"]
+          Service['iptables'] -> File['conf dir link', 'log dir link']
         }
         default  : {
         }
