@@ -51,7 +51,7 @@ Basic usage when installing a xldeploy server
 
 For a more comprehensive setup
 
-    class{xldeploy::server
+    class{xldeploy::server:
         install_java                => true,
         install_license             => true,
         install_type                => 'netinstall'
@@ -59,3 +59,14 @@ For a more comprehensive setup
         download_password           => 'notapassword'
         download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
      }
+
+Installing the cli
+
+    class{xldeploy::cli:
+            install_java                => true,
+            install_type                => 'netinstall'
+            download_user               => 'foobar',
+            download_password           => 'notapassword'
+            download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
+     }
+
