@@ -62,7 +62,7 @@ class xldeploy::server::install (
       'RedHat' : {
         $java_packages = ['java-1.7.0-openjdk']
         package { $java_packages: ensure => present }
-        Anchor['preinstall']-> Package[$java_packages] -> File["install"]
+        Anchor['preinstall']-> Package[$java_packages] -> Anchor['install']
       }
       default  : {
         fail("${::osfamily}:${::operatingsystem} not supported by this module")
