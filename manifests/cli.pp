@@ -30,51 +30,53 @@ $custom_download_server_url        = undef,
 $custom_download_cli_url           = undef,
 ) inherits xldeploy::params {
 
-# this class is not compatible with the xldeploy::server class so let's check for that
-if defined(Class['xldeploy::server']){fail('using xldeploy::cli in conjunction with xldeploy::server is not supported')}
+  
+  # composed variables
 
-# composed variables
-
-#we need to support the two different download urls for xldeploy and deployit
-  if ($custom_download_cli_url == undef) {
-    if versioncmp($version , '3.9.90') > 0 {
-      $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+  #we need to support the two different download urls for xldeploy and deployit
+    if ($custom_download_cli_url == undef) {
+      if versioncmp($version , '3.9.90') > 0 {
+        $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+      } else {
+        $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+      }
     } else {
-      $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+      $download_cli_url    = $custom_download_cli_url
     }
-  } else {
-    $download_cli_url    = $custom_download_cli_url
-  }
 
-# we need to support two different productnames
-  if ($custom_productname == undef) {
-    if versioncmp($version , '3.9.90') > 0 {
-      $productname         = 'xl-deploy'
+  # we need to support two different productnames
+    if ($custom_productname == undef) {
+      if versioncmp($version , '3.9.90') > 0 {
+        $productname         = 'xl-deploy'
+      } else {
+        $productname         = 'deployit'
+      }
     } else {
-      $productname         = 'deployit'
+        $productname = $custom_productname
     }
-  } else {
-      $productname = $custom_productname
+
+  $base_dir            = "${xldeploy_base_dir}/${productname}"
+  $cli_home_dir        = "${base_dir}/${productname}-cli"
+
+
+
+  anchor    { 'xldeploy::cli::begin': }
+  -> Class  [ 'xldeploy::shared_prereq']
+  -> class  { 'xldeploy::cli::install': }
+  -> anchor { 'xldeploy::cli::end': }
+
+    #class to setup shared stuff between cli and server installations
+  if !defined['xldeploy::shared_prereq']{
+    class{'xldeploy::shared_prereq':
+      base_dir => $base_dir,
+      os_user => $os_user,
+      os_group => $os_group,
+      os_user_home => $cli_home_dir,
+      install_java => $install_java,
+      java_home => $java_home
+    }
+  Anchor    [ 'xldeploy::cli::begin']
+  -> Class  [ 'xldeploy::shared_prereq']
+  -> Class  [ 'xldeploy::cli::install']
   }
-
-$base_dir            = "${xldeploy_base_dir}/${productname}"
-$cli_home_dir        = "${base_dir}/${productname}-cli"
-
-
-
-anchor    { 'xldeploy::cli::begin': }
--> Class  [ 'xldeploy::shared_prereq']
--> class  { 'xldeploy::cli::install': }
--> anchor { 'xldeploy::cli::end': }
-
-  #class to setup shared stuff between cli and server installations
-  class{'xldeploy::shared_prereq':
-    base_dir => $base_dir,
-    os_user => $os_user,
-    os_group => $os_group,
-    os_user_home => $cli_home_dir,
-    install_java => $install_java,
-    java_home => $java_home
-  }
-
 }
