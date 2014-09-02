@@ -27,7 +27,7 @@ class xldeploy::cli::install (
   $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
 
   # Flow controll
-  -> anchor{'install':}
+  anchor{'install':}
   -> anchor{'postinstall':}
   -> File[$cli_home_dir]
   -> anchor{'installend':}
