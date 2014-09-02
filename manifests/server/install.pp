@@ -213,7 +213,7 @@ class xldeploy::server::install (
     if str2bool($install_license) {
       case $license_source {
       /^http/ : {
-                  Anchor['postinstall']
+                  File[$server_home_dir]
 
                   -> xldeploy_license_install{$license_source:
                       owner                => $os_user,
@@ -225,7 +225,7 @@ class xldeploy::server::install (
                   -> Anchor['installend']
             }
       default : {
-                  Anchor['postinstall']
+                  File[$server_home_dir]
 
                   -> file{"${server_home_dir}/conf/deployit-license.lic":
                       owner           => $os_user,
