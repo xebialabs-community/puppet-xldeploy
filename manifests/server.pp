@@ -135,6 +135,7 @@ class xldeploy::server (
   anchor    { 'xldeploy::server::begin': }
   -> Class  [ 'xldeploy::shared_prereq' ]
   -> class  { 'xldeploy::server::install': }
+  -> Class  [ 'xldeploy::cli']
   -> class  { 'xldeploy::server::install_sshkey': }
   -> class  { 'xldeploy::server::config': }
   -> class  { 'xldeploy::server::repository': }
@@ -156,5 +157,21 @@ class xldeploy::server (
     os_user_home => $server_home_dir,
     install_java => $install_java,
     java_home => $java_home
+  }
+  class {'xldeploy::cli':
+    install_java                => 'false',
+    version                     => $version,
+    base_dir                    => $base_dir,
+    productname                 => $productname,
+    os_user                     => $os_user,
+    os_group                    => $os_group,
+    xldeploy_base_dir           => $xldeploy_base_dir,
+    install_type                => $install_type,
+    puppetfiles_xldeploy_source => $puppetfiles_xldeploy_source,
+    download_user               => $download_user,
+    download_password           => $download_password,
+    download_proxy_url          => $download_proxy_url,
+    java_home                   => $java_home,
+    custom_download_cli_url     => $custom_download_cli_url,
   }
 }
