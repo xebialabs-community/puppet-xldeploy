@@ -9,8 +9,6 @@ class xldeploy::cli::install (
   $os_group                    = $xldeploy::cli::os_group,
   $install_type                = $xldeploy::cli::install_type,
   $cli_home_dir                = $xldeploy::cli::cli_home_dir,
-  $install_java                = $xldeploy::cli::install_java,
-  $java_home                   = $xldeploy::cli::java_home,
   $puppetfiles_xldeploy_source = $xldeploy::cli::puppetfiles_xldeploy_source,
   $download_user               = $xldeploy::cli::download_user,
   $download_password           = $xldeploy::cli::download_password,
@@ -27,10 +25,10 @@ class xldeploy::cli::install (
   $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
 
   # Flow controll
-  anchor{'install':}
-  -> anchor{'postinstall':}
+  anchor{'cli::install':}
+  -> anchor{'cli::postinstall':}
   -> File[$cli_home_dir]
-  -> anchor{'installend':}
+  -> anchor{'cli::installend':}
 
 
   # Resource defaults
@@ -46,7 +44,7 @@ class xldeploy::cli::install (
 
     $cli_zipfile    = "${productname}-${version}-cli.zip"
 
-    Anchor['install']
+    Anchor['cli::install']
 
     -> file { "${tmp_dir}/${cli_zipfile}": source => "${puppetfiles_xldeploy_source}/${cli_zipfile}" }
 
@@ -59,11 +57,11 @@ class xldeploy::cli::install (
       cwd     => $tmp_dir,
       user    => $os_user
     }
-    -> Anchor['postinstall']
+    -> Anchor['cli::postinstall']
   }
     'download'    : {
 
-      Anchor['install']
+      Anchor['cli::install']
 
       -> xldeploy_netinstall{$download_cli_url:
           owner           => $os_user,
@@ -74,7 +72,7 @@ class xldeploy::cli::install (
           proxy_url       => $download_proxy_url
          }
 
-      -> Anchor['postinstall']
+      -> Anchor['cli::postinstall']
     }
     default       : {
     }
