@@ -35,11 +35,11 @@ class xldeploy::server::install (
   Group[$os_group]
     -> User[$os_user]
     -> File['conf dir link', 'log dir link']
-    -> File["/etc/init.d/${productname}"]
+
     -> File[$server_home_dir]
     -> File[$cli_home_dir]
     -> File["${server_home_dir}/scripts"]
-
+    -> File["/etc/init.d/${productname}"]
 
   # Resource defaults
   File {
