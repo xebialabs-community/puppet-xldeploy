@@ -27,11 +27,6 @@ class xldeploy::cli::install (
   $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
 
   # Flow controll
-  Group[$os_group]
-  -> User[$os_user]
-  -> anchor{'userandgroup':}
-  -> anchor{'preinstall':}
-  -> File[$base_dir]
   -> anchor{'install':}
   -> anchor{'postinstall':}
   -> File[$cli_home_dir]
@@ -44,38 +39,6 @@ class xldeploy::cli::install (
     group  => $os_group,
     ensure => present
   }
-
-
-
-  # install java packages if needed
-  if str2bool($install_java) {
-    case $::osfamily {
-      'RedHat' : {
-        $java_packages = ['java-1.7.0-openjdk']
-        package { $java_packages: ensure => present }
-        Anchor['preinstall']-> Package[$java_packages] -> Anchor['install']
-      }
-      default  : {
-        fail("${::osfamily}:${::operatingsystem} not supported by this module")
-      }
-    }
-  }
-
-  # user and group
-
-  group { $os_group: ensure => 'present' }
-
-  user { $os_user:
-    ensure     => present,
-    gid        => $os_group,
-    managehome => false,
-    home       => $server_home_dir
-  }
-
-  # base dir
-
-  file { $base_dir: ensure => directory }
-
 
   # check the install_type and act accordingly
   case $install_type {
@@ -116,13 +79,6 @@ class xldeploy::cli::install (
     default       : {
     }
   }
-
-  # convenience links
-
-  # put the init script in place
-  # the template uses the following variables:
-  # @os_user
-  # @server_install_dir
 
   file { $cli_home_dir:
     ensure => link,

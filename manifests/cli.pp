@@ -63,8 +63,18 @@ $cli_home_dir        = "${base_dir}/${productname}-cli"
 
 
 anchor    { 'xldeploy::cli::begin': }
+-> Class  [ 'xldeploy::shared_prereq']
 -> class  { 'xldeploy::cli::install': }
 -> anchor { 'xldeploy::cli::end': }
 
+  #class to setup shared stuff between cli and server installations
+  class{'xldeploy::shared_prereq':
+    base_dir => $base_dir,
+    os_user => $os_user,
+    os_group => $os_group,
+    os_user_home => $cli_home_dir,
+    install_java => $install_java,
+    java_home => $java_home
+  }
 
 }
