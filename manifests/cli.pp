@@ -30,7 +30,7 @@ $custom_download_server_url        = undef,
 $custom_download_cli_url           = undef,
 ) inherits xldeploy::params {
 
-  
+
   # composed variables
 
   #we need to support the two different download urls for xldeploy and deployit
@@ -61,7 +61,6 @@ $custom_download_cli_url           = undef,
 
 
   anchor    { 'xldeploy::cli::begin': }
-  -> Class  [ 'xldeploy::shared_prereq']
   -> class  { 'xldeploy::cli::install': }
   -> anchor { 'xldeploy::cli::end': }
 
