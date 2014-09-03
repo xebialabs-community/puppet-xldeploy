@@ -54,7 +54,8 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
                 when 'post'   then Net::HTTP::Post.new(uri.request_uri)
                 when 'put'    then Net::HTTP::Put.new(uri.request_uri)
                 when 'delete' then Net::HTTP::Delete.new(uri.request_uri)
-
+              end
+    
     request.basic_auth(uri.user, uri.password) if uri.user and uri.password
     request.body = body unless body == ''
     request.add_field 'Content-Type', 'application/xml'
