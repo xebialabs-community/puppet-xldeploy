@@ -37,7 +37,6 @@ class xldeploy::server::install (
   -> anchor{'server::postinstall':}
   -> File['conf dir link', 'log dir link']
   -> File[$server_home_dir]
-  -> File[$cli_home_dir]
   -> File["/etc/init.d/${productname}"]
   -> anchor{'server::installend':}
 
