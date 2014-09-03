@@ -19,7 +19,7 @@ Puppet::Type.type(:xldeploy_dictionary_entry).provide :rest, :parent => Puppet::
   def exists?
 
     get_dictionary
-    p @property_hash
+
     entries = @property_hash['dictionary'].values[0]['entries']
     entries.each do |a|
       return true if a['@key'] == key
