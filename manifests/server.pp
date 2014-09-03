@@ -161,7 +161,6 @@ class xldeploy::server (
   class {'xldeploy::cli':
     install_java                => 'false',
     version                     => $version,
-    productname                 => $productname,
     os_user                     => $os_user,
     os_group                    => $os_group,
     xldeploy_base_dir           => $xldeploy_base_dir,
@@ -172,5 +171,6 @@ class xldeploy::server (
     download_proxy_url          => $download_proxy_url,
     java_home                   => $java_home,
     custom_download_cli_url     => $custom_download_cli_url,
+    custom_productname          => $custom_productname,
   }
 }
