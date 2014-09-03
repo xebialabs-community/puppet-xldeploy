@@ -41,34 +41,33 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   def rest_delete(service)
     execute_rest(service, 'delete')
   end
-
   def execute_rest(service, method, body='')
-
 
     uri = URI.parse("#{resource[:rest_url]}/#{service}")
 
     http = Net::HTTP.new(uri.host, uri.port)
-
     request = case method
                 when 'get'    then Net::HTTP::Get.new(uri.request_uri)
                 when 'post'   then Net::HTTP::Post.new(uri.request_uri)
                 when 'put'    then Net::HTTP::Put.new(uri.request_uri)
                 when 'delete' then Net::HTTP::Delete.new(uri.request_uri)
               end
-    
+    #p request.pretty_print_inspect
+
     request.basic_auth(uri.user, uri.password) if uri.user and uri.password
     request.body = body unless body == ''
-    request.add_field 'Content-Type', 'application/xml'
-    request.add_field 'Accept', 'xml'
+    request.content_type = 'application/xml'
 
     begin
-      response = http.request(request)
+      res = http.request(request)
+      raise Puppet::Error, "cannot send request to deployit server #{res.code}/#{res.message}:#{res.body}" unless res.is_a?(Net::HTTPSuccess)
+      return res.body
     rescue Exception => e
       return e.message
     end
 
   end
-
+  
   def to_xml(id, type, properties)
     props = {'@id' => id}.merge(properties)
     XmlSimple.xml_out(
