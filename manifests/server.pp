@@ -161,7 +161,6 @@ class xldeploy::server (
   class {'xldeploy::cli':
     install_java                => 'false',
     version                     => $version,
-    xldeploy_base_dir           => $xldeploy_base_dir,
     productname                 => $productname,
     os_user                     => $os_user,
     os_group                    => $os_group,
