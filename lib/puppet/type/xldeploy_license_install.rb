@@ -4,16 +4,6 @@ Puppet::Type.newtype(:xldeploy_license_install) do
 
   desc 'Download an XL Deploy license file from the XebiaLabs download site'
 
-  autorequire(:xldeploy_netinstall) do
-    requires = []
-    catalog.resources.each {|d|
-      if (d.class.to_s == "Puppet::Type::Xldeploy_netinstall")
-        requires << d.name
-      end
-    }
-    requires
-  end
-
   ensurable do
     desc "xldeploy_license_install resource state"
 
