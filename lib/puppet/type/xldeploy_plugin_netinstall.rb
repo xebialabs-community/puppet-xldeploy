@@ -4,16 +4,6 @@ Puppet::Type.newtype(:xldeploy_plugin_netinstall) do
 
   desc 'download and unpack a xldeploy archive file from the interwebs'
 
-  autorequire(:xldeploy_netinstall) do
-    requires = []
-    catalog.resources.each {|d|
-      if (d.class.to_s == "Puppet::Type::Xldeploy_netinstall")
-        requires << d.name
-      end
-    }
-    requires
-  end
-
   ensurable do
     desc "xldeploy_netinstall resource state"
 
