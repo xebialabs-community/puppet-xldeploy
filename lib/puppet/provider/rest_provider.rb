@@ -41,6 +41,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   def rest_delete(service)
     execute_rest(service, 'delete')
   end
+
   def execute_rest(service, method, body='')
 
     uri = URI.parse("#{resource[:rest_url]}/#{service}")
@@ -67,7 +68,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     end
 
   end
-  
+
   def to_xml(id, type, properties)
     props = {'@id' => id}.merge(properties)
     XmlSimple.xml_out(
