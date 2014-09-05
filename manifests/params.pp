@@ -57,6 +57,7 @@ class xldeploy::params {
   $datastore_databasetype            = undef
   $datastore_schema                  = undef
   $datastore_persistencemanagerclass = undef
+  $datastore_jdbc_driver_url         = undef
 
 
   # installation related params

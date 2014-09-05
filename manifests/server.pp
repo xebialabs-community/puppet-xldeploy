@@ -64,6 +64,7 @@ class xldeploy::server (
   $datastore_databasetype            = $xldeploy::params::datastore_databasetype,
   $datastore_schema                  = $xldeploy::params::datastore_schema,
   $datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
+  $datastore_jdbc_driver_url         = $xldeploy::params::datastore_jdbc_driver_url,
   $gem_use_local                     = $xldeploy::params::gem_use_local,
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
