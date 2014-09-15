@@ -32,7 +32,7 @@ class xldeploy::server::repository(
   }
   } else {
     if $datastore_jdbc_driver_url != undef {
-      xldeploy_repo_driver_netinstall{$datastore_jdbxc_driver_url:
+      xldeploy_repo_driver_netinstall{$datastore_jdbc_driver_url:
         ensure    => present,
         proxy_url => $download_proxy_url,
         lib_dir   => "${server_home_dir}/lib",
