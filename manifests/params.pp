@@ -30,7 +30,7 @@ class xldeploy::params {
   $enable_housekeeping        = true
   $java_home                  = '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64'
   $install_java               = false
-
+  $disable_firewall           = true
 
   #security settings
   $xldeploy_authentication_providers = {'rememberMeAuthenticationProvider' => 'com.xebialabs.deployit.security.authentication.RememberMeAuthenticationProvider',
@@ -57,11 +57,12 @@ class xldeploy::params {
   $datastore_databasetype            = undef
   $datastore_schema                  = undef
   $datastore_persistencemanagerclass = undef
+  $datastore_jdbc_driver_url         = undef
 
 
   # installation related params
   $install_type                 = 'download'
-  $puppetfiles_xldeploy_source  = 'modules/xldeploy/sources'
+  $puppetfiles_xldeploy_source  = 'puppet:///modules/xldeploy/sources'
   $download_user                = undef
   $download_password            = undef
   $download_proxy_url           = undef

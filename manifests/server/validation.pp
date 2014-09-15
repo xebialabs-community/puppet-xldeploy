@@ -50,6 +50,7 @@ class xldeploy::server::validation (
   validate_bool(str2bool($xldeploy::server::enable_housekeeping))
   validate_bool(str2bool($xldeploy::server::install_java))
   validate_bool(str2bool($xldeploy::server::client_propagate_key))
+  validate_bool(str2bool($xldeploy::server::disable_firewall))
 
   # hash validation
   validate_hash($xldeploy::server::cis)

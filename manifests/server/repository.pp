@@ -13,7 +13,9 @@ class xldeploy::server::repository(
   $datastore_password                = $xldeploy::server::datastore_password,
   $datastore_databasetype            = $xldeploy::server::datastore_databasetype,
   $datastore_schema                  = $xldeploy::server::datastore_schema,
-  $datastore_persistencemanagerclass = $xldeploy::server::datastore_persistencemanagerclass
+  $datastore_persistencemanagerclass = $xldeploy::server::datastore_persistencemanagerclass,
+  $datastore_jdbc_driver_url         = $xldeploy::server::datastore_jdbc_driver_url,
+  $download_proxy_url                = $xldeploy::server::download_proxy_url,
 ){
   # Resource defaults
   File {
@@ -29,6 +31,15 @@ class xldeploy::server::repository(
       content => template('xldeploy/repository/jackrabbit-repository-standalone.xml.erb')
   }
   } else {
+    if $datastore_jdbc_driver_url != undef {
+      xldeploy_repo_driver_netinstall{$datastore_jdbxc_driver_url:
+        ensure    => present,
+        proxy_url => $download_proxy_url,
+        lib_dir   => "${server_home_dir}/lib",
+        owner     => $os_user,
+        group     => $os_group,
+        }
+    }
     file { "${server_home_dir}/conf/jackrabbit-repository.xml":
       content => template('xldeploy/repository/jackrabbit-repository-database.xml.erb')
   }

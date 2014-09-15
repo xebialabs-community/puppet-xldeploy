@@ -7,7 +7,9 @@ class xldeploy::server::housekeeping (
   $server_home_dir = $xldeploy::server::server_home_dir,
   $cli_home_dir    = $xldeploy::server::cli_home_dir,
   $http_port       = $xldeploy::server::http_port,
-  $admin_password  = $xldeploy::server::admin_password) {
+  $admin_password  = $xldeploy::server::admin_password,
+  $java_home       = $xldeploy::server::java_home,
+) {
 
   file { "${server_home_dir}/scripts/xldeploy-housekeeping.sh":
     ensure  => present,
