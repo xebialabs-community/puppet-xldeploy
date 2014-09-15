@@ -1,0 +1,137 @@
+#!/bin/bash
+#
+# <%= @productname %>  Start/Stop the <%= @productname %> daemon.
+#
+# chkconfig: 2345 50 80
+# description: Runs <%= @productname %>
+#
+# Date: 07-02-2012 Version 1.0
+#
+# processname: <%= @productname %>
+# config: <%= @server_dir %>/conf/deployit.conf
+# pidfile: /var/run/<%= @productname %>.pid
+#
+
+. /etc/init.d/functions
+
+RUNNINGUSER="<%= @os_user %>"
+PROG="jetty"
+PIDFILE="/var/run/<%= @productname %>.pid"
+DEPLOYIT_HOME="<%= @server_home_dir %>"
+JAVA_HOME="<%= @java_home %>"
+
+PID=$(ps -fu $RUNNINGUSER | grep $PROG | awk '{print $2}')
+if [ "$PID" != "" ]
+then
+  echo $PID >$PIDFILE
+fi
+
+status -p $PIDFILE $PROG &> /dev/null
+P_STATUS=$?
+
+case "$P_STATUS" in
+  # process is running, business as usual...
+  0)
+    A_STATUS=0
+    ;;
+  # process is not running, but pidfile exists...
+  1)
+    rm -f $PIDFILE
+    A_STATUS=1
+    ;;
+  # process is not running, no pidfile exists...
+  3)
+    A_STATUS=3
+    ;;
+esac
+
+# See how we were called.
+start() {
+  echo -n $"Starting $PROG: "
+  if [ $A_STATUS -eq 0 -o $A_STATUS -eq 2 ] 
+  then 
+    echo -n "$PROG already running"  
+    failure "$PROG already running"  
+    echo
+    exit 1
+  else
+	/bin/su - $RUNNINGUSER -c 'export JAVA_HOME=<%= @java_home %>;/bin/sh <%= @server_home_dir %>/bin/server.sh 2>&1 &' > /dev/null 2>&1  
+	sleep 3
+	PID=$(ps -fu $RUNNINGUSER | grep $PROG | awk '{print $2}')
+    if [ "$PID" != "" ]
+    then
+      echo ${PID} >$PIDFILE 
+      echo -n "$PROG started"
+      success "$PROG started"
+      echo
+    else        
+      echo -n "see $PROG log for more info"
+      failure "see $PROG log for more info"
+      echo  
+      return 1
+    fi
+  fi
+}
+
+stop() {
+  echo -n "Stopping $PROG: "
+  if [ $A_STATUS -eq 0 -o $A_STATUS -eq 2 ] 
+  then
+    kill -15 $(cat $PIDFILE)
+    count=60
+    sleep 0.2
+
+    while [ "$(ps -fu $RUNNINGUSER | grep $PROG | awk '{print $2}')" != "" -a $count -ne 0 ]
+    do
+      sleep 1
+      echo -n "."
+      count=$((count - 1))
+    done    
+
+    echo
+    if [ $count -eq 0 ]
+    then
+      echo "Sending QUIT to $PROG" >&2
+      kill -9 $(cat $PIDFILE)
+    fi
+
+    rm -f $PIDFILE
+    echo -n "$PROG stopped"
+    success "$PROG stopped"
+    A_STATUS=3
+    echo
+    return 0
+  else
+    echo -n "$PROG is not running."
+    failure "$PROG is not running."
+    echo
+    return 1
+  fi
+}
+
+rhstatus() {
+  status -p $PIDFILE $PROG
+}
+
+restart() {
+  stop
+  start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  status)
+    rhstatus
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart}"
+    exit 1
+esac

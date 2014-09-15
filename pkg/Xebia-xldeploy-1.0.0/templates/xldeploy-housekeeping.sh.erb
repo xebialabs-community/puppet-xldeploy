@@ -1,0 +1,21 @@
+#!/bin/sh
+
+export JAVA_HOME=/kvk/jdk1.6.0_27
+
+logfile=<%= @cli_home_dir %>/logs/xldeploy-housekeeping.log
+timestamp=`date`
+
+echo "XlDeploy housekeeping [${timestamp}]" >> ${logfile}
+
+reposize_old=`du -h --max-depth 1 <%= @server_home_dir %> | grep repository | cut -f1`
+echo "Current repository size: ${reposize_old}" >> ${logfile}
+
+sh <%= @cli_home_dir %>/bin/cli.sh \
+  -host <%= @fqdn %> \
+  -port <%= @http_port %> \
+  -username admin \
+  -password <%= @admin_password %> \
+  -f <%= @server_home_dir %>/scripts/housekeeping.py
+
+reposize_new=`du -h --max-depth 1 <%= @server_home_dir %> | grep repository | cut -f1`
+echo "New repository size    : ${reposize_new}" >> ${logfile}
