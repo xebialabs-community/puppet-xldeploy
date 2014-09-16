@@ -1,5 +1,11 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
+if ENV.key?('PUPPET_VERSION')
+   puppetversion = "= #{ENV['PUPPET_VERSION']}"
+else
+   puppetversion = ['>= 3.4']
+end
+
 
 gem 'xml-simple'
 gem 'rest_client'
@@ -18,6 +24,6 @@ gem 'rest_client'
   gem 'beaker',  		 :require => false
   gem 'beaker-rspec', 		 :require => false
   gem 'vagrant-wrapper',         :require => false
-  gem 'puppet',         :require => false
+  gem 'puppet', puppetversion, :require => false
 #end
 
