@@ -124,6 +124,7 @@ Puppet::Type.type(:xldeploy_plugin_netinstall).provide(:curl)  do
   def set_proxy_url
     unless resource[:proxy_url].nil?
       ENV['http_proxy'] = resource[:proxy_url]
+      ENV['https_proxy'] = resource[:proxy_url]
     end
   end
 
