@@ -1,6 +1,6 @@
-name 'XebiaLabs-xldeploy'
+name 'xebialabs-xldeploy'
 version '1.0.0'
-author 'XebiaLabs'
+author 'xebialabs'
 license 'Apache V2.0'
 project_page 'https://github.com/xebialabs/xebia-deployit.git'
 source 'https://github.com/xebialabs/xebia-deployit.git'
