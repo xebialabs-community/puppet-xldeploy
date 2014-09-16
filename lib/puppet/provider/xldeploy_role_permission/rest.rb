@@ -1,4 +1,5 @@
 require 'uri'
+require_relative '../rest_provider.rb'
 
 Puppet::Type.type(:xldeploy_role_permission).provide :rest, :parent => Puppet::Provider::XLDeployRestProvider do
 

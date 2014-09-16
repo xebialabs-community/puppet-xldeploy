@@ -1,3 +1,5 @@
+require_relative '../rest_provider.rb'
+
 Puppet::Type.type(:xldeploy_user).provide :rest, :parent => Puppet::Provider::XLDeployRestProvider do
 
   confine :feature => :restclient
