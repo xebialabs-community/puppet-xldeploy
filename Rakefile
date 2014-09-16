@@ -29,5 +29,7 @@ task :test => [
   :spec
 ]
 
+task :default => [:spec, :lint]
+
 
 
