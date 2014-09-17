@@ -41,7 +41,7 @@ describe 'xldeploy::server::install' do
                    :server_plugins              => { }
     }}
 
-    it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-server.zip')}
+    it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('modules/deployit/sources/deployit-3.9.4-server.zip')}
     it {should contain_file('/opt/deployit').with_ensure('directory')}
     it {should contain_file('/opt/deployit/deployit-server').with_ensure('link')}
     it {should contain_exec('unpack server file').with({
@@ -83,12 +83,12 @@ describe 'xldeploy::server::install' do
                    :download_server_url         => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
-                   :license_source              => 'puppet:///modules/deployit/file/deployit-license.lic',
+                   :license_source              => 'modules/deployit/file/deployit-license.lic',
                    :productname                 => 'deployit',
                    :server_plugins              => { }
     }}
 
-    it {should contain_file('/opt/deployit/deployit-server/conf/deployit-license.lic').with_source('puppet:///modules/deployit/file/deployit-license.lic')}
+    it {should contain_file('/opt/deployit/deployit-server/conf/deployit-license.lic').with_source('modules/deployit/file/deployit-license.lic')}
   end
   context 'with install_license set to true and url given' do
     let(:params) {{:version                     => '4.0.1',
