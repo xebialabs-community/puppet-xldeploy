@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # TODO: check template content ..
 
-describe 'xldeploy::repository' do
+describe 'xldeploy::server::repository' do
   let(:facts) { {:osfamily       => 'RedHat',
                  :concat_basedir => '/var/tmp'} }
   context 'with repository_type set to standalone' do
