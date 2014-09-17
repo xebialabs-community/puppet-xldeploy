@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'xldeploy::install_sshkey' do
+describe 'xldeploy::server::install_sshkey' do
 
   let(:facts) {{ :osfamily => 'RedHat',
                  :concat_basedir => '/var/tmp' }}
