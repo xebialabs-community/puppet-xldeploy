@@ -9,7 +9,6 @@ describe 'xldeploy::client' do
 
     it { should contain_anchor('xldeploy::client::begin') }
     it { should contain_class('xldeploy::client::user') }
-    it { should contain_class('xldeploy::client::gems') }
     it { should contain_class('xldeploy::client::config')}
     it { should contain_anchor('xldeploy::client::end') }
   end
