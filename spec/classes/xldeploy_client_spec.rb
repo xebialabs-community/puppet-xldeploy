@@ -5,10 +5,11 @@ describe 'xldeploy::client' do
                  :concat_basedir => '/var/tmp' }}
 
   context 'xldeploy class wit server set to false' do
-    let(:params) {{ :server => 'false'}}
+    let(:params) {{ }}
 
     it { should contain_anchor('xldeploy::client::begin') }
     it { should contain_class('xldeploy::client::user') }
+    it { should contain_class('xldeploy::client::gems') }
     it { should contain_class('xldeploy::client::config')}
     it { should contain_anchor('xldeploy::client::end') }
   end
