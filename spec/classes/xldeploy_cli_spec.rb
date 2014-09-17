@@ -9,7 +9,7 @@ describe 'xldeploy::cli' do
 
     it { should contain_anchor('xldeploy::cli::begin') }
     it { should contain_class('xldeploy::cli::install') }
-    it { should contain_class('xldeploy::cli::end') }
+    it { should contain_anchor('xldeploy::cli::end') }
   end
 
 end #describe xldeploy
