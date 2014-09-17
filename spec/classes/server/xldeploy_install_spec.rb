@@ -13,7 +13,6 @@ describe 'xldeploy::server::install' do
                       :os_group                    => 'deployit',
                       :install_type                => 'puppetfiles',
                       :server_home_dir             => '/opt/deployit/deployit-server',
-                      :cli_home_dir                => '/opt/deployit/deployit-cli',
                       :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                       :productname                 => 'deployit',
                       :server_plugins              => { }
@@ -25,7 +24,6 @@ describe 'xldeploy::server::install' do
       it {should contain_file('/etc/deployit').with_ensure('link').with_target('/opt/deployit/deployit-3.9.4-server/conf')}
       it {should contain_file('/etc/init.d/deployit').with_owner('root').with_group('root').with_mode('0700')}
       it {should contain_file('/opt/deployit/deployit-server').with_owner('deployit').with_group('deployit').with_ensure('link').with_target('/opt/deployit/deployit-3.9.4-server')}
-      it {should contain_file('/opt/deployit/deployit-cli').with_owner('deployit').with_group('deployit').with_ensure('link').with_target('/opt/deployit/deployit-3.9.4-cli')}
       it {should contain_file('/opt/deployit/deployit-server/scripts').with_owner('deployit').with_group('deployit').with_ensure('directory')}
 
     end
@@ -38,26 +36,17 @@ describe 'xldeploy::server::install' do
                    :os_group                    => 'deployit',
                    :install_type                => 'puppetfiles',
                    :server_home_dir             => '/opt/deployit/deployit-server',
-                   :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :productname                 => 'deployit',
                    :server_plugins              => { }
     }}
 
     it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-server.zip')}
-    it {should contain_file('/var/tmp/deployit-3.9.4-cli.zip').with_source('puppet:///modules/deployit/sources/deployit-3.9.4-cli.zip')}
     it {should contain_file('/opt/deployit').with_ensure('directory')}
     it {should contain_file('/opt/deployit/deployit-server').with_ensure('link')}
-    it {should contain_file('/opt/deployit/deployit-cli').with_ensure('link')}
     it {should contain_exec('unpack server file').with({
                     :command => '/usr/bin/unzip /var/tmp/deployit-3.9.4-server.zip;/bin/cp -rp /var/tmp/deployit-3.9.4-server/* /opt/deployit/deployit-3.9.4-server',
                     :creates => '/opt/deployit/deployit-3.9.4-server/bin',
-                    :cwd     => '/var/tmp',
-                    :user    => 'deployit'
-            }) }
-    it {should contain_exec('unpack cli file').with({
-                    :command => '/usr/bin/unzip /var/tmp/deployit-3.9.4-cli.zip;/bin/cp -rp /var/tmp/deployit-3.9.4-cli/* /opt/deployit/deployit-3.9.4-cli',
-                    :creates => '/opt/deployit/deployit-3.9.4-cli/bin',
                     :cwd     => '/var/tmp',
                     :user    => 'deployit'
             }) }
@@ -73,16 +62,13 @@ describe 'xldeploy::server::install' do
                    :download_user               => 'download',
                    :download_password           => 'download',
                    :server_home_dir             => '/opt/deployit/deployit-server',
-                   :download_cli_url            => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip',
                    :download_server_url         => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip',
-                   :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :productname                 => 'deployit',
                    :server_plugins              => { }
     }}
 
     it {should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip')}
-    it {should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip')}
   end
   context 'with install_license set to true and puppet file given' do
     let(:params) {{:version                     => '3.9.4',
@@ -94,9 +80,7 @@ describe 'xldeploy::server::install' do
                    :download_user               => 'download',
                    :download_password           => 'download',
                    :server_home_dir             => '/opt/deployit/deployit-server',
-                   :download_cli_url            => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip',
                    :download_server_url         => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip',
-                   :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
                    :license_source              => 'puppet:///modules/deployit/file/deployit-license.lic',
@@ -116,9 +100,7 @@ describe 'xldeploy::server::install' do
                    :download_user               => 'download',
                    :download_password           => 'download',
                    :server_home_dir             => '/opt/deployit/deployit-server',
-                   :download_cli_url            => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-cli.zip',
                    :download_server_url         => 'https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip',
-                   :cli_home_dir                => '/opt/deployit/deployit-cli',
                    :puppetfiles_xldeploy_source => 'modules/deployit/sources',
                    :install_license             => 'true',
                    :license_source              => 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic',
