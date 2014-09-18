@@ -18,6 +18,7 @@ class xldeploy::server::config (
   $java_home                         = $xldeploy::server::java_home,
   $rest_url                          = $xldeploy::server::rest_url,
   $xldeploy_default_settings         = $xldeploy::server::xldeploy_default_settings,
+  $xldeploy_init_repo                = $xldeploy::server::xldeploy_init_repo,
 ) {
 
 
@@ -113,14 +114,21 @@ class xldeploy::server::config (
       value   => $importable_packages_path;
   }
 
-  exec { 'init xldeploy':
-    creates     => "${server_home_dir}/${jcr_repository_path}",
-    command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
-    user        => $os_user,
-    environment => ["JAVA_HOME=${java_home}"]
+  if str2bool($xldeploy_init_repo) {
+    exec { 'init xldeploy':
+      creates     => "${server_home_dir}/${jcr_repository_path}",
+      command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
+      user        => $os_user,
+      environment => ["JAVA_HOME=${java_home}"]
+    }
+  } else {
+    exec { 'init xldeploy':
+      creates     => "${server_home_dir}/${jcr_repository_path}",
+      command     => "${server_home_dir}/bin/server.sh -setup -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
+      user        => $os_user,
+      environment => ["JAVA_HOME=${java_home}"]
+    }
   }
-
-
 
   create_resources('xldeploy::resources::defaultsetting', $xldeploy_default_settings)
 
