@@ -22,6 +22,7 @@ describe 'xldeploy::server::config' do
         :importable_packages_path => 'importablePackages',
         :java_home => '/usr/lib/jvm/jre-1.6.0-openjdk.x86_64',
         :rest_url => 'http://localhost:4516/xldeploy',
+        :xldeploy_init_repo => 'true',
         :xldeploy_default_settings => {}
     } }
     it { should contain_file('/opt/xl-deploy/xl-deploy-4.0.1-server/conf/deployit.conf').with({
