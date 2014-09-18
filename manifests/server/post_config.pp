@@ -21,8 +21,9 @@ class xldeploy::server::post_config (
 
   # Check connection
   xldeploy_check_connection{'default':
-    host => $http_server_address,
-    port => $http_port
+    host    => $http_server_address,
+    port    => $http_port,
+    timeout => 60,
   }
 
   # config stuff in xldeploy
