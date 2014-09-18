@@ -28,11 +28,11 @@ define xldeploy::client::config_ci(
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent
   if str2bool($use_exported_resources) {
     @@xldeploy::client::exported_ci{"${::hostname}_${name}":
-      type                 => $type,
-      properties           => $properties,
-      rest_url             => $rest_url,
-      discovery            => $discovery,
-      discovery_max_wait   => $discovery_max_wait
+      type               => $type,
+      properties         => $properties,
+      rest_url           => $rest_url,
+      discovery          => $discovery,
+      discovery_max_wait => $discovery_max_wait
     }
 
   }else{

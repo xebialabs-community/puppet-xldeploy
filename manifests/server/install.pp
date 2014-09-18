@@ -87,13 +87,13 @@ class xldeploy::server::install (
       Anchor['server::install']
 
       -> xldeploy_netinstall{$download_server_url:
-          owner           => $os_user,
-          group           => $os_group,
-          user            => $download_user,
-          password        => $download_password,
-          destinationdir  => $base_dir,
-          proxy_url       => $download_proxy_url
-         }
+          owner          => $os_user,
+          group          => $os_group,
+          user           => $download_user,
+          password       => $download_password,
+          destinationdir => $base_dir,
+          proxy_url      => $download_proxy_url
+        }
 
       -> Anchor['server::postinstall']
     }
@@ -159,10 +159,10 @@ class xldeploy::server::install (
                   File[$server_home_dir]
 
                   -> file{"${server_home_dir}/conf/deployit-license.lic":
-                      owner           => $os_user,
-                      group           => $os_group,
-                      source          => $license_source,
-                      }
+                      owner  => $os_user,
+                      group  => $os_group,
+                      source => $license_source,
+                    }
                   -> Anchor['server::installend']
             }
       }

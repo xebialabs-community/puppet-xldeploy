@@ -32,7 +32,7 @@ class xldeploy::shared_prereq(
     gid        => $os_group,
     managehome => false,
     home       => $os_user_home
-   }
+  }
 
   # base dir
 

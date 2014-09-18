@@ -25,11 +25,11 @@ define xldeploy::client::exported_members(
 
   if !defined(Xldeploy_environment_member[$name]) {
     xldeploy_environment_member{$name:
-      ensure             => present,
-      env                => $env,
-      members            => $members,
-      dictionaries       => $dictionaries,
-      rest_url           => $rest_url
+      ensure       => present,
+      env          => $env,
+      members      => $members,
+      dictionaries => $dictionaries,
+      rest_url     => $rest_url
     }
   }
 }

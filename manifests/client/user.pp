@@ -30,10 +30,10 @@ class xldeploy::client::user(
   }
 
   user{$os_user:
-    ensure      => present,
-    gid         => $os_group ,
-    managehome  => true,
-    password    => md5pass($client_user_password,$client_user_password_salt)
+    ensure     => present,
+    gid        => $os_group ,
+    managehome => true,
+    password   => md5pass($client_user_password,$client_user_password_salt)
   }
 
   if str2bool($client_sudo) {

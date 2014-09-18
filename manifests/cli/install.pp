@@ -64,13 +64,13 @@ class xldeploy::cli::install (
       Anchor['cli::install']
 
       -> xldeploy_netinstall{$download_cli_url:
-          owner           => $os_user,
-          group           => $os_group,
-          user            => $download_user,
-          password        => $download_password,
-          destinationdir  => $base_dir,
-          proxy_url       => $download_proxy_url
-         }
+          owner          => $os_user,
+          group          => $os_group,
+          user           => $download_user,
+          password       => $download_password,
+          destinationdir => $base_dir,
+          proxy_url      => $download_proxy_url
+        }
 
       -> Anchor['cli::postinstall']
     }

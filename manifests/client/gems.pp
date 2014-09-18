@@ -1,3 +1,16 @@
+# == Class: xldeploy::client::gems
+#
+# === Examples
+#
+#
+#
+# === Parameters
+#
+#
+# === Copyright
+#
+# Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
+#
 class xldeploy::client::gems (
   $gem_hash      = $xldeploy::client::gem_hash,
   $gem_array     = $xldeploy::client::gem_array,

@@ -24,9 +24,9 @@ define xldeploy::client::exported_dictionary_entry(
 
   if !defined(Xldeploy_dictionary_entry[$dict_id[1]]) {
     xldeploy_dictionary_entry{$dict_id[1]:
-      ensure             => present,
-      value              => $value,
-      rest_url           => $rest_url
+      ensure   => present,
+      value    => $value,
+      rest_url => $rest_url
     }
   }
 }

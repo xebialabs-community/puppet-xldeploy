@@ -27,10 +27,10 @@ define xldeploy::client::exported_role(
 
   if !defined(Xldeploy_role[$role_name[1]]) {
     xldeploy_role{$role_name[1]:
-      ensure               => present,
-      granted_permissions  => $granted_permissions,
-      users                => $users,
-      rest_url             => $rest_url
+      ensure              => present,
+      granted_permissions => $granted_permissions,
+      users               => $users,
+      rest_url            => $rest_url
     }
   }
 }

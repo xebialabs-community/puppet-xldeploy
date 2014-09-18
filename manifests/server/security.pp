@@ -36,24 +36,24 @@ class xldeploy::server::security(
     }
 
   concat::fragment{'security_header':
-    ensure   => present,
-    target   => $security_config_file,
-    content  => template('xldeploy/security/security-header.xml.erb'),
-    order    => '10',
+    ensure  => present,
+    target  => $security_config_file,
+    content => template('xldeploy/security/security-header.xml.erb'),
+    order   => '10',
   }
   concat::fragment{'security_footer':
-    ensure   => present,
-    target   => $security_config_file,
-    content  => template('xldeploy/security/security-footer.xml.erb'),
-    order    => '90',
+    ensure  => present,
+    target  => $security_config_file,
+    content => template('xldeploy/security/security-footer.xml.erb'),
+    order   => '90',
   }
 
   if $xldeploy_authentication_providers {
     concat::fragment{'security_beans':
-      ensure   => present,
-      target   => $security_config_file,
-      content  => template('xldeploy/security/security-beans.xml.erb'),
-      order    => '20',
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-beans.xml.erb'),
+      order   => '20',
     }
   }
 

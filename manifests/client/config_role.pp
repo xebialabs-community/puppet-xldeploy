@@ -27,16 +27,16 @@ define xldeploy::client::config_role(
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent
   if str2bool($use_exported_resources) {
     @@xldeploy::client::exported_role{"${::hostname}_${id}":
-      granted_permissions  => $granted_permissions,
-      users                => $users,
-      rest_url             => $rest_url
+      granted_permissions => $granted_permissions,
+      users               => $users,
+      rest_url            => $rest_url
     }
 
   }else{
     xldeploy_role{ $id:
-      ensure               => $ensure,
-      granted_permissions  => $granted_permissions,
-      users                => $users,
-      rest_url             => $rest_url }
+      ensure              => $ensure,
+      granted_permissions => $granted_permissions,
+      users               => $users,
+      rest_url            => $rest_url }
     }
 }

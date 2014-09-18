@@ -26,15 +26,15 @@ define xldeploy::client::config_dictionary_entry(
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent
   if str2bool($use_exported_resources) {
     @@xldeploy::client::exported_dictionary_entry{"${::hostname}_${key}":
-      value                => $value,
-      rest_url             => $rest_url
+      value    => $value,
+      rest_url => $rest_url
     }
 
   }else{
     xldeploy_dictionary_entry{ $key:
-      ensure             => $ensure,
-      value              => $value,
-      rest_url           => $rest_url
+      ensure   => $ensure,
+      value    => $value,
+      rest_url => $rest_url
     }
   }
 }

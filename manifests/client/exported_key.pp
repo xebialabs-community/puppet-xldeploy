@@ -26,11 +26,11 @@ define xldeploy::client::exported_key(
 
   if !defined(File["${key_path}/${name}"]){
     file{"${key_path}/${name}":
-      ensure             => present,
-      content            => get_xldeploy_key('private', $key_tag),
-      mode               => '0600',
-      owner              => $os_user,
-      group              => $os_group
+      ensure  => present,
+      content => get_xldeploy_key('private', $key_tag),
+      mode    => '0600',
+      owner   => $os_user,
+      group   => $os_group
     }
   }
 }
