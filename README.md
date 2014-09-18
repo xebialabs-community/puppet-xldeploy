@@ -3,17 +3,25 @@ puppet-xldeploy
 
 ####Table of Contents
 
-1. [Overview](#overview)
+1. [License](#license)
 
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with puppet-xldeploy](#setup)
+2. [Overview](#overview)
+
+3. [Module Description - What the module does and why it is useful](#module-description)
+4. [Setup - The basics of getting started with puppet-xldeploy](#setup)
     * [What puppet-xldeploy affects](#what-puppet-xldeploy-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with puppet-xldeploy](#beginning-with-puppet-xldeploy)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+5. [Usage - Configuration options and additional functionality](#usage)
+6. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+7. [Limitations - OS compatibility, etc.](#limitations)
+8. [Development - Guide for contributing to the module](#development)
+
+license
+-------
+THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS 
+FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 
 overview
 --------
