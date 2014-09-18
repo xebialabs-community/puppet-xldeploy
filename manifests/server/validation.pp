@@ -73,7 +73,7 @@ class xldeploy::server::validation (
     'download'    : {
     }
     default       : {
-      fail("unsupported install_type parameter ${xldeploy::server::install_type} specified, should be one of: [puppetfiles, packages]")
+      fail("unsupported install_type parameter ${xldeploy::server::install_type} specified, should be one of: [puppetfiles, download]")
     }
   }
 

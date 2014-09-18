@@ -25,11 +25,11 @@ FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALA
 
 overview
 --------
-The Xldeploy module enables you to install and manage large XL Deploy enabled infrastructures.
+The xldeploy module enables you to install and manage large XL Deploy enabled infrastructures.
 
 module-description
 ------------------
-XL Deploy is a kick-ass modular platform independant software deployment system. This module enables you to tie this deployment software into your puppet environment. It can take care of installing XL Deploy servers as well as integrate middleware components eslewhere in your infrastructure.
+XL Deploy is a kick-ass modular platform independant software deployment system. This module enables you to tie this deployment software into your puppet environment. It can take care of installing XL Deploy servers as well as integrate middleware components elsewhere in your infrastructure.
 
 setup
 -----
@@ -62,9 +62,9 @@ For a more comprehensive setup
     class{xldeploy::server:
         install_java                => true,
         install_license             => true,
-        install_type                => 'netinstall'
+        install_type                => 'download',
         download_user               => 'foobar',
-        download_password           => 'notapassword'
+        download_password           => 'notapassword',
         download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
      }
 
@@ -72,9 +72,9 @@ Installing the cli
 
     class{xldeploy::cli:
             install_java                => true,
-            install_type                => 'netinstall'
+            install_type                => 'netinstall',
             download_user               => 'foobar',
-            download_password           => 'notapassword'
+            download_password           => 'notapassword',
             download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
      }
 

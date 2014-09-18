@@ -3,7 +3,7 @@
 # Default parameters for xldeploy
 #
 class xldeploy::params {
-  $version         = '4.0.1'
+  $version         = '4.5.0'
   $tmp_dir         = '/var/tmp'
   $server          = true
   $os_user         = 'xldeploy'
