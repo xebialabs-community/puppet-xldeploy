@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'xldeploy::post_config' do
+describe 'xldeploy::server::post_config' do
 
   context 'with default parameters' do
     let(:facts) { {:osfamily => 'RedHat',

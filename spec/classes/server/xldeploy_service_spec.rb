@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'xldeploy::service' do
+describe 'xldeploy::server::service' do
   let(:facts) { {:osfamily       => 'RedHat',
                  :concat_basedir => '/var/tmp'}}
 

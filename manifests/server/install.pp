@@ -9,13 +9,11 @@ class xldeploy::server::install (
   $os_group                    = $xldeploy::server::os_group,
   $install_type                = $xldeploy::server::install_type,
   $server_home_dir             = $xldeploy::server::server_home_dir,
-  $cli_home_dir                = $xldeploy::server::cli_home_dir,
   $puppetfiles_xldeploy_source = $xldeploy::server::puppetfiles_xldeploy_source,
   $download_user               = $xldeploy::server::download_user,
   $download_password           = $xldeploy::server::download_password,
   $download_proxy_url          = $xldeploy::server::download_proxy_url,
   $download_server_url         = $xldeploy::server::download_server_url,
-  $download_cli_url            = $xldeploy::server::download_cli_url,
   $install_license             = $xldeploy::server::install_license,
   $license_source              = $xldeploy::server::license_source,
   $productname                 = $xldeploy::server::productname,
@@ -28,7 +26,6 @@ class xldeploy::server::install (
   # Variables
 
   $server_install_dir   = "${base_dir}/${productname}-${version}-server"
-  $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
 
   # Flow controll
 
