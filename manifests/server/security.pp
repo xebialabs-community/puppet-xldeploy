@@ -6,6 +6,7 @@
 #
 class xldeploy::server::security(
   $server_home_dir                   = $xldeploy::server::server_home_dir,
+  $version                           = $xldeploy::server::version,
   $os_user                           = $xldeploy::server::os_user,
   $os_group                          = $xldeploy::server::os_group,
   $ldap_server_id                    = $xldeploy::server::ldap_server_id,
@@ -35,12 +36,25 @@ class xldeploy::server::security(
     mode   => '0640'
     }
 
-  concat::fragment{'security_header':
-    ensure  => present,
-    target  => $security_config_file,
-    content => template('xldeploy/security/security-header.xml.erb'),
-    order   => '10',
+ #if where dealing with a 4.x release the header of the deployit-securtity file is different
+ # issuenr: 16
+ 
+ if versioncmp($version , '3.9.90') > 0 {
+    concat::fragment{'security_header':
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-header-pre4.xml.erb'),
+      order   => '10',
+    }
+  } else {
+    concat::fragment{'security_header':
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-header-post4.xml.erb'),
+      order   => '10',
+    }
   }
+
   concat::fragment{'security_footer':
     ensure  => present,
     target  => $security_config_file,
