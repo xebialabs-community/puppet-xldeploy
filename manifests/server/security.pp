@@ -36,10 +36,10 @@ class xldeploy::server::security(
     mode   => '0640'
     }
 
- #if where dealing with a 4.x release the header of the deployit-securtity file is different
- # issuenr: 16
- 
- if versioncmp($version , '3.9.90') < 0 {
+  #if where dealing with a 4.x release the header of the deployit-securtity file is different
+  # issuenr: 16
+
+  if versioncmp($version , '3.9.90') < 0 {
     concat::fragment{'security_header':
       ensure  => present,
       target  => $security_config_file,
