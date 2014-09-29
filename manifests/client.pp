@@ -22,6 +22,7 @@ class xldeploy::client (
   $http_port                         = $xldeploy::params::http_port,
   $http_context_root                 = $xldeploy::params::http_context_root,
   $http_server_address               = $xldeploy::params::http_server_address,
+  $ssl                               = $xldeploy::params::ssl,
   $admin_password                    = $xldeploy::params::admin_password,
   $client_sudo                       = $xldeploy::params::client_sudo,
   $client_user_password              = $xldeploy::params::client_user_password,
