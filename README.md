@@ -79,9 +79,9 @@ Installing the cli
      }
 
 
-* using the module to register a ci in with the xldeploy server
+using the module to register a ci in with the xldeploy server
 
-    all in one go:
+  all in one go:
 
     class{xldeploy::cli:
             http_context_root => '/xldeploy',
@@ -102,13 +102,14 @@ Installing the cli
                                      }
     }
 
-    using the modules types and providers
+  using the modules types and providers:
 
     xldeploy_ci{ '/Infrastructure/projectx':
           ensure             => present,
           type               => 'core.Directory',
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
+    
     xldeploy_ci{ "/Infrastructure/projectx/${hostname}_sshHost":
           ensure             => present,
           type               => 'overthere.SshHost',
@@ -119,4 +120,4 @@ Installing the cli
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 
-    This works not only for ci's but also for memberships,users, roles, dictionary_settings and role_permissions
+  Both class parameters and types and providers are available for defining memberships,users, roles, dictionary_settings and role_permissions wich work in the same way as the above specified method for defining a ci
