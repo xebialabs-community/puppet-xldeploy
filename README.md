@@ -78,3 +78,45 @@ Installing the cli
             download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
      }
 
+
+* using the module to register a ci in with the xldeploy server
+
+    all in one go:
+
+    class{xldeploy::cli:
+            http_context_root => '/xldeploy',
+            http_server_address => 'xldeploy.local.domain',
+            http_port           => '4516',
+            admin_password      => 'dummy',
+            ssl                 => 'false',
+            cis                 => { 'project_folder' => { name => "/Infrastructure/projectx",
+                                                           type => 'core.Directory',
+                                                           remove_when_expired => 'true'},
+                                     'host' => { name => "/Infrastructure/projectx/${hostname}_sshHost",
+                                                 type => 'overthere.SshHost',
+                                                 properties => { 'os' => 'UNIX',
+                                                                 'port' => '22',
+                                                                 'username' => 'deployit',
+                                                                 'tags' => 'projectx' }
+                                      }
+                                     }
+    }
+
+    using the modules types and providers
+
+    xldeploy_ci{ '/Infrastructure/projectx':
+          ensure             => present,
+          type               => 'core.Directory',
+          rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
+    }
+    xldeploy_ci{ "/Infrastructure/projectx/${hostname}_sshHost":
+          ensure             => present,
+          type               => 'overthere.SshHost',
+          properties         => { 'os' => 'UNIX',
+                                  'port' => '22',
+                                  'username' => 'deployit',
+                                  'tags' => 'projectx' },
+          rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
+    }
+
+    This works not only for ci's but also for memberships,users, roles, dictionary_settings and role_permissions
