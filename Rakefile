@@ -29,6 +29,11 @@ task :test => [
   :spec
 ]
 
+desc "Run integration specs"
+RSpec::Core::RakeTask.new('spec:integration') do |t|
+  t.pattern = 'spec/integration/*_spec.rb'
+end
+
 task :default => [:spec, :lint]
 
 

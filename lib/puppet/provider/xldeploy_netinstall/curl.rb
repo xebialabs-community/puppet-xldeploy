@@ -5,8 +5,7 @@ require "digest/md5"
 
 Puppet::Type.type(:xldeploy_netinstall).provide(:curl)  do
 
-
-
+  confine :osfamily => [:redhat,:debian]
 
   commands  :curl     => '/usr/bin/curl',
             :mktemp   => '/bin/mktemp',
