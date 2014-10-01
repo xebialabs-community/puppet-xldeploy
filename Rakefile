@@ -17,3 +17,9 @@ PuppetLint.configuration.send('disable_single_quote_string_with_variables')
 PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp"]
 
 
+desc "Run integration specs"
+RSpec::Core::RakeTask.new('spec:integration') do |t|
+  t.pattern = 'spec/integration/*_spec.rb'
+end
+
+task :default => [:spec, :lint]

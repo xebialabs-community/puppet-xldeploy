@@ -27,6 +27,5 @@ Puppet::Type.newtype :xldeploy_directory do
     [Pathname.new(self[:id]).dirname.to_s]
   end
 
-
 end
 

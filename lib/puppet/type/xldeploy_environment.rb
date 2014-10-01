@@ -70,7 +70,6 @@ Puppet::Type.newtype :xldeploy_environment do
     [Pathname.new(self[:id]).dirname.to_s]
   end
 
-
   ensurable do
     defaultvalues
     defaultto :present
