@@ -123,4 +123,97 @@ From a potential xldeploy client machine using the module to register a ci in wi
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 
-  Both class parameters and types and providers are available for defining memberships,users, roles, dictionary_settings and role_permissions wich work in the same way as the above specified method for defining a ci
+  Both class parameters and types and providers are available for defining memberships,users, roles, dictionary_settings and role_permissions wich work in the same way as the above specified method for defining a ci.
+  
+usage
+-----
+  
+  
+  
+**xldeploy::server**
+######version                          
+    specifies the version of xldeploy to install 
+    version numbers below 4.0 will install deployit
+######xldeploy_base_dir                 
+    specifies the base dir under wich xldeploy will be installed. 
+    default: /opt
+######xldeploy_init_repo 
+    Tells puppet to initialize the xldeploy repository upon first installation
+    default: true
+######tmp_dir 
+    Tells puppet wich temporary directory to use during installation. This directory will be used for downloading the installation packages
+    default: /var/tmp
+######os_user       
+    Specifies the default user for xldeploy to be installed under
+    this user will be created by puppet
+    default: pre_4 : deployit
+             post_4 : xldeploy
+######os_group            
+    Specifies the group xldeploy will be installed under
+    This group will be created by pupept
+    default: pre_4 : deployit
+             post_4 : xldeploy
+######import_ssh_key               
+    Tells puppet to use automagic to create and distribute an ssh key to all client systems for secure ssh communication
+    default : false
+######http_bind_address
+    the http address to bind the xldeploy server to 
+    default: 0.0.0.0 (xldeploy will listen on all interfaces) 
+######http_port                         = $xldeploy::params::http_port,
+######http_context_root                 = $xldeploy::params::http_context_root,
+######http_server_address               = $xldeploy::params::http_server_address,
+######admin_password                    = $xldeploy::params::admin_password,
+######jcr_repository_path               = $xldeploy::params::jcr_repository_path,
+######importable_packages_path          = $xldeploy::params::importable_packages_path,
+######client_sudo                       = $xldeploy::params::client_sudo,
+######client_user_password              = $xldeploy::params::client_user_password,
+######client_user_password_salt         = $xldeploy::params::client_user_password_salt,
+######install_type                      = $xldeploy::params::install_type,
+######puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
+######download_user                     = $xldeploy::params::download_user,
+######download_password                 = $xldeploy::params::download_password,
+######download_proxy_url                = $xldeploy::params::download_proxy_url,
+######use_exported_resources            = $xldeploy::params::use_exported_resources,
+######use_exported_keys                 = $xldeploy::params::use_exported_keys,
+######client_propagate_key              = $xldeploy::params::client_propagate_key,
+######java_home                         = $xldeploy::params::java_home,
+######install_java                      = $xldeploy::params::install_java,
+######install_license                   = $xldeploy::params::install_license,
+######license_source                    = $xldeploy::params::license_source,
+######enable_housekeeping               = $xldeploy::params::enable_housekeeping,
+######ldap_server_id                    = $xldeploy::params::ldap_server_id,
+######ldap_server_url                   = $xldeploy::params::ldap_server_url,
+######ldap_server_root                  = $xldeploy::params::ldap_server_root,
+######ldap_manager_dn                   = $xldeploy::params::ldap_manager_dn,
+######ldap_manager_password             = $xldeploy::params::ldap_manager_password,
+######ldap_user_search_filter           = $xldeploy::params::ldap_user_search_filter,
+######ldap_user_search_base             = $xldeploy::params::ldap_user_search_base,
+######ldap_group_search_filter          = $xldeploy::params::ldap_group_search_filter,
+######ldap_group_search_base            = $xldeploy::params::ldap_group_search_base,
+######ldap_role_prefix                  = $xldeploy::params::ldap_role_prefix,
+######xldeploy_authentication_providers = $xldeploy::params::xldeploy_authentication_providers,
+######repository_type                   = $xldeploy::params::repository_type,
+######datastore_driver                  = $xldeploy::params::datastore_driver,
+######datastore_url                     = $xldeploy::params::datastore_url,
+######datastore_user                    = $xldeploy::params::datastore_user,
+######datastore_password                = $xldeploy::params::datastore_password,
+######datastore_databasetype            = $xldeploy::params::datastore_databasetype,
+######datastore_schema                  = $xldeploy::params::datastore_schema,
+######datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
+######datastore_jdbc_driver_url         = $xldeploy::params::datastore_jdbc_driver_url,
+######gem_use_local                     = $xldeploy::params::gem_use_local,
+######gem_hash                          = $xldeploy::params::gem_hash,
+######gem_array                         = $xldeploy::params::gem_array,
+######disable_firewall                  = $xldeploy::params::disable_firewall,
+######custom_productname                = undef,
+######custom_download_server_url        = undef,
+######custom_download_cli_url           = undef,
+######server_plugins                    = { } ,
+######cis                               = { } ,
+######memberships                       = { } ,
+######users                             = { } ,
+######roles                             = { } ,
+######dictionary_settings               = { } ,
+######role_permissions                  = { } ,
+######xldeploy_default_settings         = { }
+ 
