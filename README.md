@@ -57,7 +57,7 @@ Basic usage when installing a xldeploy server
 
     class{xldeploy::server:}
 
-For a more comprehensive setup
+For a more comprehensive setup in wich a supported java version is installed and a xldeploy license file is included try the example below.
 
     class{xldeploy::server:
         install_java                => true,
@@ -68,7 +68,8 @@ For a more comprehensive setup
         download_proxy_url          => 'http://some:user@companyproxy.evil.empire:8080'
      }
 
-Installing the cli
+
+To install the command line interface (cli) software bundled with xldeploy use the seperate xldeploy::cli class like discribed below. 
 
     class{xldeploy::cli:
             install_java                => true,
@@ -79,11 +80,11 @@ Installing the cli
      }
 
 
-using the module to register a ci in with the xldeploy server
+From a potential xldeploy client machine using the module to register a ci in with the xldeploy server. 
 
   all in one go:
 
-    class{xldeploy::cli:
+    class{xldeploy::client:
             http_context_root => '/xldeploy',
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
@@ -101,8 +102,10 @@ using the module to register a ci in with the xldeploy server
                                       }
                                      }
     }
-
-  using the modules types and providers:
+  the above example uses the builtin create_resources construct to create the ci's specified in the array one by one. This construct is especially handy when used in conjunction with automatic data bindings from a Hiera backend.
+  
+  
+  Users are also able to create ci's using the module's types and providers:
 
     xldeploy_ci{ '/Infrastructure/projectx':
           ensure             => present,
