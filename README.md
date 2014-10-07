@@ -159,32 +159,56 @@ usage
 ######http_bind_address
     the http address to bind the xldeploy server to 
     default: 0.0.0.0 (xldeploy will listen on all interfaces) 
-######http_port                         = $xldeploy::params::http_port,
-######http_context_root                 = $xldeploy::params::http_context_root,
-######http_server_address               = $xldeploy::params::http_server_address,
-######admin_password                    = $xldeploy::params::admin_password,
-######jcr_repository_path               = $xldeploy::params::jcr_repository_path,
-######importable_packages_path          = $xldeploy::params::importable_packages_path,
-######client_sudo                       = $xldeploy::params::client_sudo,
-######client_user_password              = $xldeploy::params::client_user_password,
-######client_user_password_salt         = $xldeploy::params::client_user_password_salt,
-######install_type                      = $xldeploy::params::install_type,
-######puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
-######download_user                     = $xldeploy::params::download_user,
-######download_password                 = $xldeploy::params::download_password,
-######download_proxy_url                = $xldeploy::params::download_proxy_url,
-######use_exported_resources            = $xldeploy::params::use_exported_resources,
-######use_exported_keys                 = $xldeploy::params::use_exported_keys,
-######client_propagate_key              = $xldeploy::params::client_propagate_key,
-######java_home                         = $xldeploy::params::java_home,
-######install_java                      = $xldeploy::params::install_java,
-######install_license                   = $xldeploy::params::install_license,
-######license_source                    = $xldeploy::params::license_source,
-######enable_housekeeping               = $xldeploy::params::enable_housekeeping,
-######ldap_server_id                    = $xldeploy::params::ldap_server_id,
-######ldap_server_url                   = $xldeploy::params::ldap_server_url,
-######ldap_server_root                  = $xldeploy::params::ldap_server_root,
-######ldap_manager_dn                   = $xldeploy::params::ldap_manager_dn,
+######http_port   
+    the http port on wich xldeploy will listen for incoming traffic
+    default: 4516
+######http_context_root                
+    the http context root xldeploy will use for incoming web traffic(both gui and rest interface)
+    default: /deployit
+######http_server_address
+    the ipadress to contact the xldeploy server on (this is used in combination with the ci creation construct)
+    defaults to the fqdn of the current host
+######admin_password                   
+    the admin password to be used for xldeploy
+    default: admin
+######jcr_repository_path      
+    the relative path to put the jcr_repository
+    default: repository
+######importable_packages_path
+    the relative path to the importable packages directory
+    default: importablePackages
+######install_type        
+    the type of installation to use. Possible values: puppetfiles, download
+    default: download
+######puppetfiles_xldeploy_source
+    when install_type is set to puppetfiles this parameter should contain the path to the xldeploy tar.gz packages
+    default: undef
+######download_user    
+    a valid xldeploy download acount user
+    default: undef
+######download_password     
+    a valid xldeploy download account user password
+    default: undef
+######download_proxy_url    
+    optional proxy url (should contain user and password if needed) 
+    we've included this because we hate modules that download stuff for you and then completely forget that most company's do not allow direct internet access from the production network
+######use_exported_resources 
+    use exported resources to import the various exported ci and other resources to the xldeploy service 
+    default: false
+######use_exported_keys      
+    export a locally generated public key of a ssh key pair that can be used to import on client nodes to setup secure communication
+    default: false
+######client_propagate_key
+   
+######java_home              
+######install_java           
+######install_license        
+######license_source         
+######enable_housekeeping    
+######ldap_server_id         
+######ldap_server_url        
+######ldap_server_root             
+######ldap_manager_dn              
 ######ldap_manager_password             = $xldeploy::params::ldap_manager_password,
 ######ldap_user_search_filter           = $xldeploy::params::ldap_user_search_filter,
 ######ldap_user_search_base             = $xldeploy::params::ldap_user_search_base,
@@ -216,4 +240,29 @@ usage
 ######dictionary_settings               = { } ,
 ######role_permissions                  = { } ,
 ######xldeploy_default_settings         = { }
- 
+
+**xldeploy::client**
+
+######os_user                           = $xldeploy::params::os_user,
+######os_group                          = $xldeploy::params::os_group,
+######http_bind_address                 = $xldeploy::params::http_bind_address,
+######http_port                         = $xldeploy::params::http_port,
+######http_context_root                 = $xldeploy::params::http_context_root,
+######http_server_address               = $xldeploy::params::http_server_address,
+######ssl                               = $xldeploy::params::ssl,
+######admin_password                    = $xldeploy::params::admin_password,
+######client_sudo                       = $xldeploy::params::client_sudo,
+######client_user_password              = $xldeploy::params::client_user_password,
+######client_user_password_salt         = $xldeploy::params::client_user_password_salt,
+######use_exported_resources            = $xldeploy::params::use_exported_resources,
+######use_exported_keys                 = $xldeploy::params::use_exported_keys,
+######client_propagate_key              = $xldeploy::params::client_propagate_key,
+######gem_use_local                     = $xldeploy::params::gem_use_local,
+######gem_hash                          = $xldeploy::params::gem_hash,
+######gem_array                         = $xldeploy::params::gem_array,
+######cis                               = { } ,
+######memberships                       = { } ,
+######users                             = { } ,
+######roles                             = { } ,
+######dictionary_settings               = { } ,
+######role_permissions                  = { } ,

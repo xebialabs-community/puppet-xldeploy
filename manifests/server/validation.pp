@@ -20,8 +20,6 @@ class xldeploy::server::validation (
   validate_string($xldeploy::server::admin_password)
   validate_string($xldeploy::server::jcr_repository_path)
   validate_string($xldeploy::server::importable_packages_path)
-  validate_string($xldeploy::server::client_user_password)
-  validate_string($xldeploy::server::client_user_password_salt)
   validate_string($xldeploy::server::repository_type)
   validate_string($xldeploy::server::datastore_driver)
   validate_string($xldeploy::server::datastore_url)
