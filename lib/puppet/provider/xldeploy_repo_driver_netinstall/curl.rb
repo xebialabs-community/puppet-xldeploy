@@ -5,7 +5,7 @@ require "digest/md5"
 
 Puppet::Type.type(:xldeploy_repo_driver_netinstall).provide(:curl)  do
 
-  confine :osfamily => [:redhat]
+
 
 
   commands  :curl     => '/usr/bin/curl',

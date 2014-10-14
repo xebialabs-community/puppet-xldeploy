@@ -5,7 +5,7 @@ require "digest/md5"
 
 Puppet::Type.type(:xldeploy_license_install).provide(:curl)  do
 
-  confine :osfamily => [:redhat]
+  
 
 
   commands  :curl     => '/usr/bin/curl',

@@ -18,7 +18,7 @@ class xldeploy::shared_prereq(
           }
       }
       'Debian' : {
-          $java_packages = ['openjdk-7-jdk']
+          $java_packages = ['openjdk-7-jdk', 'unzip']
           if !defined(Package[$java_packages]){
             package { $java_packages: ensure => present }
           }
