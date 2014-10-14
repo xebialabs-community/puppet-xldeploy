@@ -18,10 +18,15 @@ class xldeploy::shared_prereq(
           }
       }
       'Debian' : {
-          $java_packages = ['openjdk-7-jdk', 'unzip']
+          $java_packages = ['openjdk-7-jdk']
           if !defined(Package[$java_packages]){
             package { $java_packages: ensure => present }
           }
+          $unzip_packages = ['unzip']
+          if !defined(Package[$unzip_packages]){
+            package { $unzip_packages: ensure => present }
+          }
+
       }
       default  : {
           fail("${::osfamily}:${::operatingsystem} not supported by this module")
