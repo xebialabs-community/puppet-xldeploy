@@ -3,6 +3,19 @@
 # Default parameters for xldeploy
 #
 class xldeploy::params {
+
+  # os dependant variables
+  case $::osfamily {
+    'RedHat' : {
+                  $java_home = '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64'
+                }
+    'Debian' : {
+                  $java_home = '/usr/lib/jvm/java-7-openjdk-amd64'
+               }
+    default  : { fail("operating system ${::operatingsystem} not supported") }
+  }
+
+
   $version         = '4.5.0'
   $tmp_dir         = '/var/tmp'
   $server          = true
@@ -29,7 +42,6 @@ class xldeploy::params {
   $use_exported_resources     = false
   $use_exported_keys          = false
   $enable_housekeeping        = true
-  $java_home                  = '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64'
   $install_java               = false
   $disable_firewall           = true
 
