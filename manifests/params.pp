@@ -15,8 +15,7 @@ class xldeploy::params {
     default  : { fail("operating system ${::operatingsystem} not supported") }
   }
 
-
-  $version         = '4.5.0'
+  $version         = '4.5.1'
   $tmp_dir         = '/var/tmp'
   $server          = true
   $os_user         = 'xldeploy'

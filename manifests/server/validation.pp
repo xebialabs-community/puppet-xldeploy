@@ -62,7 +62,7 @@ class xldeploy::server::validation (
   case $::osfamily {
     'RedHat' : { }
     'Debian' : { }
-    default  : { fail("operating system ${::operatingsystem} not supported") }
+    default  : { fail("operating system ${$::osfamily}/${::operatingsystem} not supported") }
   }
 
   # install_type should be valid

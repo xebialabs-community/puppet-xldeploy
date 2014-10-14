@@ -42,7 +42,8 @@ class xldeploy::client::validation (
   # check validity of this module on the specific system
   case $::osfamily {
     'RedHat' : { }
-    default  : { fail("operating system ${::operatingsystem} not supported") }
+    'Debian' : { }
+    default  : { fail("operating system ${$::osfamily}/${::operatingsystem} not supported") }
   }
 
 
