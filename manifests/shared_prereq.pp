@@ -17,6 +17,12 @@ class xldeploy::shared_prereq(
             package { $java_packages: ensure => present }
           }
       }
+      'Debian' : {
+          $java_packages = ['openjdk-7-jdk']
+          if !defined(Package[$java_packages]){
+            package { $java_packages: ensure => present }
+          }
+      }
       default  : {
           fail("${::osfamily}:${::operatingsystem} not supported by this module")
       }

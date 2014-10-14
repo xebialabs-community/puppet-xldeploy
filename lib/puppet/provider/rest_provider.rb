@@ -104,6 +104,8 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
       }
     )
   end
+
+
 end
 
 
