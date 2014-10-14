@@ -17,8 +17,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
 
       max_wait = resource[:discovery_max_wait].to_i
       while max_wait > 0
-        state = to_hash(rest_get "task/#{task_id}")['@state']
-
+        state = to_hash(rest_get "task/#{task_id}")['@state'].upcase
         case state
         when 'EXECUTED'
           break
@@ -35,7 +34,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
       end
 
       rest_post "task/#{task_id}/archive"
-      inspection_result = rest_post "inspection/retrieve/#{task_id}"
+      inspection_result = rest_get "inspection/retrieve/#{task_id}"
       rest_post "repository/cis", inspection_result
     else
       rest_post "repository/ci/#{resource[:id]}", ci_xml

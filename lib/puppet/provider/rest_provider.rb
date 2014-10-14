@@ -1,6 +1,7 @@
 require 'puppet'
 require 'open-uri'
 require 'net/http'
+require 'xmlsimple'
 
 #require 'puppet_x/xebialabs/xldeploy/communicator.rb'
 
