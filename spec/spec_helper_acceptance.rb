@@ -66,6 +66,7 @@ RSpec.configure do |c|
   c.before :suite do
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'xldeploy')
+
     hosts.each do |host|
       on host, "/bin/touch #{default['puppetpath']}/hiera.yaml"
       on host, 'chmod 755 /root'
@@ -82,6 +83,7 @@ RSpec.configure do |c|
         Encoding.default_external = Encoding::UTF_8
         Encoding.default_internal = Encoding::UTF_8
       end
+
       on host, puppet('module','install','puppetlabs-concat'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-inifile'), { :acceptable_exit_codes => [0,1] }

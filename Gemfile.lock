@@ -93,7 +93,6 @@ GEM
     json (1.8.1)
     json_pure (1.8.1)
     jwt (1.0.0)
-    kwalify (0.7.2)
     launchy (2.4.2)
       addressable (~> 2.3)
     metaclass (0.0.4)
@@ -148,16 +147,6 @@ GEM
     rspec-mocks (2.99.2)
     rspec-puppet (1.0.1)
       rspec
-    rspec-system (2.8.0)
-      fog (~> 1.18)
-      kwalify (~> 0.7.2)
-      mime-types (~> 1.16)
-      net-scp (~> 1.1)
-      net-ssh (~> 2.7)
-      nokogiri (~> 1.5.10)
-      rbvmomi (~> 1.6)
-      rspec (~> 2.14)
-      systemu (~> 2.5)
     serverspec (1.16.0)
       highline
       net-ssh
@@ -176,7 +165,6 @@ GEM
     simplecov-html (0.8.0)
     slop (3.6.0)
     specinfra (1.27.3)
-    systemu (2.6.4)
     thor (0.19.1)
     trollop (2.0)
     unf (0.1.4)
@@ -192,16 +180,15 @@ PLATFORMS
 DEPENDENCIES
   beaker
   beaker-rspec
+  facter
   mime-types (< 2.0)
   pry
-  puppet (>= 3.4)
+  puppet
   puppet-lint
   puppetlabs_spec_helper
   rake
   rest_client
-  rspec-core
   rspec-puppet
-  rspec-system
   serverspec
   simplecov
   vagrant-wrapper

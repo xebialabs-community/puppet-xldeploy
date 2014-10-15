@@ -20,8 +20,6 @@ class xldeploy::server (
   $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $xldeploy_init_repo                = $xldeploy::params::xldeploy_init_repo,
   $tmp_dir                           = $xldeploy::params::tmp_dir,
-  $os_user                           = $xldeploy::params::os_user,
-  $os_group                          = $xldeploy::params::os_group,
   $import_ssh_key                    = $xldeploy::params::import_ssh_key,
   $http_bind_address                 = $xldeploy::params::http_bind_address,
   $http_port                         = $xldeploy::params::http_port,
@@ -70,6 +68,8 @@ class xldeploy::server (
   $custom_productname                = undef,
   $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef,
+  $custom_os_user                    = undef,
+  $custom_os_group                   = undef,
   $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
@@ -121,28 +121,50 @@ class xldeploy::server (
     $productname = $custom_productname
   }
 
+  if ($custom_os_user == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $os_user         = 'xldeploy'
+    } else {
+      $os_user         = 'deployit'
+    }
+  } else {
+      $os_user = $custom_os_user
+  }
+  
+  if ($custom_os_group == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $os_group         = 'xldeploy'
+    } else {
+      $os_group         = 'deployit'
+    }
+  } else {
+      $os_group = $custom_os_group
+  }
+  
+  
+  
   $base_dir            = "${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"
   $cli_home_dir        = "${base_dir}/${productname}-cli"
   $key_path            = "${server_home_dir}/keys"
-
+  
   # include validation class to check our input
   include xldeploy::server::validation
 
   # to serve or not to server
 
   anchor    { 'xldeploy::server::begin': }
-  -> Class  [ 'xldeploy::shared_prereq' ]
-  -> class  { 'xldeploy::server::install': }
-  -> Class  [ 'xldeploy::cli']
-  -> class  { 'xldeploy::server::install_sshkey': }
-  -> class  { 'xldeploy::server::config': }
-  -> class  { 'xldeploy::server::repository': }
-  ~> class  { 'xldeploy::server::security': }
-  ~> class  { 'xldeploy::server::service': }
-  -> class  { 'xldeploy::server::gems': }
-  -> class  { 'xldeploy::server::post_config': }
-  -> anchor { 'xldeploy::server::end': }
+    -> Class  [ 'xldeploy::shared_prereq' ]
+    -> class  { 'xldeploy::server::install': }
+    -> Class  [ 'xldeploy::cli']
+    -> class  { 'xldeploy::server::install_sshkey': }
+    -> class  { 'xldeploy::server::config': }
+    -> class  { 'xldeploy::server::repository': }
+    ~> class  { 'xldeploy::server::security': }
+    ~> class  { 'xldeploy::server::service': }
+    -> class  { 'xldeploy::server::gems': }
+    -> class  { 'xldeploy::server::post_config': }
+    -> anchor { 'xldeploy::server::end': }
 
   if str2bool($enable_housekeeping) {
     Class['xldeploy::server::service'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']

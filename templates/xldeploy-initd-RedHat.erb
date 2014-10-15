@@ -12,7 +12,7 @@
 # pidfile: /var/run/<%= @productname %>.pid
 #
 
-#. /etc/init.d/functions
+. /etc/init.d/functions
 
 RUNNINGUSER="<%= @os_user %>"
 PROG="jetty"
@@ -62,7 +62,7 @@ start() {
     then
       echo ${PID} >$PIDFILE 
       echo -n "$PROG started"
-      echo -n "$PROG started"
+      success "$PROG started"
       echo
     else        
       echo -n "see $PROG log for more info"

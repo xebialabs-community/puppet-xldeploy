@@ -18,7 +18,7 @@ class xldeploy::server::install (
   $license_source              = $xldeploy::server::license_source,
   $productname                 = $xldeploy::server::productname,
   $server_plugins              = $xldeploy::server::server_plugins,
-  $disable_firewall            = $xldeploy::server::disable_firewall
+  $disable_firewall            = $xldeploy::server::disable_firewall,
 ) {
 
   # Refactor .. stuff getting out of hand
@@ -120,7 +120,7 @@ class xldeploy::server::install (
   # @os_user
   # @server_install_dir
   file { "/etc/init.d/${productname}":
-    content => template('xldeploy/xldeploy.initd.erb'),
+    content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
     owner   => 'root',
     group   => 'root',
     mode    => '0700'
