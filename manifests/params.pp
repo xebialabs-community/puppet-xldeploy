@@ -11,16 +11,15 @@ class xldeploy::params {
                 }
     'Debian' : {
                   $java_home = '/usr/lib/jvm/java-7-openjdk-amd64'
-               }
+                }
     default  : { fail("operating system ${::operatingsystem} not supported") }
   }
+
 
 
   $version         = '4.5.0'
   $tmp_dir         = '/var/tmp'
   $server          = true
-  $os_user         = 'xldeploy'
-  $os_group        = 'xldeploy'
   $import_ssh_key  = false
   $xldeploy_base_dir  = '/opt'
   $xldeploy_init_repo = true

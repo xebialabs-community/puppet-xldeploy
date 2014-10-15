@@ -17,13 +17,12 @@ class xldeploy::server::post_config (
 
   # set rest_url as a default to use with configurable stuff
   $defaults = { rest_url => $rest_url,
-                require => Xldeploy_check_connection['default']}
+                require  => Xldeploy_check_connection['default']}
 
   # Check connection
   xldeploy_check_connection{'default':
-    host    => $http_server_address,
-    port    => $http_port,
-    timeout => 60,
+    host => $http_server_address,
+    port => $http_port
   }
 
   # config stuff in xldeploy
