@@ -42,14 +42,16 @@ RUNNINGUSER="<%= @os_user %>"
 #
 do_start()
 {
-    # Return
-    #   0 if daemon has been started
-    #   1 if daemon was already running
-    #   2 if daemon could not be started
+# Return
+#   0 if daemon has been started
+#   1 if daemon was already running
+#   2 if daemon could not be started
     start-stop-daemon -b --chuid $RUNNINGUSER --start --quiet --exec /usr/bin/env JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64" $DAEMON  > /dev/null
     sleep 5
     PID=$(ps -fu $RUNNINGUSER | grep $NAME | awk '{print $2}')
+    if [ "$PID"  = "" ] ; then return 1 ; fi
     echo $PID > $PIDFILE
+    return 0
 }
 
 #
