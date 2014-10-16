@@ -58,7 +58,15 @@ describe 'xldeploy::server' do
       it { should contain_xldeploy__resources__defaultsetting('overthere.SshHost.passphrase')}
       it { should contain_xldeploy__resources__defaultsetting('overthere.SshHost.privateKeyFile').with_value('/opt/deployit/deployit-server/.ssh/id_rsa')}
       it { should contain_service('deployit').with_ensure('running')}
+      it { should contain_concat('/opt/deployit/deployit-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_header').with_target('/opt/deployit/deployit-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_footer').with_target('/opt/deployit/deployit-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_authentication_manager').with_target('/opt/deployit/deployit-server/conf/deployit-security.xml')}
+      it { should_not contain_concat__fragment('security_beans')}
+      it { should_not contain_concat__fragment('security_ldapserver')}
+
     end
+
     context 'xldeploy with version set to 4.5.0' do
 
       let(:params) {{ :version => '4.5.0' }}
@@ -86,6 +94,12 @@ describe 'xldeploy::server' do
       it { should contain_xldeploy__resources__defaultsetting('overthere.SshHost.passphrase')}
       it { should contain_xldeploy__resources__defaultsetting('overthere.SshHost.privateKeyFile').with_value('/opt/xl-deploy/xl-deploy-server/.ssh/id_rsa')}
       it { should contain_service('xl-deploy').with_ensure('running')}
+      it { should contain_concat('/opt/deployit/deployit-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_header').with_target('/opt/xl-deploy/xl-deploy-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_footer').with_target('/opt/xl-deploy/xl-deploy-server/conf/deployit-security.xml')}
+      it { should contain_concat__fragment('security_authentication_manager').with_target('/opt/xl-deploy/xl-deploy-server/conf/deployit-security.xml')}
+      it { should_not contain_concat__fragment('security_beans')}
+      it { should_not contain_concat__fragment('security_ldapserver')}
     end
  end
 

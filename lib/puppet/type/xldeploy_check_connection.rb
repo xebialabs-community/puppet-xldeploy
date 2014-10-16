@@ -29,7 +29,7 @@ Puppet::Type.newtype(:xldeploy_check_connection) do
   end
 
   newparam(:timeout) do
-    defaultto 120
+    defaultto 240
 
     validate do |value|
       # This will raise an error if the string is not an integer

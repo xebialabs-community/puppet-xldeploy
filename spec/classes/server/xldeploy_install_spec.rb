@@ -25,8 +25,8 @@ describe 'xldeploy::server::install' do
     context 'with install_type set to puppetfiles' do
       let :params do
           default_params.merge({
-                                   :install_type                => 'puppetfiles'
-                               })
+                  :install_type                => 'puppetfiles'
+                   })
       end
 
       it {should contain_file('/var/tmp/deployit-3.9.4-server.zip').with_source('modules/deployit/sources/deployit-3.9.4-server.zip')}
