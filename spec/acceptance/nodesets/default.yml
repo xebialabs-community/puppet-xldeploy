@@ -1,5 +1,5 @@
 HOSTS:
-  centos-64-x64:
+  centos-64-x64-master:
     roles:
       - master
       - database
@@ -8,5 +8,13 @@ HOSTS:
     box : centos-64-x64-vbox4210-nocm
     box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box
     hypervisor : vagrant
+  centos-64-x64-deployit:
+      roles:
+        - agent
+        - xldeploy
+      platform: el-6-x86_64
+      box : centos-64-x64-vbox4210-nocm
+      box_url : http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box
+      hypervisor : vagrant
 CONFIG:
     type: git
