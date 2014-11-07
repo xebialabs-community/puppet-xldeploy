@@ -23,7 +23,7 @@ class xldeploy::server::config (
 
 
   # Dependencies
-  File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy cli ext', 'xldeploy default properties'
+  File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy default properties'
     ] -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
     ] -> Exec['init xldeploy']
 
@@ -71,11 +71,7 @@ class xldeploy::server::config (
     path    => "${server_home_dir}/ext",
   }
 
-  file { 'xldeploy cli ext':
-    source  => 'puppet:///modules/xldeploy/cli-ext/',
-    recurse => 'remote',
-    path    => "${cli_home_dir}/ext",
-  }
+
 
   file { 'xldeploy default properties':
     ensure => present,

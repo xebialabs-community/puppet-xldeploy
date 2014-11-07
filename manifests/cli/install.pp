@@ -28,6 +28,7 @@ class xldeploy::cli::install (
   anchor{'cli::install':}
   -> anchor{'cli::postinstall':}
   -> File[$cli_home_dir]
+  -> File['xldeploy cli ext']
   -> anchor{'cli::installend':}
 
 
@@ -78,11 +79,18 @@ class xldeploy::cli::install (
     }
   }
 
+
   file { $cli_home_dir:
     ensure => link,
     target => $cli_install_dir,
     owner  => $os_user,
     group  => $os_group
+  }
+
+  file { 'xldeploy cli ext':
+    source  => 'puppet:///modules/xldeploy/cli-ext/',
+    recurse => 'remote',
+    path    => "${cli_home_dir}/ext",
   }
 
 

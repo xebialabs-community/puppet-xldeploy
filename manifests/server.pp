@@ -166,6 +166,7 @@ class xldeploy::server (
     -> anchor { 'xldeploy::server::end': }
 
   if str2bool($enable_housekeeping) {
+
     class {'xldeploy::cli':
       install_java                => false,
       version                     => $version,
