@@ -66,7 +66,8 @@ $custom_download_cli_url           = undef,
 
     #class to setup shared stuff between cli and server installations
   if !defined(Class['Xldeploy::Shared_prereq']){
-    class{'xldeploy::shared_prereq':
+    Anchor    [ 'xldeploy::cli::begin']
+    -> class{'xldeploy::shared_prereq':
       base_dir     => $base_dir,
       os_user      => $os_user,
       os_group     => $os_group,
@@ -74,8 +75,6 @@ $custom_download_cli_url           = undef,
       install_java => $install_java,
       java_home    => $java_home
     }
-  Anchor    [ 'Xldeploy::Cli::Begin']
-  -> Class  [ 'Xldeploy::Shared_prereq']
-  -> Class  [ 'Xldeploy::Cli::Install']
+    -> Class  [ 'xldeploy::cli::install']
   }
 }
