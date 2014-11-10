@@ -80,7 +80,7 @@ class xldeploy::params {
 
   # housekeeping defaults
   $enable_housekeeping        = true
-  $housekeeping_minute        = undef
+  $housekeeping_minute        = 5
   $housekeeping_hour          = 2
   $housekeeping_month         = undef
   $housekeeping_monthday      = undef
