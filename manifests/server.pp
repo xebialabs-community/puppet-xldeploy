@@ -165,13 +165,11 @@ class xldeploy::server (
     -> class  { 'xldeploy::server::post_config': }
     -> anchor { 'xldeploy::server::end': }
 
-  if str2bool($enable_housekeeping) {
+  if str2bool($enable_housekeeping) and !defined(Class['Xldeploy::Cli']) {
 
     class {'xldeploy::cli':
       install_java                => false,
       version                     => $version,
-      os_user                     => $os_user,
-      os_group                    => $os_group,
       xldeploy_base_dir           => $xldeploy_base_dir,
       install_type                => $install_type,
       puppetfiles_xldeploy_source => $puppetfiles_xldeploy_source,
