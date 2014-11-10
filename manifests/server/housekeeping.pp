@@ -10,11 +10,11 @@ class xldeploy::server::housekeeping (
   $admin_password        = $xldeploy::server::admin_password,
   $java_home             = $xldeploy::server::java_home,
   $http_context_root     = $xldeploy::server::http_context_root,
-  $housekeeping_minute   = $xldeploy::params::housekeeping_minute,
-  $housekeeping_hour     = $xldeploy::params::housekeeping_hour,
-  $housekeeping_month    = $xldeploy::params::housekeeping_month,
-  $housekeeping_monthday = $xldeploy::params::housekeeping_monthday,
-  $housekeeping_weekday  = $xldeploy::params::housekeeping_weekday,
+  $housekeeping_minute   = $xldeploy::server::housekeeping_minute,
+  $housekeeping_hour     = $xldeploy::server::housekeeping_hour,
+  $housekeeping_month    = $xldeploy::server::housekeeping_month,
+  $housekeeping_monthday = $xldeploy::server::housekeeping_monthday,
+  $housekeeping_weekday  = $xldeploy::server::housekeeping_weekday,
 ) {
 
   file { "${server_home_dir}/scripts/xldeploy-housekeeping.sh":
