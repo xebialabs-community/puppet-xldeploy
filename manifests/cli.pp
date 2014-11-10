@@ -16,8 +16,6 @@ class xldeploy::cli (
 $version                           = $xldeploy::params::version,
 $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
 $tmp_dir                           = $xldeploy::params::tmp_dir,
-$os_user                           = $xldeploy::params::os_user,
-$os_group                          = $xldeploy::params::os_group,
 $install_type                      = $xldeploy::params::install_type,
 $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
 $download_user                     = $xldeploy::params::download_user,
@@ -25,6 +23,8 @@ $download_password                 = $xldeploy::params::download_password,
 $download_proxy_url                = $xldeploy::params::download_proxy_url,
 $java_home                         = $xldeploy::params::java_home,
 $install_java                      = $xldeploy::params::install_java,
+$custom_os_user                    = undef,
+$custom_os_group                   = undef,
 $custom_productname                = undef,
 $custom_download_server_url        = undef,
 $custom_download_cli_url           = undef,
@@ -44,6 +44,7 @@ $custom_download_cli_url           = undef,
       $download_cli_url    = $custom_download_cli_url
     }
 
+
   # we need to support two different productnames
     if ($custom_productname == undef) {
       if versioncmp($version , '3.9.90') > 0 {
@@ -53,6 +54,26 @@ $custom_download_cli_url           = undef,
       }
     } else {
         $productname = $custom_productname
+    }
+
+    if ($custom_os_user == undef) {
+      if versioncmp($version , '3.9.90') > 0 {
+        $os_user         = 'xldeploy'
+      } else {
+        $os_user         = 'deployit'
+      }
+    } else {
+      $os_user = $custom_os_user
+    }
+
+    if ($custom_os_group == undef) {
+      if versioncmp($version , '3.9.90') > 0 {
+        $os_group         = 'xldeploy'
+      } else {
+        $os_group         = 'deployit'
+      }
+    } else {
+      $os_group = $custom_os_group
     }
 
   $base_dir            = "${xldeploy_base_dir}/${productname}"
