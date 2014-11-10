@@ -57,6 +57,8 @@ class xldeploy::server::validation (
   validate_hash($xldeploy::server::users)
   validate_hash($xldeploy::server::server_plugins)
 
+  
+
   ## content validation
   # check validity of this module on the specific system
   case $::osfamily {

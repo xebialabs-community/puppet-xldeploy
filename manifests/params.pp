@@ -40,7 +40,6 @@ class xldeploy::params {
   $client_propagate_key       = true
   $use_exported_resources     = false
   $use_exported_keys          = false
-  $enable_housekeeping        = true
   $install_java               = false
   $disable_firewall           = true
 
@@ -78,6 +77,14 @@ class xldeploy::params {
   $download_user                = undef
   $download_password            = undef
   $download_proxy_url           = undef
+
+  # housekeeping defaults
+  $enable_housekeeping        = true
+  $housekeeping_minute        = undef
+  $housekeeping_hour          = 2
+  $housekeeping_month         = undef
+  $housekeeping_monthday      = undef
+  $housekeeping_weekday       = undef
 
   # license stuff
   $install_license              = true

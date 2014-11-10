@@ -2,14 +2,19 @@
 #
 # Install the xldeploy::server::server server
 class xldeploy::server::housekeeping (
-  $os_user            = $xldeploy::server::os_user,
-  $os_group           = $xldeploy::server::os_group,
-  $server_home_dir    = $xldeploy::server::server_home_dir,
-  $cli_home_dir       = $xldeploy::server::cli_home_dir,
-  $http_port          = $xldeploy::server::http_port,
-  $admin_password     = $xldeploy::server::admin_password,
-  $java_home          = $xldeploy::server::java_home,
-  $http_context_root  = $xldeploy::server::http_context_root
+  $os_user               = $xldeploy::server::os_user,
+  $os_group              = $xldeploy::server::os_group,
+  $server_home_dir       = $xldeploy::server::server_home_dir,
+  $cli_home_dir          = $xldeploy::server::cli_home_dir,
+  $http_port             = $xldeploy::server::http_port,
+  $admin_password        = $xldeploy::server::admin_password,
+  $java_home             = $xldeploy::server::java_home,
+  $http_context_root     = $xldeploy::server::http_context_root,
+  $housekeeping_minute   = $xldeploy::params::housekeeping_minute,
+  $housekeeping_hour     = $xldeploy::params::housekeeping_hour,
+  $housekeeping_month    = $xldeploy::params::housekeeping_month,
+  $housekeeping_monthday = $xldeploy::params::housekeeping_monthday,
+  $housekeeping_weekday  = $xldeploy::params::housekeeping_weekday,
 ) {
 
   file { "${server_home_dir}/scripts/xldeploy-housekeeping.sh":
@@ -26,11 +31,14 @@ class xldeploy::server::housekeeping (
   }
 
   cron { 'xldeploy-housekeeping':
-    ensure  => present,
-    command => "${server_home_dir}/scripts/xldeploy-housekeeping.sh",
-    user    => root,
-    hour    => 2,
-    minute  => 5,
+    ensure   => present,
+    command  => "${server_home_dir}/scripts/xldeploy-housekeeping.sh",
+    user     => root,
+    hour     => $housekeeping_hour,
+    minute   => $housekeeping_minute,
+    month    => $housekeeping_month,
+    monthday => $housekeeping_monthday,
+    weekday  => $housekeeping_weekday,
   }
 
 }
