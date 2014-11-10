@@ -181,7 +181,7 @@ class xldeploy::server (
       custom_productname          => $custom_productname,
     }
 
-    Class['xldeploy::server::service'] -> Class  [ 'xldeploy::cli'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
+    Class  [ 'xldeploy::cli'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
 
 
   }
