@@ -36,7 +36,9 @@ class xldeploy::cli::install (
   File {
     owner  => $os_user,
     group  => $os_group,
-    ensure => present
+    ensure => present,
+    mode   => '0640',
+    ignore => '.gitkeep'
   }
 
   # check the install_type and act accordingly
