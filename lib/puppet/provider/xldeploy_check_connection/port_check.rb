@@ -31,6 +31,7 @@ Puppet::Type.type(:xldeploy_check_connection).provide(:port_check) do
           Puppet.notice("unable to reach #{resource[:host]}:#{resource[:port]} ")
           sleep 2
           success = port_open?(resource[:host], resource[:port])
+          break if success
         end
       end
 

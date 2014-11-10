@@ -65,7 +65,7 @@ $custom_download_cli_url           = undef,
   -> anchor { 'xldeploy::cli::end': }
 
     #class to setup shared stuff between cli and server installations
-  if !defined('Xldeploy::Shared_prereq'){
+  if !defined(Class['Xldeploy::Shared_prereq']){
     class{'xldeploy::shared_prereq':
       base_dir     => $base_dir,
       os_user      => $os_user,
