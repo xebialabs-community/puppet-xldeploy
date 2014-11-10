@@ -170,25 +170,27 @@ class xldeploy::server (
     -> class  { 'xldeploy::server::post_config': }
     -> anchor { 'xldeploy::server::end': }
 
-  if str2bool($enable_housekeeping) and !defined(Class['Xldeploy::Cli']) {
+  if str2bool($enable_housekeeping)  {
 
-    class {'xldeploy::cli':
-      install_java                => false,
-      version                     => $version,
-      xldeploy_base_dir           => $xldeploy_base_dir,
-      install_type                => $install_type,
-      puppetfiles_xldeploy_source => $puppetfiles_xldeploy_source,
-      download_user               => $download_user,
-      download_password           => $download_password,
-      download_proxy_url          => $download_proxy_url,
-      java_home                   => $java_home,
-      custom_download_cli_url     => $custom_download_cli_url,
-      custom_productname          => $custom_productname,
+    class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
+
+    if !defined(Class['Xldeploy::Cli']) {
+      class {'xldeploy::cli':
+        install_java                => false,
+        version                     => $version,
+        xldeploy_base_dir           => $xldeploy_base_dir,
+        install_type                => $install_type,
+        puppetfiles_xldeploy_source => $puppetfiles_xldeploy_source,
+        download_user               => $download_user,
+        download_password           => $download_password,
+        download_proxy_url          => $download_proxy_url,
+        java_home                   => $java_home,
+        custom_download_cli_url     => $custom_download_cli_url,
+        custom_productname          => $custom_productname,
+      }
+
+      -> Class['xldeploy::server::housekeeping']
     }
-
-    Class  [ 'xldeploy::cli'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
-
-
   }
 
   #class to setup shared stuff between cli and server installations
