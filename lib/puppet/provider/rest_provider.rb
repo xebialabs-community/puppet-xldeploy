@@ -135,6 +135,9 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
+      p " inside loop "
+      p key
+      p value
       property = root.add_element(key)
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
       case pd[key].attributes['kind']
