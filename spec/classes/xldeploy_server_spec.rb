@@ -11,6 +11,7 @@ describe 'xldeploy::server' do
           let(:params) {{ }}
 
           it { should contain_class('xldeploy::params') }
+          it { should contain_class('xldeploy::shared_prereq') }
           it { should contain_class('xldeploy::server::validation') }
           it { should contain_anchor('xldeploy::server::begin') }
           it { should contain_class('xldeploy::server::install') }
