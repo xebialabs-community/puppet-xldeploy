@@ -66,7 +66,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties=(value)
-    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
+    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties][:properties])
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end
 
