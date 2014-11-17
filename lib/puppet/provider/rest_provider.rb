@@ -2,6 +2,8 @@ require 'puppet'
 require 'open-uri'
 require 'net/http'
 require 'xmlsimple'
+require 'puppet_x/xebialabs/xldeploy/configuration_item.rb'
+
 
 #require 'puppet_x/xebialabs/xldeploy/communicator.rb'
 
@@ -70,39 +72,112 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
   end
 
-  def to_xml(id, type, properties)
-    props = {'@id' => id}.merge(properties)
-    XmlSimple.xml_out(
-      props,
-      {
-        'RootName'   => type,
-        'AttrPrefix' => true,
-        'GroupTags'  => {
-          'tags'         => 'value',
-          'servers'      => 'ci',
-          'members'      => 'ci',
-          'dictionaries' => 'ci',
-          'entries'      => 'entry'
-        },
-      }
-    )
+  # def to_xml(id, type, properties)
+  #   props = {'@id' => id}.merge(properties)
+  #   XmlSimple.xml_out(
+  #     props,
+  #     {
+  #       'RootName'   => type,
+  #       'AttrPrefix' => true,
+  #       'GroupTags'  => {
+  #         'tags'         => 'value',
+  #         'servers'      => 'ci',
+  #         'members'      => 'ci',
+  #         'dictionaries' => 'ci',
+  #         'entries'      => 'entry'
+  #       },
+  #     }
+  #   )
+  # end
+  #
+  #
+  #
+  # def to_hash(xml)
+  #   XmlSimple.xml_in(
+  #     xml,
+  #     {
+  #       'ForceArray' => false,
+  #       'AttrPrefix' => true,
+  #       'GroupTags'  => {
+  #         'tags'         => 'value',
+  #         'servers'      => 'ci',
+  #         'members'      => 'ci',
+  #         'dictionaries' => 'ci',
+  #         'entries'      => 'entry'
+  #       },
+  #     }
+  #   )
+  # end
+  #
+
+  def type(name)
+    doc = rest_get "/deployit/metadata/type/#{name}"
+    @types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
-  def to_hash(xml)
-    XmlSimple.xml_in(
-      xml,
-      {
-        'ForceArray' => false,
-        'AttrPrefix' => true,
-        'GroupTags'  => {
-          'tags'         => 'value',
-          'servers'      => 'ci',
-          'members'      => 'ci',
-          'dictionaries' => 'ci',
-          'entries'      => 'entry'
-        },
-      }
-    )
+  def to_xml(id, type, properties)
+    pd=type(type)
+    doc = REXML::Document.new
+    root = doc.add_element type, {'id' => id}
+    properties.each do |key, value|
+      property = root.add_element(key)
+      #Puppet.debug(" to_xml::processing #{key}:#{value}")
+      case pd[key].attributes['kind']
+        when 'SET_OF_STRING', 'LIST_OF_STRING'
+          value.each do |v|
+            property.add_element('value').text = v
+          end
+        when 'SET_OF_CI', 'LIST_OF_CI'
+          value.each do |v|
+            property.add_element('ci', {'ref' => v})
+          end
+        when 'MAP_STRING_STRING'
+          value.each do |k, v|
+            property.add_element('entry', {'key' => k}).text = v
+          end
+        when 'CI'
+          property.add_attribute('ref', value)
+        else
+          property.text = value
+      end
+
+    end
+    Puppet.debug " to_xml::#{doc.to_s}"
+    doc.to_s()
+  end
+
+
+  def to_hash(doc)
+    ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
+    pd=type(ci.type)
+    doc.elements.each("/*/*") do |prop|
+      case pd[prop.name].attributes["kind"]
+        when 'SET_OF_STRING', 'LIST_OF_STRING'
+          values = []
+          prop.elements.each("//#{prop.name}/value") { |v|
+            values << v.text
+          }
+          ci.properties[prop.name]=values
+        when 'SET_OF_CI', 'LIST_OF_CI'
+          values = []
+          prop.elements.each("//#{prop.name}/ci") { |v|
+            values << v.attributes['ref']
+          }
+          ci.properties[prop.name]=values
+        when 'MAP_STRING_STRING'
+          values = {}
+          prop.elements.each("//#{prop.name}/entry") { |v|
+            values[v.attributes['key']]=v.text
+          }
+          ci.properties[prop.name]=values
+        when 'CI'
+          ci.properties[prop.name]=prop.attributes['ref']
+        else
+          ci.properties[prop.name]=prop.text
+
+      end
+    end
+    ci.to_h
   end
 
 
