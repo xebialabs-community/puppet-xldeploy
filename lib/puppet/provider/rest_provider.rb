@@ -158,9 +158,9 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     pd=type(ci.type)
     p pd
     p pd.class
-
+    p pd.methods
     doc.elements.each("/*/*") do |prop|
-      case pd[prop.name].attributes["kind"]
+    unless pd.empty?  case pd[prop.name].attributes["kind"]
         when 'SET_OF_STRING', 'LIST_OF_STRING'
           values = []
           prop.elements.each("//#{prop.name}/value") { |v|
