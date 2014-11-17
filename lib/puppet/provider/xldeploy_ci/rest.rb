@@ -50,6 +50,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties
+    p " properties !!!!!!"
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
     p resource[:id]
     p ci_xml
