@@ -31,18 +31,24 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   # end
 
   def rest_get(service)
+    p "rest get #{service}"
     execute_rest(service, 'get')
   end
 
   def rest_post(service, body='')
+    p  "rest_post #{service} #{body}"
     execute_rest(service, 'post', body)
   end
 
   def rest_put(service, body='')
+    p  "rest_put #{service} #{body}"
+
     execute_rest(service, 'put', body)
   end
 
   def rest_delete(service)
+    p  "rest_delete #{service} "
+
     execute_rest(service, 'delete')
   end
 
