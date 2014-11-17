@@ -40,7 +40,7 @@ class xldeploy::params {
   $client_propagate_key       = true
   $use_exported_resources     = false
   $use_exported_keys          = false
-  $install_java               = false
+  $install_java               = true
   $disable_firewall           = true
 
   #security settings
