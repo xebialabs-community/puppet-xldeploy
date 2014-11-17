@@ -126,6 +126,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
   def to_xml(id, type, properties)
     p "to_xml"
+    p properties
     properties.delete(:id)
     properties.delete(:type)
     pd=type(type)
