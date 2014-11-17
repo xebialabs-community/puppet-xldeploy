@@ -7,8 +7,8 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
 
   def create
     ensure_parent_directory("#{resource[:id]}")
-    p resource['properties']
-    ci_xml = to_xml(resource[:id],resource[:type],resource['properties'])
+    p resource[:properties]
+    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties][:properties])
 
     if resource[:discovery]
       inspection = rest_post "inspection/prepare/", ci_xml
