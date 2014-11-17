@@ -54,7 +54,8 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
 
     ci_hash = to_hash(ci_xml)
-   
+    p ci_hash
+    p resource[:properties]
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
     ci_hash.each do |k, v|
