@@ -112,12 +112,14 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   #
 
   def type(name)
+    p "type #{name}"
     types={}
     doc = REXML::Document.new(rest_get "/deployit/metadata/type/#{name}")
     types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
   def to_xml(id, type, properties)
+    p "to_xml"
     properties.delete(:id)
     properties.delete(:type)
     pd=type(type)
@@ -155,7 +157,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
 
   def to_hash(input)
-
+    p "to_hash"
     doc = REXML::Document.new input
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)

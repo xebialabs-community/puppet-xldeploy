@@ -50,7 +50,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties
-
+    p " properties !!!"
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
 
     ci_hash = to_hash(ci_xml)
@@ -71,6 +71,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties=(value)
+    p "properties=!!!"
     ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end
