@@ -152,13 +152,11 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
 
   def to_hash(input)
-    p input
+
     doc = REXML::Document.new input
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)
-    p pd
-    p pd.class
-    p pd.methods
+
     unless pd.empty?
     doc.elements.each("/*/*") do |prop|
       case pd[prop.name].attributes["kind"]
