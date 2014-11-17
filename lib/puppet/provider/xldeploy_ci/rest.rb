@@ -7,7 +7,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
 
   def create
     ensure_parent_directory("#{resource[:id]}")
-    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties][:properties])
+    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
 
     if resource[:discovery]
       inspection = rest_post "inspection/prepare/", ci_xml
@@ -45,6 +45,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def exists?
+    p resource[:id]
     resource_exists?(resource[:id])
   end
 
@@ -53,7 +54,9 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
 
     ci_hash = to_hash(ci_xml)
-
+    p resource[:id]
+    p ci_hash
+    p resource[:properties]
 
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
@@ -68,7 +71,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties=(value)
-    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties][:properties])
+    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end
 
