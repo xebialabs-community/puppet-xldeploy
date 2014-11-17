@@ -147,6 +147,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
     end unless properties.nil?
     Puppet.debug " to_xml::#{doc.to_s}"
+    p doc.to_s()
     doc.to_s()
   end
 
@@ -186,6 +187,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
       end
     end
     end
+    p ci.to_h
     ci.to_h
   end
 
