@@ -138,6 +138,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
       p " inside loop "
       p key
       p value
+      p pd
       property = root.add_element(key)
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
       case pd[key].attributes['kind']
