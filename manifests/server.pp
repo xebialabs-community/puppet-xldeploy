@@ -176,7 +176,7 @@ class xldeploy::server (
 
     if !defined(Class['Xldeploy::Cli']) {
       class {'xldeploy::cli':
-        install_java                => false,
+        install_java                => $install_java,
         version                     => $version,
         xldeploy_base_dir           => $xldeploy_base_dir,
         install_type                => $install_type,
