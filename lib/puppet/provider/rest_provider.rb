@@ -120,7 +120,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   def type(name)
     p "type #{name}"
     types={}
-    output = rest_get("/deployit/metadata/type/#{name}")
+    output = rest_get("metadata/type/#{name}")
     p output
     doc = REXML::Document.new output
     p doc
