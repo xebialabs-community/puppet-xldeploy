@@ -1,7 +1,8 @@
 require 'puppet'
 require 'open-uri'
 require 'net/http'
-require 'xmlsimple'
+#require 'xmlsimple'
+require 'rexml/document'
 require 'puppet_x/xebialabs/xldeploy/configuration_item.rb'
 
 
