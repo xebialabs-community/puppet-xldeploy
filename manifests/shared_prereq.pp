@@ -27,7 +27,7 @@ class xldeploy::shared_prereq(
     }
   }
 
-  if $str2bool($install_java){
+  if str2bool($install_java){
     if !defined(Package[$java_package]){
       package{$java_package:
         ensure => present
