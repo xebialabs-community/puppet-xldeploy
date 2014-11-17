@@ -112,9 +112,9 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   #
 
   def type(name)
-    @types={}
+    types={}
     doc = REXML::Document.new(rest_get "/deployit/metadata/type/#{name}")
-    @types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
+    types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
   def to_xml(id, type, properties)
@@ -157,6 +157,8 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)
     p pd
+    p.class
+
     doc.elements.each("/*/*") do |prop|
       case pd[prop.name].attributes["kind"]
         when 'SET_OF_STRING', 'LIST_OF_STRING'
@@ -182,7 +184,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
         else
           ci.properties[prop.name]=prop.text
 
-      end unless pd.emtpy?
+      end
     end
     ci.to_h
   end
