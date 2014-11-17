@@ -182,7 +182,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
         else
           ci.properties[prop.name]=prop.text
 
-      end
+      end unless pd.nil?
     end
     ci.to_h
   end
