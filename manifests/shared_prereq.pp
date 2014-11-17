@@ -9,29 +9,30 @@ class xldeploy::shared_prereq(
 ){
 
   # install java packages if needed
-  notice($install_java)
-  if str2bool($install_java) {
-    case $::osfamily {
-      'RedHat' : {
-          $java_packages = ['java-1.7.0-openjdk']
-          if !defined(Package[$java_packages]){
-            package { $java_packages: ensure => present }
-          }
-      }
-      'Debian' : {
-          $java_packages = ['openjdk-7-jdk']
-          if !defined(Package[$java_packages]){
-            package { $java_packages: ensure => present }
-          }
-          $unzip_packages = ['unzip']
-          if !defined(Package[$unzip_packages]){
-            package { $unzip_packages: ensure => present }
-          }
+
+  case $::osfamily {
+    'RedHat' : {
+        $java_package = ['java-1.7.0-openjdk']
 
       }
-      default  : {
-          fail("${::osfamily}:${::operatingsystem} not supported by this module")
+    'Debian' : {
+        $java_package = ['openjdk-7-jdk']
+        $unzip_packages = ['unzip']
+        if !defined(Package[$unzip_packages]){
+          package { $unzip_packages: ensure => present } -> User[$os_user]
+        }
+    }
+    default  : {
+        fail("${::osfamily}:${::operatingsystem} not supported by this module")
+    }
+  }
+
+  if $str2bool($install_java){
+    if !defined(Package[$java_package]){
+      package{$java_package:
+        ensure => present
       }
+    -> User[$os_user]
     }
   }
 
