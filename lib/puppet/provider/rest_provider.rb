@@ -157,7 +157,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)
     p pd
-    p.class
+    p pd.class
 
     doc.elements.each("/*/*") do |prop|
       case pd[prop.name].attributes["kind"]
