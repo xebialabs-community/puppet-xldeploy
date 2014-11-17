@@ -62,7 +62,10 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     defaultto({})
 
+
+
     validate do |value|
+      p value
       raise Puppet::Error, "Invalid properties: #{value}, expected a hash" unless value.is_a? Hash
     end
 
