@@ -112,7 +112,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   #
 
   def type(name)
-    doc = rest_get "/deployit/metadata/type/#{name}"
+    doc = REXML::Document.new(rest_get "/deployit/metadata/type/#{name}")
     @types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
