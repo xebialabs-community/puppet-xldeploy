@@ -119,10 +119,8 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
   def to_xml(id, type, properties)
     pd=type(type)
-    p pd
-    p id
-    p type
-    p properties
+    Puppet.debug "Property definition #{pd}"
+    Puppet.debug "Proposed properties #{properties}"
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
@@ -147,7 +145,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
           property.text = value
       end
 
-    end
+    end unless properties.nil?
     Puppet.debug " to_xml::#{doc.to_s}"
     doc.to_s()
   end
