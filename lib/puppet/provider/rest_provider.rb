@@ -119,6 +119,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
   def to_xml(id, type, properties)
     pd=type(type)
+    p pd
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
