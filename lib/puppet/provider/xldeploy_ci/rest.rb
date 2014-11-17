@@ -69,12 +69,13 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
     p " end of properties !!!"
-    
+
   end
 
   def properties=(value)
     p "properties=!!!"
-    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
+    p "#{value}"
+    ci_xml = to_xml(resource[:id],resource[:type],value)
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end
 
