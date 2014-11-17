@@ -93,6 +93,8 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   def resource_exists?(id)
     # check if a certain resource exists in the XL Deploy repository
     xml = rest_get "repository/exists/#{id}"
+    p xml
+    p xml =~ /"true"/
     return xml =~ /"true"/
   end
 end
