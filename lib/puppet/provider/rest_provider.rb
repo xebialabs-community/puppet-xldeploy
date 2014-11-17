@@ -149,7 +149,8 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
   end
 
 
-  def to_hash(doc)
+  def to_hash(input)
+    doc = REXML::Document.new input
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)
     doc.elements.each("/*/*") do |prop|
