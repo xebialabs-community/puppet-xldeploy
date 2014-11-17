@@ -9,7 +9,7 @@ class xldeploy::shared_prereq(
 ){
 
   # install java packages if needed
-  notify{$install_java:}
+  notice($install_java)
   if str2bool($install_java) {
     case $::osfamily {
       'RedHat' : {
