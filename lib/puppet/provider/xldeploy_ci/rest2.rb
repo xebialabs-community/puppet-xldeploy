@@ -33,7 +33,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
     ci_hash
-    
+
   end
 
   def properties=(value)
