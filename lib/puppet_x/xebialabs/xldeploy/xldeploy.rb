@@ -32,6 +32,7 @@ class Xldeploy
 
     http = Net::HTTP.new(uri.host, uri.port)
     request = case method
+                p uri
                 when 'get'    then Net::HTTP::Get.new(uri.request_uri)
                 when 'post'   then Net::HTTP::Post.new(uri.request_uri)
                 when 'put'    then Net::HTTP::Put.new(uri.request_uri)
