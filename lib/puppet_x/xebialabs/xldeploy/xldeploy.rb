@@ -30,6 +30,8 @@ class Xldeploy
 
     uri = URI.parse("#{rest_url}/#{service}")
     p uri
+    p uri.methods
+    p uri.request_uri
     http = Net::HTTP.new(uri.host, uri.port)
     request = case method
 
