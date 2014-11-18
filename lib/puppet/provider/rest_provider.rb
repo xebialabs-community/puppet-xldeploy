@@ -3,7 +3,6 @@ require 'open-uri'
 require 'net/http'
 #require 'xmlsimple'
 require 'rexml/document'
-require 'puppet_x/xebialabs/xldeploy/configuration_item.rb'
 
 
 #require 'puppet_x/xebialabs/xldeploy/communicator.rb'
