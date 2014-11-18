@@ -114,20 +114,20 @@ class Xldeploy
           when 'SET_OF_STRING', 'LIST_OF_STRING'
             values = []
             prop.elements.each("//#{prop.name}/value") { |v|
-              values << v.text unless v.text.nil?
+              values << v.text
             }
             values = "" if values = []
             data_hash['properties'][prop.name]=values
           when 'SET_OF_CI', 'LIST_OF_CI'
             values = []
             prop.elements.each("//#{prop.name}/ci") { |v|
-              values << v.attributes['ref'] unless v.attributes['ref'].nil?
+              values << v.attributes['ref']
             }
             data_hash['properties'][prop.name]=values
           when 'MAP_STRING_STRING'
             values = {}
             prop.elements.each("//#{prop.name}/entry") { |v|
-              values[v.attributes['key']]=v.text unless v.test.nil?
+              values[v.attributes['key']]=v.text
             }
             data_hash['properties'][prop.name]=values
           when 'CI'
