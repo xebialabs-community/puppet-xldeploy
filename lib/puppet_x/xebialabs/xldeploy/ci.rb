@@ -59,6 +59,8 @@ class Ci < Xldeploy
 
   # persist the ci to xldeploy
   def persist
+    p " persiting "
+    p desired_xml
     ensure_parent_directory
     if exists?
       rest_put "repository/ci/#{id}", desired_xml
