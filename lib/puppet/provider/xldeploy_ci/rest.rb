@@ -51,31 +51,27 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def properties
-    p " properties !!!"
+
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
 
     ci_hash = to_hash(ci_xml)
 
-    p "actual #{ci_hash}"
-    p "desired #{resource[:properties]}"
+
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
     ci_hash.each do |k, v|
-      p k
-      p v
+
       resource[:properties][k] = v unless resource[:properties].include? k
 
       # Temporarily replace password properties as well, until we can
       # encode passwords ourselves
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
-    p " end of properties !!!"
+
 
   end
 
   def properties=(value)
-    p "properties=!!!"
-    p "#{value}"
     ci_xml = to_xml(resource[:id],resource[:type],value)
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end

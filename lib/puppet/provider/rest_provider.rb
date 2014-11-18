@@ -123,14 +123,13 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     output = rest_get("metadata/type/#{name}")
 
     doc = REXML::Document.new output
-   
+
     types[name]=Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
 
   end
 
   def to_xml(id, type, properties)
-    p "to_xml"
-    p properties
+
     properties.delete(:id)
     properties.delete(:type)
     pd=type(type)
@@ -139,10 +138,7 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
-      p " inside loop "
-      p key
-      p value
-      p pd
+
       property = root.add_element(key)
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
       case pd[key].attributes['kind']
@@ -171,7 +167,6 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
 
   def to_hash(input)
-    p "to_hash"
     doc = REXML::Document.new input
     ci = ConfigurationItem.new(doc.root.name, doc.root.attributes["id"])
     pd=type(ci.type)
