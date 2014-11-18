@@ -1,7 +1,8 @@
 require 'puppet_x/xebialabs/xldeploy/ci.rb'
 Puppet::Type.type(:xldeploy_ci).provide :rest2 do
 
-  def initialize
+  def initialize(*args)
+    super
     @ci = Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties])
   end
   def create
