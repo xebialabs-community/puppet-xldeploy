@@ -7,8 +7,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
 
   def create
     ensure_parent_directory("#{resource[:id]}")
-    p resource[:id]
-    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
+    ci_xml = to_xml(resource[:id],resource[:type],resource['properties'])
 
     if resource[:discovery]
       inspection = rest_post "inspection/prepare/", ci_xml
@@ -46,33 +45,27 @@ Puppet::Type.type(:xldeploy_ci).provide :rest, :parent => Puppet::Provider::XLDe
   end
 
   def exists?
-    p resource[:id]
     resource_exists?(resource[:id])
   end
 
   def properties
-
     ci_xml = rest_get "repository/ci/#{resource[:id]}"
-
     ci_hash = to_hash(ci_xml)
-
 
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
     ci_hash.each do |k, v|
-
       resource[:properties][k] = v unless resource[:properties].include? k
 
       # Temporarily replace password properties as well, until we can
       # encode passwords ourselves
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
-
-
+    ci_hash
   end
 
   def properties=(value)
-    ci_xml = to_xml(resource[:id],resource[:type],value)
+    ci_xml = to_xml(resource[:id],resource[:type],resource[:properties])
     rest_put "repository/ci/#{resource[:id]}", ci_xml
   end
 
