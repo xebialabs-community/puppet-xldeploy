@@ -3,6 +3,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
 
   def initialize(*args)
     super
+    p resource
     @ci = Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties])
   end
   def create
