@@ -7,7 +7,6 @@ class Xldeploy
   attr_accessor :rest_url
 
   def initialize(rest_url)
-    p rest_url
     @rest_url = rest_url
   end
 
@@ -30,9 +29,7 @@ class Xldeploy
   def execute_rest(service, method, body='')
 
     uri = URI.parse("#{rest_url}/#{service}")
-    p uri
-    p uri.methods
-    p uri.request_uri
+
     http = Net::HTTP.new(uri.host, uri.port)
     request = case method
 
