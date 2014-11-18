@@ -86,7 +86,9 @@ class Xldeploy
             property.add_element('value').text = v
           end
         when 'SET_OF_CI', 'LIST_OF_CI'
+          p value
           value.each do |v|
+            p v
             property.add_element('ci', {'ref' => v})
           end
         when 'MAP_STRING_STRING'
