@@ -7,6 +7,7 @@ class Xldeploy
   attr_accessor :rest_url
 
   def initialize(rest_url)
+    p rest_url
     @rest_url = rest_url
   end
 
