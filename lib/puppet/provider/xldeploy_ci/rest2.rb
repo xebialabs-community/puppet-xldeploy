@@ -46,6 +46,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
     @ci || @ci = get_ci
   end
   def get_ci
+    p resource
      Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties])
   end
 end
