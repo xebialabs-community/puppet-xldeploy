@@ -65,7 +65,6 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
 
     validate do |value|
-      p value
       raise Puppet::Error, "Invalid properties: #{value}, expected a hash" unless value.is_a? Hash
     end
 
@@ -130,6 +129,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
   end
 
   newparam(:rest_url, :required_features => ['restclient']) do
+
     desc 'The rest url for making changes to XL Deploy'
   end
 
