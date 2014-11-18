@@ -15,11 +15,11 @@ class Xldeploy
   end
 
   def rest_post(service, body='')
-   p execute_rest(service, 'post', body)
+   execute_rest(service, 'post', body)
   end
 
   def rest_put(service, body='')
-   p execute_rest(service, 'put', body)
+   execute_rest(service, 'put', body)
   end
 
   def rest_delete(service)
