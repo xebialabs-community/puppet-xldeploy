@@ -88,7 +88,7 @@ class Xldeploy
         when 'SET_OF_CI', 'LIST_OF_CI'
           p value
           value.each do |v|
-            v = v.values[0] if v.class(Hash)
+            v = v.values[0] if v.is_a?(Hash)
             property.add_element('ci', {'ref' => v})
           end
         when 'MAP_STRING_STRING'
