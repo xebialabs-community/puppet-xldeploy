@@ -12,7 +12,7 @@ class Ci < Xldeploy
   # type is the type of the ci
   # properties is optional.. these represent the properties in xldeploy if needed
   def initialize(rest_url,id,type, properties={})
-    p rest_url
+
     super(rest_url)
     @id   = id
     @type = type
@@ -59,8 +59,7 @@ class Ci < Xldeploy
 
   # persist the ci to xldeploy
   def persist
-    p " persiting "
-    p desired_xml
+    
     ensure_parent_directory
     if exists?
       rest_put "repository/ci/#{id}", desired_xml
