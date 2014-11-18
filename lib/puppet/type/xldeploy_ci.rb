@@ -128,7 +128,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
   end
 
-  newparam(:rest_url, :required_features => ['restclient']) do
+  newparam(:rest_url) do
 
     desc 'The rest url for making changes to XL Deploy'
     validate do |value|
