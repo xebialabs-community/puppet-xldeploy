@@ -1,5 +1,5 @@
 require 'puppet_x/xebialabs/xldeploy/ci.rb'
-Puppet::Type.type(:xldeploy_ci).provide :rest2, :parent => Puppet::Provider::XLDeployRestProvider do
+Puppet::Type.type(:xldeploy_ci).provide :rest2 do
 
   def initialize
     @ci = Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties])
