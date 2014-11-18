@@ -12,6 +12,7 @@ class Ci < Xldeploy
   # type is the type of the ci
   # properties is optional.. these represent the properties in xldeploy if needed
   def initialize(rest_url,id,type, properties={})
+    p rest_url
     super(rest_url)
     @id   = id
     @type = type
