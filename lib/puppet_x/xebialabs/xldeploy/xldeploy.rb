@@ -53,7 +53,7 @@ class Xldeploy
 
   end
 
-  def get_type_description
+  def type_description
     output = rest_get("metadata/type/#{type}")
     doc = REXML::Document.new output
     Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
@@ -69,9 +69,7 @@ class Xldeploy
     doc.root.attributes
   end
 
-  def type_description
-    @type_description || @type_description = get_type_description
-  end
+ 
 
   def to_xml(id, type, properties)
     doc = REXML::Document.new
