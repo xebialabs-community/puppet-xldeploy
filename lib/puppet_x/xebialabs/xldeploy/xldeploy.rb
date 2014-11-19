@@ -123,7 +123,7 @@ class Xldeploy
               data_hash['properties'][prop.name]="#{values}"
             else
               p values.class
-              values = "" if values = []
+              values = "" if values.empty?
               data_hash['properties'][prop.name]=values
               p data_hash['properties'][prop.name]
             end
