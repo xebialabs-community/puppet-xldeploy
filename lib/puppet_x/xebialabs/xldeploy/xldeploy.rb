@@ -125,6 +125,7 @@ class Xldeploy
               p values.class
               values = "" if values = []
               data_hash['properties'][prop.name]=values
+              p data_hash['properties'][prop.name]
             end
             p data_hash['properties'][prop.name]
           when 'SET_OF_CI', 'LIST_OF_CI'
