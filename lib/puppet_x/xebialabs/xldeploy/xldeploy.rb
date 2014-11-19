@@ -77,6 +77,8 @@ class Xldeploy
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
+      p key
+      p value
       property = root.add_element(key)
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
       case type_description[key].attributes['kind']
