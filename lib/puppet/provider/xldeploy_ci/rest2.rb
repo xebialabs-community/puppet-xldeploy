@@ -30,7 +30,10 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
       # encode passwords ourselves
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
-    ci.actual_properties.sort
+    ci.actual_properties.keys.sort.each do |k|
+      nh[k] = ci.actual_properties[k]
+    end
+    nh
   end
 
   def properties=(value)
