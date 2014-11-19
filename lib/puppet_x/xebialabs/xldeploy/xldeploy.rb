@@ -69,7 +69,7 @@ class Xldeploy
     doc.root.attributes
   end
 
- 
+
 
   def to_xml(id, type, properties)
     doc = REXML::Document.new
