@@ -74,7 +74,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     # could include properties that are not set by puppet
     def insync?(is)
       p is.class
-      compare(is, @should.first) and compare(@should.first, is)
+      compare(is, Hash[@should.first.sort]) and compare(Hash[@should.first.sort], is)
     end
 
     def compare(is, should)
