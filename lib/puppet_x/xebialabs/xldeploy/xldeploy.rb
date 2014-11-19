@@ -124,6 +124,7 @@ class Xldeploy
               values = "" if values = []
               data_hash['properties'][prop.name]=values
             end
+            p data_hash['properties'][prop.name]
           when 'SET_OF_CI', 'LIST_OF_CI'
             values = []
             prop.elements.each("//#{prop.name}/ci") { |v|
