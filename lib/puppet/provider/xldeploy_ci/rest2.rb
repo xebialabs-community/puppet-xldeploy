@@ -33,7 +33,9 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
     end
     p resource[:properties]
-    Hash[resource[:properties].sort]
+    p Hash[ci.actual_properties.sort]
+
+    Hash[ci.actual_properties.sort]
   end
 
   def properties=(value)
