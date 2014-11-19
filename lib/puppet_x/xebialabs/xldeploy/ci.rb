@@ -61,9 +61,9 @@ class Ci < Xldeploy
 
     ensure_parent_directory
     if exists?
-      rest_put "repository/ci/#{@id}", @desired_xml
+      rest_put ("repository/ci/#{@id}", desired_xml)
     else
-      rest_post "repository/ci/#{@id}", @desired_xml
+      rest_post ("repository/ci/#{@id}", desired_xml)
     end
   end
 
