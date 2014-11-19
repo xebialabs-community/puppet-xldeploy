@@ -96,7 +96,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     def should_to_s(newvalue)
-      Hash[@newvalue.sort].inspect
+      Hash[newvalue.sort].inspect
     end
 
     def is_to_s(currentvalue)
