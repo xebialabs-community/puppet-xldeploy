@@ -27,24 +27,24 @@ class Ci < Xldeploy
 
   # return the actual properties the ci has in xldeploy
   # this construct makes sure the propertys are only
-  def actual_properties
-    @actual_properties || @actual_properties = get_actual_properties
-  end
+  # def actual_properties
+  #   @actual_properties || @actual_properties = get_actual_properties
+  # end
 
   # fetch the actual properties if needed
-  def get_actual_properties
+  def actual_properties
     xml = actual_xml
     return {} if xml.nil?
     to_hash(xml)
   end
 
   # return the actual xml of the xldeploy ci
-  def actual_xml
-    @actual_xml || @actual_xml = get_actual_xml
-  end
+  # def actual_xml
+  #   @actual_xml || @actual_xml = get_actual_xml
+  # end
 
   # fetch the actual xml from xldeploy
-  def get_actual_xml
+  def actual_xml
     if exists?
       rest_get "repository/ci/#{id}"
     else
@@ -59,7 +59,7 @@ class Ci < Xldeploy
 
   # persist the ci to xldeploy
   def persist
-    
+
     ensure_parent_directory
     if exists?
       rest_put "repository/ci/#{id}", desired_xml
