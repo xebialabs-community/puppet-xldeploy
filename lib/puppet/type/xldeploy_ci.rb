@@ -73,7 +73,6 @@ Puppet::Type.newtype(:xldeploy_ci) do
     # manage, because XL Deploy also returns all properties of a CI, which
     # could include properties that are not set by puppet
     def insync?(is)
-      p is.class
       compare(is, @should.first) and compare(@should.first, is)
     end
 
