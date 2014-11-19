@@ -1,5 +1,5 @@
 require 'puppet_x/xebialabs/xldeploy/ci.rb'
-Puppet::Type.type(:xldeploy_ci).provide :rest2 do
+Puppet::Type.type(:xldeploy_ci).provide :rest do
 
 
   def create

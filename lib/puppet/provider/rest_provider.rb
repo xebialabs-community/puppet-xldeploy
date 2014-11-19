@@ -1,7 +1,7 @@
 require 'puppet'
 require 'open-uri'
 require 'net/http'
-#require 'xmlsimple'
+require 'xmlsimple'
 require 'rexml/document'
 
 
