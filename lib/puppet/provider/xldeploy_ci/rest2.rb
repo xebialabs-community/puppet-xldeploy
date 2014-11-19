@@ -26,7 +26,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
     ci.actual_properties.each do |k, v|
       p k
       p v
-      resource[:properties][k] = v unless resource[:properties].include? k
+      resource[:properties][k] = v unless resource[:properties].keys.include? k
 
       # Temporarily replace password properties as well, until we can
       # encode passwords ourselves
