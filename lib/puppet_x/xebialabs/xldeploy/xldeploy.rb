@@ -117,10 +117,12 @@ class Xldeploy
             prop.elements.each("//#{prop.name}/value") { |v|
               values << v.text
             }
-
+            p values
             if values.is_a?(String)
+              p "string"
               data_hash['properties'][prop.name]="#{values}"
             else
+              p values.class
               values = "" if values = []
               data_hash['properties'][prop.name]=values
             end
