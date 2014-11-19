@@ -24,8 +24,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
     ci.actual_properties.each do |k, v|
-      p k
-      p v
+
       resource[:properties][k] = v unless resource[:properties].keys.include? k
 
       # Temporarily replace password properties as well, until we can
@@ -33,8 +32,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
       resource[:properties] = Hash[resource[:properties].sort]
     end
-    p resource[:properties]
-    p Hash[ci.actual_properties.sort]
+   
 
     Hash[ci.actual_properties.sort]
   end
