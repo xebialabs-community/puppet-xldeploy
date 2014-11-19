@@ -60,7 +60,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
   newproperty(:properties) do
     desc 'Properties of the CI'
 
-    defaultto({})
+    defaultto {}
 
 
 

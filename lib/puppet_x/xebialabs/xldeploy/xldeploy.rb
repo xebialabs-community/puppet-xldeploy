@@ -54,6 +54,7 @@ class Xldeploy
   end
 
   def type_description
+    p "in type_description"
     p @type
     output = rest_get("metadata/type/#{@type}")
     doc = REXML::Document.new output
