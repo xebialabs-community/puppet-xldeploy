@@ -20,7 +20,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest2 do
   end
 
   def properties
-    p resouce[:properties]
+    p resource[:properties]
     # Add unmanaged k/v pairs that XL Deploy returns to our properties.
     # Otherwise these will be reset when updating any other property.
     ci.actual_properties.each do |k, v|
