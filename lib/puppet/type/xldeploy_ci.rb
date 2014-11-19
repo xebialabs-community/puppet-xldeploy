@@ -62,6 +62,9 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     defaultto {}
 
+    munge do |value|
+      value.sort
+    end
 
 
     validate do |value|
@@ -73,10 +76,10 @@ Puppet::Type.newtype(:xldeploy_ci) do
     # could include properties that are not set by puppet
     def insync?(is)
 
-      compare(is.sort , @should.first) and compare(@should.first, is)
+      compare(is, @should.first) and compare(@should.first, is)
     end
 
-    def compare(is.sort, should.sort)
+    def compare(is, should)
       return false unless is.class == should.class
 
       if should.is_a? Hash
