@@ -118,7 +118,7 @@ class Xldeploy
               values << v.text
             }
             p values
-            new_values = values if values.is_a?(string)
+            new_values = values if values.is_a?(String)
             new_values = "" if values = []
             p values
             data_hash['properties'][prop.name]=new_values
