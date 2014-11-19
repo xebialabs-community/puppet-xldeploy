@@ -124,6 +124,7 @@ class Xldeploy
             else
               p values.class
               values = "" if values.empty?
+              values = values[1] if values.length == 1
               data_hash['properties'][prop.name]=values
               p data_hash['properties'][prop.name]
             end
