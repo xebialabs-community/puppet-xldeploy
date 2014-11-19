@@ -12,16 +12,15 @@ class Ci < Xldeploy
   # type is the type of the ci
   # properties is optional.. these represent the properties in xldeploy if needed
   def initialize(rest_url,id,type, properties={})
-
-    super(rest_url)
     @id   = id
     @type = type
     @desired_properties = properties
+    super(rest_url)
   end
 
   # check wheter the ci already exists in xldeploy
   def exists?
-    xml = rest_get "repository/exists/#{id}"
+    xml = rest_get "repository/exists/#{@id}"
     return xml =~ /true/
   end
 
@@ -46,7 +45,7 @@ class Ci < Xldeploy
   # fetch the actual xml from xldeploy
   def actual_xml
     if exists?
-      rest_get "repository/ci/#{id}"
+      rest_get "repository/ci/#{@id}"
     else
       nil
     end
@@ -54,7 +53,7 @@ class Ci < Xldeploy
 
   # translate the desired properties into xml
   def desired_xml
-    to_xml(id, type, desired_properties)
+    to_xml(@id, @type, @desired_properties)
   end
 
   # persist the ci to xldeploy
@@ -62,15 +61,15 @@ class Ci < Xldeploy
 
     ensure_parent_directory
     if exists?
-      rest_put "repository/ci/#{id}", desired_xml
+      rest_put "repository/ci/#{@id}", @desired_xml
     else
-      rest_post "repository/ci/#{id}", desired_xml
+      rest_post "repository/ci/#{@id}", @desired_xml
     end
   end
 
   # destroy's the ci in xldeploy
   def destroy
-    rest_delete "repository/ci/#{id}"
+    rest_delete "repository/ci/#{@id}"
   end
 
   # make sure the ci's parent structure is in place
