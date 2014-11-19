@@ -73,7 +73,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
     # manage, because XL Deploy also returns all properties of a CI, which
     # could include properties that are not set by puppet
     def insync?(is)
-      compare(is, Hash[@should.first.sort]) and compare(Hash[@should.first.sort], is)
+      p is.class
+      compare(is, @should.first) and compare(@should.first, is)
     end
 
     def compare(is, should)
@@ -95,11 +96,11 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     def should_to_s(newvalue)
-      Hash[newvalue.sort].inspect
+      newvalue.inspect
     end
 
     def is_to_s(currentvalue)
-      Hash[currentvalue.sort].inspect
+      currentvalue.inspect
     end
   end
 
