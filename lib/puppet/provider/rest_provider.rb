@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'puppet'
 require 'open-uri'
 require 'net/http'
