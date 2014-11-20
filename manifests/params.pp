@@ -33,7 +33,9 @@ class xldeploy::params {
   $importable_packages_path = 'importablePackages'
 
 
-
+  $os_user                    = 'xldeploy'
+  $os_group                   = 'xldeploy'
+  $os_user_home               = '/home/xldeploy'
   $client_sudo                = true
   $client_user_password       = 'xldeploy'
   $client_user_password_salt  = 'H8kV96rb'
