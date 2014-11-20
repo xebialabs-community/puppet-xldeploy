@@ -18,6 +18,7 @@
 class xldeploy::client (
   $os_user                           = $xldeploy::params::os_user,
   $os_group                          = $xldeploy::params::os_group,
+  $os_user_home                      = $xldeploy::params::os_user_home,
   $http_bind_address                 = $xldeploy::params::http_bind_address,
   $http_port                         = $xldeploy::params::http_port,
   $http_context_root                 = $xldeploy::params::http_context_root,
