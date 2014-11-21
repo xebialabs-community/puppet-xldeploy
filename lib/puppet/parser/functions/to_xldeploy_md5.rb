@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'yaml'
 require 'fileutils'
-require 'puppet_x/xebialabs/xldeploy/password.rb'
+require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/', 'xldeploy')
 
  module Puppet::Parser::Functions
   newfunction(:to_xldeploy_md5, :type => :rvalue, :doc => <<-EOS
