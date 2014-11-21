@@ -23,11 +23,14 @@ class xldeploy::params {
   $import_ssh_key  = false
   $xldeploy_base_dir  = '/opt'
   $xldeploy_init_repo = true
-  $ssl             = false
+  $ssl                      = false
+  $verifySsl                = true
   $http_bind_address        = '0.0.0.0'
   $http_server_address      = $::fqdn
   $http_port                = '4516'
   $http_context_root        = '/deployit'
+  $rest_user                = 'admin'
+  $rest_password            = xldeploy_credentials('admin_password', 'admin')
   $admin_password           = xldeploy_credentials('admin_password', 'admin')
   $jcr_repository_path      = 'repository'
   $importable_packages_path = 'importablePackages'

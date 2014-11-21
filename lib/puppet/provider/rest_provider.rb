@@ -3,29 +3,7 @@ require 'open-uri'
 require 'net/http'
 require 'xmlsimple'
 
-#require 'puppet_x/xebialabs/xldeploy/communicator.rb'
-
 class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
-
-  # def rest_get(service)
-  #   begin
-  #     response = RestClient.get "#{resource[:rest_url]}/#{service}", {:accept => :xml, :content_type => :xml }
-  #   rescue Exception => e
-  #     return e.message
-  #   end
-  # end
-  #
-  # def rest_post(service, body='')
-  #   RestClient.post "#{resource[:rest_url]}/#{service}", body, {:content_type => :xml }
-  # end
-  #
-  # def rest_put(service, body='')
-  #   RestClient.put "#{resource[:rest_url]}/#{service}", body, {:content_type => :xml }
-  # end
-  #
-  # def rest_delete(service)
-  #   RestClient.delete "#{resource[:rest_url]}/#{service}", {:accept => :xml, :content_type => :xml }
-  # end
 
   def rest_get(service)
     execute_rest(service, 'get')
@@ -48,13 +26,20 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
     uri = URI.parse("#{resource[:rest_url]}/#{service}")
 
     http = Net::HTTP.new(uri.host, uri.port)
+    # Ssl settings
+    if str2bool("#{resource[:ssl]}") == true
+      http.use_ssl = true
+      unless str2bool("#{resource[:verifySsl]}") == true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+    end
+    
     request = case method
                 when 'get'    then Net::HTTP::Get.new(uri.request_uri)
                 when 'post'   then Net::HTTP::Post.new(uri.request_uri)
                 when 'put'    then Net::HTTP::Put.new(uri.request_uri)
                 when 'delete' then Net::HTTP::Delete.new(uri.request_uri)
               end
-    #p request.pretty_print_inspect
 
     request.basic_auth(uri.user, uri.password) if uri.user and uri.password
     request.body = body unless body == ''

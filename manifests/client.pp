@@ -1,15 +1,11 @@
 # = = Class: xldeploy
 #
-# This class installs xldeploy
+# This class installs xldeploy client
 #
 # === Examples
 #
-#  class { 'xldeploy':
+#  class { 'xldeploy::client':
 #  }
-#
-# === Parameters
-# [*import_ssh_key*]
-#  on client: import xldeploy public key from puppetdb
 #
 # === Copyright
 #
@@ -24,7 +20,9 @@ class xldeploy::client (
   $http_context_root                 = $xldeploy::params::http_context_root,
   $http_server_address               = $xldeploy::params::http_server_address,
   $ssl                               = $xldeploy::params::ssl,
-  $admin_password                    = $xldeploy::params::admin_password,
+  $verifySsl                         = $xldeploy::params::verifySsl,
+  $rest_user                         = $xldeploy::params::rest_user,
+  $rest_password                     = $xldeploy::params::rest_password,
   $client_sudo                       = $xldeploy::params::client_sudo,
   $client_user_password              = $xldeploy::params::client_user_password,
   $client_user_password_salt         = $xldeploy::params::client_user_password_salt,
@@ -49,14 +47,16 @@ class xldeploy::client (
 
   if str2bool($::ssl) {
     $rest_protocol = 'https://'
+    # Check certificate validation
+    $verifySsl = str2bool($::verifySsl)
   } else {
     $rest_protocol = 'http://'
   }
 
   if $http_context_root == '/' {
-    $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}/deployit"
+    $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}/deployit"
   } else {
-    $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
+    $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
   }
 
   anchor    { 'xldeploy::client::begin': }

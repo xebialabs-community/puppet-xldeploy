@@ -1,6 +1,6 @@
 # = = Class: xldeploy::cli
 #
-# This class installs xldeploy
+# This class installs xldeploy cli
 #
 # === Examples
 #
