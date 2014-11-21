@@ -41,6 +41,7 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
     unless cache.has_key?(passwordString)
 
       # check if deployit is reachable
+      p "test"
       pw = Password.new(restUrl, passwordString)
 
       if pw.reachable?
