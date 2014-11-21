@@ -26,10 +26,7 @@ p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'passw
       baseDir = '/tmp'
     end
 
-    p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
-    p "test"
-    p File.dirname(__FILE__)
-
+   
     passDirName = File.join(baseDir, "deployitdir")
     yamlIndexName=File.join(passDirName, "index.yaml")
 
@@ -46,6 +43,9 @@ p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'passw
     unless cache.has_key?(passwordString)
 
       # check if deployit is reachable
+      p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
+      p "test"
+      p File.dirname(__FILE__)
       p "test"
       pw = Password.new(restUrl, passwordString)
 
