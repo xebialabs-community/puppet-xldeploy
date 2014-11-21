@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'yaml'
 require 'fileutils'
-require File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
-p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
+require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/', 'password')
  module Puppet::Parser::Functions
   newfunction(:to_xldeploy_md5, :type => :rvalue, :doc => <<-EOS
    Returns a deployit specific password hash when fed a plain text string
@@ -26,7 +25,7 @@ p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'passw
       baseDir = '/tmp'
     end
 
-   
+
     passDirName = File.join(baseDir, "deployitdir")
     yamlIndexName=File.join(passDirName, "index.yaml")
 
@@ -43,10 +42,7 @@ p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'passw
     unless cache.has_key?(passwordString)
 
       # check if deployit is reachable
-      p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
-      p "test"
-      p File.dirname(__FILE__)
-      p "test"
+      
       pw = Password.new(restUrl, passwordString)
 
       if pw.reachable?
