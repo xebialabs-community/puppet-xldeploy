@@ -148,11 +148,15 @@ class Xldeploy
   end
 
   def reachable?
-    uri = URI(rest_url)
 
+    uri = URI(rest_url)
+    p uri
+    p uri.host
+    p uri.port
     begin
       Timeout::timeout(1) do
         begin
+          p "begin testing"
           s = TCPSocket.new(uri.host, uri.port)
           s.close
           return true
