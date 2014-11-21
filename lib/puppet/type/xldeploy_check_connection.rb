@@ -9,24 +9,15 @@ Puppet::Type.newtype(:xldeploy_check_connection) do
     desc 'just a name '
   end
 
-  newparam(:host) do
-    desc 'the resolvable hostname of the server to be tested '
-  end
+  newparam(:rest_url) do
 
-  newparam(:port) do
-    desc 'the resolvable hostname of the authentication server'
-
-    defaultto 4516
-
+    desc 'The rest url for making changes to XL Deploy'
     validate do |value|
-      Integer(value)
-    end
-
-    munge do |value|
-      Integer(value)
+      fail "rest_url cannot be empty" if value.nil?
     end
 
   end
+
 
   newparam(:timeout) do
     defaultto 240

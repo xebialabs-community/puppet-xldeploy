@@ -1,5 +1,5 @@
-require 'socket'
-require 'timeout'
+require 'puppet_x/xebialabs/xldeploy/ci.rb'
+
 
 def port_open?(ip, port)
   begin
@@ -21,22 +21,23 @@ end
 Puppet::Type.type(:xldeploy_check_connection).provide(:port_check) do
 
   def exists?
+      xldeploy = Xldeploy(rest_url)
       start_time = Time.now
       timeout = resource[:timeout]
 
-      success = port_open?(resource[:host], resource[:port])
+      success = xldeploy.reachable?
 
       unless success
         while (Time.now - start_time) < timeout
-          Puppet.notice("unable to reach #{resource[:host]}:#{resource[:port]} ")
+          Puppet.notice("unable to reach #{resource[:rest_url]}} ")
           sleep 2
-          success = port_open?(resource[:host], resource[:port])
+          success = xldeploy.reachable?
           break if success
         end
       end
 
       unless success
-        Puppet.notice("unable to reach #{resource[:host]}:#{resource[:port]} withing a timeout period of #{resource[:timeout]} ; giving up.")
+        Puppet.notice("unable to reach #{resource[:rest_url]} withing a timeout period of #{resource[:timeout]} ; giving up.")
       end
 
       success

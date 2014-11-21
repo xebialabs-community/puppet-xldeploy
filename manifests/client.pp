@@ -16,8 +16,6 @@
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
 class xldeploy::client (
-  $os_user                           = $xldeploy::params::os_user,
-  $os_group                          = $xldeploy::params::os_group,
   $http_bind_address                 = $xldeploy::params::http_bind_address,
   $http_port                         = $xldeploy::params::http_port,
   $http_context_root                 = $xldeploy::params::http_context_root,
@@ -33,6 +31,8 @@ class xldeploy::client (
   $gem_use_local                     = $xldeploy::params::gem_use_local,
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
+  $custom_os_user                    = undef,
+  $custom_os_group                   = undef,
   $cis                               = { } ,
   $memberships                       = { } ,
   $users                             = { } ,
@@ -56,6 +56,26 @@ class xldeploy::client (
     $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}/deployit"
   } else {
     $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
+  }
+
+  if ($custom_os_user == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $os_user         = 'xldeploy'
+    } else {
+      $os_user         = 'deployit'
+    }
+  } else {
+      $os_user = $custom_os_user
+  }
+
+  if ($custom_os_group == undef) {
+    if versioncmp($version , '3.9.90') > 0 {
+      $os_group         = 'xldeploy'
+    } else {
+      $os_group         = 'deployit'
+    }
+  } else {
+      $os_group = $custom_os_group
   }
 
   anchor    { 'xldeploy::client::begin': }
