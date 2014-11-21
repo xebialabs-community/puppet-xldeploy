@@ -21,7 +21,8 @@ end
 Puppet::Type.type(:xldeploy_check_connection).provide(:port_check) do
 
   def exists?
-      xldeploy = Xldeploy(rest_url)
+      xldeploy = Xldeploy.new(rest_url)
+      
       start_time = Time.now
       timeout = resource[:timeout]
 
