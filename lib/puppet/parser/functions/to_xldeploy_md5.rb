@@ -27,7 +27,8 @@ p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'passw
     end
 
     p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
-
+    p "test"
+    p File.dirname(__FILE__)
 
     passDirName = File.join(baseDir, "deployitdir")
     yamlIndexName=File.join(passDirName, "index.yaml")
