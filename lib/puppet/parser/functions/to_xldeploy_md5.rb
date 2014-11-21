@@ -4,8 +4,7 @@ require 'fileutils'
 require 'uri'
 require 'socket'
 require 'timeout'
-require 'rest_client'
-require 'xmlsimple'
+require 'puppet_x/xebialabs/xldeploy/password.rb'
 
  module Puppet::Parser::Functions
   newfunction(:to_xldeploy_md5, :type => :rvalue, :doc => <<-EOS
@@ -13,7 +12,7 @@ require 'xmlsimple'
    EOS
   ) do |arguments|
     
-    # check the input . we can handle 2 or three arguments
+    # check the input . we can handle 2 arguments
     raise(Puppet::ParseError, "to_xldeploy_md5(): Wrong number of arguments " +
       "given (#{arguments.length} for 2)") if arguments.length < 2 
     raise(Puppet::ParseError, "to_xldeploy_md5(): Wrong number of arguments " +

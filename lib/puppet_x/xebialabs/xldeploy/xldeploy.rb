@@ -53,9 +53,9 @@ class Xldeploy
 
   end
 
-  def type_description
+  def type_description(type=@type)
 
-    output = rest_get("metadata/type/#{@type}")
+    output = rest_get("metadata/type/#{type}")
     doc = REXML::Document.new output
     Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
@@ -79,7 +79,7 @@ class Xldeploy
 
       property = root.add_element(key)
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
-      case type_description[key].attributes['kind']
+      case type_description(type)[key].attributes['kind']
         when 'SET_OF_STRING', 'LIST_OF_STRING'
           value = [value] if value.is_a?(String)
           value.each do |v|
@@ -108,7 +108,7 @@ class Xldeploy
   def to_hash(input, output='properties')
     doc = REXML::Document.new input
     data_hash = { 'name' => doc.root.name , 'id' => doc.root.attributes["id"], 'properties' => {}}
-    pd=type_description
+    pd=type_description(doc.root.name)
     unless pd.empty?
       doc.elements.each("/*/*") do |prop|
         case pd[prop.name].attributes["kind"]
