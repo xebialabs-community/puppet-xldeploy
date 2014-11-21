@@ -2,13 +2,13 @@ require File.join(File.dirname(__FILE__), 'xldeploy')
 
 class Password < Xldeploy
 
-  attr_accessor :translated, :plain_text
+  attr_accessor  :plain_text
 
   def initialize(rest_url, plain_text)
     super(rest_url)
     @plain_text = plain_text
-    @translated = translate
   end
+
 
   def translate
 
