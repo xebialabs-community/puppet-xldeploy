@@ -45,20 +45,22 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
 
       pw = Password.new(restUrl, passwordString)
 
+      p "test reachable 1"
       if pw.reachable?
-
+        p "reachable"
         # if so .. do the translate thingy
         hashedPassword = pw.translate
 
         # register the hashed password in the yaml
         cache[passwordString] = hashedPassword
       else
+        p "not reachable"
         # if deployit is not reachable return the input string .
         # it will work in most use-cases..
         # we do not cache it ofcourse .. that would be dumb
         hashedPassword = passwordString
       end
-
+      p "reachable done"
     else
 
       # return the key from the cache
