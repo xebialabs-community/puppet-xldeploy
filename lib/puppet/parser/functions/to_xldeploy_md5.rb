@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'yaml'
 require 'fileutils'
-
+require File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
  module Puppet::Parser::Functions
   newfunction(:to_xldeploy_md5, :type => :rvalue, :doc => <<-EOS
    Returns a deployit specific password hash when fed a plain text string
@@ -14,7 +14,7 @@ require 'fileutils'
     raise(Puppet::ParseError, "to_xldeploy_md5(): Wrong number of arguments " +
       "given (#{arguments.length} for 2)") if arguments.length > 2
 
-    require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/', 'password')
+
 
     passwordString  = arguments[0]
     restUrl         = arguments[1]
