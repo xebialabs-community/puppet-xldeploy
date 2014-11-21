@@ -26,6 +26,11 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
 
       resource[:properties][k] = v unless resource[:properties].keys.include? k
 
+      if (resource[:type] == 'udm.Dictionary' or 'udm.EncryptedDictionary') and ( k == 'entries' )
+       v.each {|key, value|
+         resource[:properties][k][key] = value
+       }
+      end
       # Temporarily replace password properties as well, until we can
       # encode passwords ourselves
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')
