@@ -82,8 +82,7 @@ class xldeploy::server::config (
   ini_setting {
     'xldeploy.admin.password':
       setting => 'admin.password',
-      #value   => to_xldeploy_md5($admin_password, $rest_url);
-      value   => 'admin';
+      value   => to_xldeploy_md5($admin_password, $rest_url);
 
     'xldeploy.http.port':
       setting => 'http.port',

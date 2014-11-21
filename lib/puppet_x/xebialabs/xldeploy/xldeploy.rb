@@ -147,6 +147,24 @@ class Xldeploy
     data_hash["#{output}"]
   end
 
+  def reachable?
+    uri = URI(rest_url)
+
+    begin
+      Timeout::timeout(1) do
+        begin
+          s = TCPSocket.new(uri.host, uri.port)
+          s.close
+          return true
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          return false
+        end
+      end
+    rescue Timeout::Error
+    end
+
+    return false
+  end
 
 
 end

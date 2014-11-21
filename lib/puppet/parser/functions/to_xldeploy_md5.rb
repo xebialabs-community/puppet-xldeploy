@@ -1,9 +1,6 @@
 require 'rubygems'
 require 'yaml'
 require 'fileutils'
-require 'uri'
-require 'socket'
-require 'timeout'
 require 'puppet_x/xebialabs/xldeploy/password.rb'
 
  module Puppet::Parser::Functions
@@ -44,11 +41,12 @@ require 'puppet_x/xebialabs/xldeploy/password.rb'
     unless cache.has_key?(passwordString)
 
       # check if deployit is reachable
+      pw = Password(restUrl, passwordString)
 
-      if deployit_reachable?(restUrl)
+      if pw.reachable?
 
         # if so .. do the translate thingy
-        hashedPassword = translate_to_deployit_hash(restUrl, passwordString)
+        hashedPassword = pw.translated
 
         # register the hashed password in the yaml
         cache[passwordString] = hashedPassword
@@ -79,94 +77,4 @@ require 'puppet_x/xebialabs/xldeploy/password.rb'
    end
  end
 
-def deployit_reachable?(restUrl)
-  uri = URI(restUrl)
 
-  begin
-    Timeout::timeout(1) do
-      begin
-        s = TCPSocket.new(uri.host, uri.port)
-        s.close
-        return true
-      rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-        return false
-      end
-    end
-  rescue Timeout::Error
-  end
-
-  return false
-end
-
-def translate_to_deployit_hash(restUrl, passwordString)
-  tmpDict         = 'Environments/puppet_tmp_dict'
-  deployitType    = 'udm.EncryptedDictionary'
-
-  #compose the xml
-  xml = to_xml(tmpDict, deployitType, {'entries' => {"@key" =>passwordString, "content" => passwordString}})
-
-  # create the dictionary in deployit
-  rest_post(restUrl, "repository/ci/#{tmpDict}", xml)
-
-  # get the dictionary from deployit
-  output = rest_get(restUrl, "repository/ci/#{tmpDict}")
-
-  # extract the passwordhash from te dictionary
-  passwordHash = to_ruby_hash(output)['entries']['content']
-
-  # remove the dictionary
-  rest_delete(restUrl, "repository/ci/#{tmpDict}" )
-
-  # return the hash
-  # we have to cut the first two and de last char of the bloody thing .. just because the deployit
-  # rest interface is soo bloody crap
-  return passwordHash[2..-2]
-end
-
-def rest_get(restUrl, service)
-  RestClient.get "#{restUrl}/#{service}", {:accept => :xml, :content_type => :xml }
-end
-
-def rest_post(restUrl,service, body='')
-  RestClient.post "#{restUrl}/#{service}", body, {:content_type => :xml }
-end
-
-def rest_delete(restUrl,service)
-  RestClient.delete "#{restUrl}/#{service}", {:accept => :xml, :content_type => :xml }
-end
-
-def to_xml(id, type, properties)
-  props = {'@id' => id}.merge(properties)
-  XmlSimple.xml_out(
-      props,
-      {
-          'RootName'   => type,
-          'AttrPrefix' => true,
-          'GroupTags'  => {
-              'tags'         => 'value',
-              'servers'      => 'ci',
-              'members'      => 'ci',
-              'dictionaries' => 'ci',
-              'entries'      => 'entry'
-          },
-      }
-  )
-end
-
-def to_ruby_hash(xml)
-
-  XmlSimple.xml_in(
-      xml,
-      {
-          'ForceArray' => false,
-          'AttrPrefix' => true,
-          'GroupTags'  => {
-              'tags'         => 'value',
-              'servers'      => 'ci',
-              'members'      => 'ci',
-              'dictionaries' => 'ci',
-              'entries'      => 'entry'
-          },
-      }
-  )
-end
