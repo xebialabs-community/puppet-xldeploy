@@ -2,6 +2,7 @@ require 'rubygems'
 require 'yaml'
 require 'fileutils'
 require File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
+p  File.join(File.dirname(__FILE__),'../../puppet_x/xebialabs/xldeploy/', 'password')
  module Puppet::Parser::Functions
   newfunction(:to_xldeploy_md5, :type => :rvalue, :doc => <<-EOS
    Returns a deployit specific password hash when fed a plain text string
