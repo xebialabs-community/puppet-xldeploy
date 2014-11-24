@@ -32,8 +32,10 @@ class xldeploy::params {
   $jcr_repository_path      = 'repository'
   $importable_packages_path = 'importablePackages'
 
-
-
+  $manage_user                = true
+  $os_user                    = 'xldeploy'
+  $os_group                   = 'xldeploy'
+  $os_user_home               = '/home/xldeploy'
   $client_sudo                = true
   $client_user_password       = 'xldeploy'
   $client_user_password_salt  = 'H8kV96rb'

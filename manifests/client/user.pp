@@ -15,6 +15,7 @@
 class xldeploy::client::user(
   $os_user                   = $xldeploy::client::os_user,
   $os_group                  = $xldeploy::client::os_group,
+  $os_user_home              = $xldeploy::client::os_user_home,
   $http_server_address       = $xldeploy::client::http_server_address,
   $client_sudo               = $xldeploy::client::client_sudo,
   $client_user_password      = $xldeploy::client::client_user_password,
@@ -29,7 +30,8 @@ class xldeploy::client::user(
     ensure => 'present'
   }
 
-  user{$os_user:
+  user{ $os_user :
+    name       => $os_user,
     ensure     => present,
     gid        => $os_group ,
     managehome => true,
@@ -52,7 +54,7 @@ class xldeploy::client::user(
   sshkeys::set_authorized_key { "${os_user}@${http_server_address}":
     local_user  => $os_user,
     remote_user => "${os_user}@${http_server_address}",
-    home        => "/home/${os_user}",
+    home        => "${os_user_home}",
   }
 
 

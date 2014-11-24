@@ -50,7 +50,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
 
   def ci
 
-    Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties])
+    Ci.new(resource[:rest_url], resource[:id], resource[:type], resource[:properties], resource[:ssl], resource[:verify_ssl])
   end
 
 end

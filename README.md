@@ -89,7 +89,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
             admin_password      => 'dummy',
-            ssl                 => 'false',
+            ssl                 => false,
             cis                 => { 'project_folder' => { name => "/Infrastructure/projectx",
                                                            type => 'core.Directory',
                                                            remove_when_expired => 'true'},
@@ -98,28 +98,32 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                                  properties => { 'os' => 'UNIX',
                                                                  'port' => '22',
                                                                  'username' => 'deployit',
-                                                                 'tags' => 'projectx' }
+                                                                 'tags' => 'projectx',
+                                                                 'connectionType' => 'SCP',
+                                                                 'address' => '${hostname}' }
                                       }
                                      }
     }
   the above example uses the builtin create_resources construct to create the ci's specified in the array one by one. This construct is especially handy when used in conjunction with automatic data bindings from a Hiera backend.
   
   
-  Users are also able to create ci's using the module's types and providers:
+  Users are also able to create ci's using the module's types and providers (setting 'use_exported_resources' to 'true'):
 
-    xldeploy_ci{ '/Infrastructure/projectx':
+    xldeploy_ci{ 'Infrastructure/projectx':
           ensure             => present,
           type               => 'core.Directory',
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
     
-    xldeploy_ci{ "/Infrastructure/projectx/${hostname}_sshHost":
+    xldeploy_ci{ "Infrastructure/projectx/${hostname}_sshHost":
           ensure             => present,
           type               => 'overthere.SshHost',
           properties         => { 'os' => 'UNIX',
                                   'port' => '22',
                                   'username' => 'deployit',
-                                  'tags' => 'projectx' },
+                                  'tags' => 'projectx',
+                                  'connectionType' => 'SCP',
+                                  'address' => '${hostname}' },
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 

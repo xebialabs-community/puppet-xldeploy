@@ -4,10 +4,12 @@ require 'rexml/document'
 
 class Xldeploy
 
-  attr_accessor :rest_url
+  attr_accessor :rest_url, :ssl, :verify_ssl
 
-  def initialize(rest_url)
-    @rest_url = rest_url
+  def initialize(rest_url, ssl, verify_ssl)
+    @rest_url   = rest_url
+    @verify_ssl = verify_ssl
+    @ssl        = ssl
   end
 
   def rest_get(service)
@@ -31,6 +33,14 @@ class Xldeploy
     uri = URI.parse("#{rest_url}/#{service}")
 
     http = Net::HTTP.new(uri.host, uri.port)
+
+
+    http.use_ssl = ssl
+    unless verify_ssl
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+
+
     request = case method
 
                 when 'get'    then Net::HTTP::Get.new(uri.request_uri)

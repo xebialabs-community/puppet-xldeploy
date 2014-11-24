@@ -31,8 +31,10 @@ class xldeploy::client (
   $gem_use_local                     = $xldeploy::params::gem_use_local,
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
+  $manage_user                       = $xldeploy::params::manage_user,
   $custom_os_user                    = undef,
   $custom_os_group                   = undef,
+  $custom_os_user_home               = undef,
   $cis                               = { } ,
   $memberships                       = { } ,
   $users                             = { } ,
@@ -78,11 +80,19 @@ class xldeploy::client (
       $os_group = $custom_os_group
   }
 
+  if ($custom_os_user_home == undef) {
+      $os_user_home = "/home/${os_user}"
+  } else {
+      $os_user_home = $custom_os_user_home
+  }
+
   anchor    { 'xldeploy::client::begin': }
-  -> class  { 'xldeploy::client::user': }
   -> class  { 'xldeploy::client::gems':}
   -> class  { 'xldeploy::client::config': }
   -> anchor { 'xldeploy::client::end': }
 
+  if ($manage_user == true) {
+    Anchor['xldeploy::client::begin'] -> class {'xldeploy::client::user':} -> Class['xldeploy::client::gems']
+  }
 
 }

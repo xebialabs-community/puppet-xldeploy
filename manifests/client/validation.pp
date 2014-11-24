@@ -17,18 +17,19 @@ class xldeploy::client::validation (
   validate_string($xldeploy::client::version)
   validate_string($xldeploy::client::os_user)
   validate_string($xldeploy::client::os_group)
+  validate_string($xldeploy::client::os_user_home)
   validate_string($xldeploy::client::admin_password)
   validate_string($xldeploy::client::client::importable_packages_path)
   validate_string($xldeploy::client::client_user_password)
   validate_string($xldeploy::client::client_user_password_salt)
 
   # boolean validation
-  validate_bool(str2bool($xldeploy::client::server))
   validate_bool(str2bool($xldeploy::client::ssl))
   validate_bool(str2bool($xldeploy::client::client_sudo))
   validate_bool(str2bool($xldeploy::client::use_exported_resources))
   validate_bool(str2bool($xldeploy::client::use_exported_keys))
   validate_bool(str2bool($xldeploy::client::client_propagate_key))
+  validate_bool(str2bool($xldeploy::client::manage_user))
 
   notice($xldeploy::client::cis)
 
@@ -42,6 +43,7 @@ class xldeploy::client::validation (
   # check validity of this module on the specific system
   case $::osfamily {
     'RedHat' : { }
+    'Debian' : { }
     default  : { fail("operating system ${::operatingsystem} not supported") }
   }
 
