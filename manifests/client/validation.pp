@@ -27,6 +27,7 @@ class xldeploy::client::validation (
   # boolean validation
   validate_bool(str2bool($xldeploy::client::ssl))
   validate_bool(str2bool($xldeploy::client::verifySsl))
+  validate_bool(str2bool($xldeploy::client::os_user_manage))
   validate_bool(str2bool($xldeploy::client::client_sudo))
   validate_bool(str2bool($xldeploy::client::use_exported_resources))
   validate_bool(str2bool($xldeploy::client::use_exported_keys))

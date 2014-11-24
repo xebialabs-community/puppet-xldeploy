@@ -39,6 +39,7 @@ class xldeploy::params {
   $os_user                    = 'xldeploy'
   $os_group                   = 'xldeploy'
   $os_user_home               = '/home/xldeploy'
+  $os_user_manage             = true
   $client_sudo                = true
   $client_user_password       = 'xldeploy'
   $client_user_password_salt  = 'H8kV96rb'

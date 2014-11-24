@@ -250,6 +250,8 @@ usage
 
 ######os_user                           = $xldeploy::params::os_user,
 ######os_group                          = $xldeploy::params::os_group,
+######os_user_home                      = $xldeploy::params::os_user_home,
+######os_user_manage                    = $xldeploy::params::os_iser_manage,
 ######http_bind_address                 = $xldeploy::params::http_bind_address,
 ######http_port                         = $xldeploy::params::http_port,
 ######http_context_root                 = $xldeploy::params::http_context_root,
