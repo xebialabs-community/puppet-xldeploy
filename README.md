@@ -85,10 +85,11 @@ From a potential xldeploy client machine using the module to register a ci in wi
   all in one go:
 
     class{xldeploy::client:
-            http_context_root => '/xldeploy',
+            http_context_root   => '/xldeploy',
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
-            admin_password      => 'dummy',
+            rest_user           => 'admin',
+            rest_password       => 'dummy',
             ssl                 => false,
             cis                 => { 'project_folder' => { name => "/Infrastructure/projectx",
                                                            type => 'core.Directory',
@@ -249,12 +250,16 @@ usage
 
 ######os_user                           = $xldeploy::params::os_user,
 ######os_group                          = $xldeploy::params::os_group,
+######os_user_home                      = $xldeploy::params::os_user_home,
+######os_user_manage                    = $xldeploy::params::os_iser_manage,
 ######http_bind_address                 = $xldeploy::params::http_bind_address,
 ######http_port                         = $xldeploy::params::http_port,
 ######http_context_root                 = $xldeploy::params::http_context_root,
 ######http_server_address               = $xldeploy::params::http_server_address,
 ######ssl                               = $xldeploy::params::ssl,
-######admin_password                    = $xldeploy::params::admin_password,
+######verifySsl                         = $xldeploy::params::verifySsl,
+######rest_user                         = $xldeploy::params::rest_user,
+######rest_password                     = $xldeploy::params::rest_password,
 ######client_sudo                       = $xldeploy::params::client_sudo,
 ######client_user_password              = $xldeploy::params::client_user_password,
 ######client_user_password_salt         = $xldeploy::params::client_user_password_salt,

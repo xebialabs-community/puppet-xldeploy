@@ -86,21 +86,6 @@ class xldeploy::server (
   ) inherits xldeploy::params {
   # composed variables
 
-
-
-  # form the rest url for use throughout the rest of the module
-  if str2bool($::ssl) {
-    $rest_protocol = 'https://'
-  } else {
-    $rest_protocol = 'http://'
-  }
-
-  if $http_context_root == '/' {
-    $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}/deployit"
-  } else {
-    $rest_url = "${rest_protocol}admin:${admin_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
-  }
-
   #we need to support the two different download urls for xldeploy and deployit
   if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
     if versioncmp($version , '3.9.90') > 0 {
