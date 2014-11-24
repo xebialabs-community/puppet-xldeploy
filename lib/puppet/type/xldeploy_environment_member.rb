@@ -96,4 +96,24 @@ Puppet::Type.newtype(:xldeploy_environment_member) do
   newparam(:rest_url, :required_features => ['restclient']) do
     desc 'The rest url for making changes to XL Deploy'
   end
+  newparam(:ssl) do
+    desc 'indicate if ssl should be used'
+
+    defaultto false
+
+    validate do |value|
+      fail 'ssl should be true or false' unless value.is_a? TrueClass or FalseClass
+    end
+  end
+
+  newparam(:verify_ssl) do
+    desc 'if set to true the offerd certificate from the server will always be accepted'
+
+    defaultto true
+
+    validate do |value|
+      fail 'ssl should be true or false' unless value.is_a? TrueClass or FalseClass
+    end
+
+  end
 end

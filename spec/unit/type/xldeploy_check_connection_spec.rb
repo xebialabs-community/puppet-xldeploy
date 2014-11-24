@@ -12,21 +12,12 @@ describe Puppet::Type.type(:xldeploy_check_connection) do
     subject[:ensure].should == :absent
   end
 
-  it 'should accept a hostname' do
-    subject[:host] = "testhost"
-    subject[:host].should == "testhost"
+  it 'should accept a rest_url' do
+    subject[:rest_url] = "http://admin:admin@localhost:4516/deployit"
+    subject[:rest_url].should == "http://admin:admin@localhost:4516/deployit"
   end
 
-  it 'should fail when port gets passed a string' do
-    expect  { subject[:port] = 'crap_in_a_box' }.to raise_error(Puppet::ResourceError)
-  end
 
-  it 'should run when port gets passed an integer or a integer masked as a string' do
-    subject[:port] = 4516
-    subject[:port].should == 4516
-    subject[:port] = "4516"
-    subject[:port].should == 4516
-  end
   it 'should run when timeout gets passed an integer or a integer masked as a string' do
     subject[:timeout] = 40
     subject[:timeout].should == 40

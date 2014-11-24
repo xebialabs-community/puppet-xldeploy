@@ -8,6 +8,8 @@ class xldeploy::server::post_config (
   $use_exported_resources = $xldeploy::server::use_exported_resources,
   $use_exported_keys      = $xldeploy::server::use_exported_keys,
   $cis                    = $xldeploy::server::cis,
+  $ssl                    = $xldeploy::server::ssl,
+  $verify_ssl             = $xldeploy::server::verify_ssl,
   $memberships            = $xldeploy::server::memberships,
   $users                  = $xldeploy::server::users,
   $roles                  = $xldeploy::server::roles,

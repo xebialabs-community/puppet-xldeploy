@@ -10,14 +10,16 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
     
     # check the input . we can handle 2 arguments
     raise(Puppet::ParseError, "to_xldeploy_md5(): Wrong number of arguments " +
-      "given (#{arguments.length} for 2)") if arguments.length < 2 
+      "given (#{arguments.length} for at least 2)") if arguments.length < 2
     raise(Puppet::ParseError, "to_xldeploy_md5(): Wrong number of arguments " +
-      "given (#{arguments.length} for 2)") if arguments.length > 2
+      "given (#{arguments.length} for 4)") if arguments.length > 4
 
 
 
     passwordString  = arguments[0]
     restUrl         = arguments[1]
+    ssl             = arguments[2]
+    verify_ssl      = arguments[3]
 
     # this bit added for spec testing purposes ..
     baseDir         = Puppet[:vardir]
@@ -43,7 +45,7 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
 
       # check if deployit is reachable
 
-      pw = Password.new(restUrl, passwordString)
+      pw = Password.new(restUrl, passwordString, ssl, verify_ssl)
 
       if pw.reachable?
         # if so .. do the translate thingy

@@ -24,7 +24,7 @@ class xldeploy::params {
   $xldeploy_base_dir  = '/opt'
   $xldeploy_init_repo = true
   $ssl                      = false
-  $verifySsl                = true
+  $verify_ssl               = true
   $http_bind_address        = '0.0.0.0'
   $http_server_address      = $::fqdn
   $http_port                = '4516'

@@ -70,6 +70,8 @@ class xldeploy::server (
   $gem_hash                          = $xldeploy::params::gem_hash,
   $gem_array                         = $xldeploy::params::gem_array,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
+  $ssl                               = $xldeploy::params::ssl,
+  $verify_ssl                        = $xldeploy::params::verify_ssl,
   $custom_productname                = undef,
   $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef,
@@ -130,8 +132,20 @@ class xldeploy::server (
   } else {
       $os_group = $custom_os_group
   }
-  
-  
+
+  if str2bool($::ssl) {
+    $rest_protocol = 'https://'
+    # Check certificate validation
+    $verify_ssl = str2bool($::verify_ssl)
+  } else {
+    $rest_protocol = 'http://'
+  }
+
+  if $http_context_root == '/' {
+    $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}/deployit"
+  } else {
+    $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
+  }
   
   $base_dir            = "${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"

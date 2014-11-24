@@ -19,7 +19,7 @@ describe 'xldeploy::server::post_config' do
         :dictionary_settings    => {},
     } }
 
-      it {should contain_xldeploy_check_connection('default').with_host('192.168.0.1').with_port('4516')}
+      it {should contain_xldeploy_check_connection('default').with_rest_url('http://localhost:4516/deployit')}
   end
 
   context 'with cis specified' do
