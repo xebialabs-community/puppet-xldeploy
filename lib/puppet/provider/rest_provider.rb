@@ -29,9 +29,9 @@ class Puppet::Provider::XLDeployRestProvider < Puppet::Provider
 
     http = Net::HTTP.new(uri.host, uri.port)
     # Ssl settings
-    if str2bool("#{resource[:ssl]}") == true
+    if resource[:ssl] == true
       http.use_ssl = true
-      unless str2bool("#{resource[:verifySsl]}") == true
+      unless resource[:verify_ssl] == true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
