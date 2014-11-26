@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), 'xldeploy')
 
 class Ci < Xldeploy
 
-  attr_accessor :desired_properties, :id, :type
+  attr_accessor :desired_properties, :id, :type, :ssl, :verify_ssl
 
   #initialize the ci
   # pass the rest_url for communication to xldeploy
@@ -15,6 +15,8 @@ class Ci < Xldeploy
     @id   = id
     @type = type
     @desired_properties = properties
+    @ssl = ssl
+    @verify_ssl = verify_ssl
     super(rest_url, ssl, verify_ssl)
   end
 
@@ -77,7 +79,7 @@ class Ci < Xldeploy
     # check if the parent tree parent of this ci exists.
 
     # get the parent name
-    parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory')
+    parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory', ssl = false, verify_ssl = true)
     # if the parent exists do nothing
     unless parent.exists?
       parent.persist
