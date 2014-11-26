@@ -1,4 +1,5 @@
 require 'puppet/type'
+require 'pathname'
 
 Puppet::Type.newtype :xldeploy_environment do
   @doc = 'Manage an udm.Environment CI on XlDeploy Server.'
@@ -58,6 +59,15 @@ Puppet::Type.newtype :xldeploy_environment do
 
   autorequire(:server) do
     self[:server]
+  end
+
+  autorequire(:xldeploy_container) do
+    self[:containers]
+  end
+
+  autorequire(:xldeploy_directory) do
+    #Parent directory is auto-required.
+    [Pathname.new(self[:id]).dirname.to_s]
   end
 
 

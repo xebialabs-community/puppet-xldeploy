@@ -1,4 +1,5 @@
 require 'puppet/type'
+require 'pathname'
 
 Puppet::Type.newtype :xldeploy_dictionary do
   @doc = 'Manage a Dictionary on XLDeploy Server.'
@@ -34,6 +35,20 @@ Puppet::Type.newtype :xldeploy_dictionary do
   autorequire(:server) do
     self[:server]
   end
+
+  autorequire(:xldeploy_container) do
+    self[:restrict_to_containers]
+  end
+
+  autorequire(:xldeploy_environment) do
+    self[:environments]
+  end
+
+  autorequire(:xldeploy_directory) do
+    #Parent directory is auto-required.
+    [Pathname.new(self[:id]).dirname.to_s]
+  end
+
 
   ensurable do
     defaultvalues

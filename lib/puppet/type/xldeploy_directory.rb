@@ -1,4 +1,5 @@
 require 'puppet/type'
+require 'pathname'
 
 Puppet::Type.newtype :xldeploy_directory do
   @doc = 'a core.Directory on XlDeploy Server.'
@@ -20,6 +21,12 @@ Puppet::Type.newtype :xldeploy_directory do
     defaultvalues
     defaultto :present
   end
+
+  autorequire(:xldeploy_directory) do
+    #Parent directory is auto-required.
+    [Pathname.new(self[:id]).dirname.to_s]
+  end
+
 
 end
 

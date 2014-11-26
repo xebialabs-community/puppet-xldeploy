@@ -1,4 +1,5 @@
 require 'puppet/type'
+require 'pathname'
 
 Puppet::Type.newtype :xldeploy_container do
   @doc = 'Manage an udm.Container on XL Deploy Server.'
@@ -50,6 +51,20 @@ Puppet::Type.newtype :xldeploy_container do
 
   autorequire(:server) do
     self[:server]
+  end
+
+  autorequire(:xldeploy_environment) do
+    self[:environments]
+  end
+
+  autorequire(:xldeploy_directory) do
+    #Parent directory is auto-required.
+    [Pathname.new(self[:id]).dirname.to_s]
+  end
+
+  autorequire(:xldeploy_container) do
+    #Parent container is auto-required.
+    [Pathname.new(self[:id]).dirname.to_s]
   end
 
   ensurable do
