@@ -9,7 +9,7 @@ Puppet::Type.type(:xldeploy_user).provide :rest  do
   end
 
   def destroy
-    user.delete
+    user.destroy
   end
 
   def exists?
