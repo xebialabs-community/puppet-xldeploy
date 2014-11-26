@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'net/http'
 require 'rexml/document'
+require 'pp'
 
 class Xldeploy
 
@@ -29,7 +30,6 @@ class Xldeploy
   end
 
   def execute_rest(service, method, body='')
-
     uri = URI.parse("#{rest_url}/#{service}")
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -67,6 +67,8 @@ class Xldeploy
 
     output = rest_get("metadata/type/#{type}")
     doc = REXML::Document.new output
+
+
     Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
@@ -86,8 +88,8 @@ class Xldeploy
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
-
       property = root.add_element(key)
+
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
       case type_description(type)[key].attributes['kind']
         when 'SET_OF_STRING', 'LIST_OF_STRING'
@@ -177,6 +179,17 @@ class Xldeploy
     return false
   end
 
+  def ci_exists?(ci)
+    xml = rest_get "repository/exists/#{ci}"
+    doc = REXML::Document.new xml
+    return doc.elements[1].text == 'true'
+  end
+
+  def get_ci_type(id)
+    output = rest_get("repository/ci/#{id}")
+    doc = REXML::Document.new output
+    doc.root.name
+  end
 
 end
 

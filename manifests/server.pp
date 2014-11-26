@@ -144,8 +144,13 @@ class xldeploy::server (
   if $http_context_root == '/' {
     $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}/deployit"
   } else {
-    $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
+    if $http_context_root =~ /^\// {
+      $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}${http_context_root}/deployit"
+    } else {
+      $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}/${http_context_root}/deployit"
+    }
   }
+  
   
   $base_dir            = "${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"
