@@ -14,7 +14,6 @@ Puppet::Type.type(:xldeploy_user).provide :rest  do
 
   def exists?
     user.exists?
-    end
   end
 
   private
