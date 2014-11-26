@@ -21,7 +21,7 @@ Puppet::Type.newtype(:xldeploy_user) do
     desc 'Password of the user'
   end
 
-  newparam(:rest_url, :required_features => ['restclient']) do
+  newparam(:rest_url) do
     desc 'The rest url for making changes to XL Deploy'
   end
 
