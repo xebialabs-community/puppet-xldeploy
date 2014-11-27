@@ -66,6 +66,9 @@ class Xldeploy
     output = rest_get("metadata/type/#{type}")
     p output
     doc = REXML::Document.new output
+    p doc
+
+    p Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
     Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
