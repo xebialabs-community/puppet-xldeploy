@@ -81,9 +81,13 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
   def to_hash(input)
     doc = REXML::Document.new input
     data_hash = {}
+    string_array = []
     doc.elements.each("/*/*") do |prop|
-      data_hash[prop.name] = prop.text
+      if prop.name == 'string'
+        string_array << prop.text
+      end
     end
+    data_hash['string'] = string_array 
   end
   private
   def xldeploy
