@@ -4,21 +4,16 @@ require 'puppet_x/xebialabs/xldeploy/xldeploy.rb'
 
 Puppet::Type.type(:xldeploy_role).provide :rest do
 
-  def initialize(args)
-    p args
-    @xldeploy = Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
-  end
-
   def create
-    @xldeploy.rest_put("security/role/#{resource[:id]}")
+    xldeploy.rest_put("security/role/#{resource[:id]}")
   end
 
   def destroy
-    @xldeploy.rest_delete "security/role/#{resource[:id]}"
+    xldeploy.rest_delete "security/role/#{resource[:id]}"
   end
 
   def exists?
-    response = @xldeploy.rest_get "security/role"
+    response = xldeploy.rest_get "security/role"
     if to_hash(response).has_key?('string')
       return true if to_hash(response)['string'].include? resource[:id]
     end
@@ -62,23 +57,27 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
 
   #private
  def has_role(user,role)
-    response = @xldeploy.rest_get("security/role/roles/#{user}")
+    response = xldeploy.rest_get("security/role/roles/#{user}")
     return true if response =~ /#{role}/
     return false
   end
 
  def assign_role(user,role)
-    @xldeploy.rest_put("security/role/#{role}/#{user}")
+    xldeploy.rest_put("security/role/#{role}/#{user}")
  end
 
   def has_permission(ci,role,permission)
-    response = @xldeploy.rest_get("security/permission/#{URI.escape(permission)}/#{role}/#{ci}")
+    response = xldeploy.rest_get("security/permission/#{URI.escape(permission)}/#{role}/#{ci}")
     return true if response =~ /true/
     return false
   end
 
   def set_permission(ci,role,permission)
-    @xldeploy.rest_put("security/permission/#{URI.escape(permission)}/#{role}/#{ci}")
+    xldeploy.rest_put("security/permission/#{URI.escape(permission)}/#{role}/#{ci}")
   end
-
+  
+  private
+  def xldeploy
+    Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
+  end
 end
