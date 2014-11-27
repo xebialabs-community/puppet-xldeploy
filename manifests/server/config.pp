@@ -9,6 +9,7 @@ class xldeploy::server::config (
   $os_user                           = $xldeploy::server::os_user,
   $os_group                          = $xldeploy::server::os_group,
   $ssl                               = $xldeploy::server::ssl,
+  $verify_ssl                        = $xldeploy::server::verify_ssl,
   $http_bind_address                 = $xldeploy::server::http_bind_address,
   $http_port                         = $xldeploy::server::http_port,
   $http_context_root                 = $xldeploy::server::http_context_root,
@@ -82,7 +83,7 @@ class xldeploy::server::config (
   ini_setting {
     'xldeploy.admin.password':
       setting => 'admin.password',
-      value   => to_xldeploy_md5($admin_password, $rest_url);
+      value   => to_xldeploy_md5($admin_password, $rest_url, $ssl, $verify_ssl);
 
     'xldeploy.http.port':
       setting => 'http.port',
