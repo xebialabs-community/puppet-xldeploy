@@ -87,7 +87,8 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
         string_array << prop.text
       end
     end
-    data_hash['string'] = string_array 
+    data_hash['string'] = string_array
+    return data_hash
   end
   private
   def xldeploy
