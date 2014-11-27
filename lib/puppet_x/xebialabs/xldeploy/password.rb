@@ -4,8 +4,8 @@ class Password < Xldeploy
 
   attr_accessor :translated, :plain_text
 
-  def initialize(rest_url, plain_text)
-    super(rest_url)
+  def initialize(rest_url, plain_text, ssl, verify_ssl)
+    super(rest_url, ssl, verify_ssl)
     @plain_text = plain_text
     @translated = translate
   end

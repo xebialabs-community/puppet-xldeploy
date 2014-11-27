@@ -18,8 +18,8 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
 
     passwordString  = arguments[0]
     restUrl         = arguments[1]
-    ssl             = arguments[2]
-    verify_ssl      = arguments[3]
+    ssl             = arguments[2] || false
+    verify_ssl      = arguments[3] || true
 
     # this bit added for spec testing purposes ..
     baseDir         = Puppet[:vardir]

@@ -79,7 +79,6 @@ class xldeploy::server::config (
     path   => "${server_home_dir}/conf/deployit-defaults.properties",
   }
 
-
   ini_setting {
     'xldeploy.admin.password':
       setting => 'admin.password',
