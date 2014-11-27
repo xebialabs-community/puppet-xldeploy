@@ -84,7 +84,11 @@ class Xldeploy
 
 
   def to_xml(id, type, properties)
+    p id
+    p type
+    p properties
     p "to_xml"
+    p type_description(type)
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
