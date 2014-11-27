@@ -75,7 +75,16 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
   def set_permission(ci,role,permission)
     xldeploy.rest_put("security/permission/#{URI.escape(permission)}/#{role}/#{ci}")
   end
-  
+
+  def to_hash(input)
+    doc = REXML::Document.new input
+    data_hash = {}
+
+    doc.elements.each("/*/*") do |prop|
+      p prop
+    end
+
+  end
   private
   def xldeploy
     Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
