@@ -14,7 +14,6 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
 
   def exists?
     response = xldeploy.rest_get "security/role"
-    p to_hash(response)
     if to_hash(response).has_key?('string')
 
       return true if to_hash(response)['string'].include? resource[:id]
@@ -90,6 +89,7 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
     data_hash['string'] = string_array
     return data_hash
   end
+
   private
   def xldeploy
     Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
