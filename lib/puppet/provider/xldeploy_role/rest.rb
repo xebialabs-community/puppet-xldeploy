@@ -4,7 +4,8 @@ require 'puppet_x/xebialabs/xldeploy/xldeploy.rb'
 
 Puppet::Type.type(:xldeploy_role).provide :rest do
 
-  def initialize
+  def initialize(args)
+    p args
     @xldeploy = Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
   end
 
