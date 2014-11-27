@@ -84,6 +84,7 @@ class Xldeploy
 
 
   def to_xml(id, type, properties)
+    p "to_xml"
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
@@ -112,6 +113,7 @@ class Xldeploy
       end
 
     end unless properties.nil?
+    p "to_xml end"
     doc.to_s()
   end
 
