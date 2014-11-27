@@ -1,7 +1,6 @@
 require 'open-uri'
 require 'net/http'
 require 'rexml/document'
-require 'pp'
 
 class Xldeploy
 

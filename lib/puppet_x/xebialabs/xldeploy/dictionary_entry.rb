@@ -31,7 +31,7 @@ class Dictionary_entry < Xldeploy
   def persist
 
     @dictionary_content = get_dictionary_entries
-    
+
     unless value_correct?
       @dictionary_content[key_name] = value
     end
@@ -43,6 +43,20 @@ class Dictionary_entry < Xldeploy
     else
       rest_post "repository/ci/#{dictionary}", dict_xml
     end
+  end
+
+  def destroy
+    @dictionary_content = get_dictionary_entries
+
+    if key_exists?
+      @dictionary_content.delete(key_name)
+    end
+
+    dict_xml = to_xml(dictionary, dictionary_type, {'entries' => @dictionary_content})
+
+
+    rest_put "repository/ci/#{dictionary}", dict_xml
+
   end
 
   def dictionary
@@ -81,6 +95,15 @@ class Dictionary_entry < Xldeploy
     if dictionary_exists?
       if key_exists?
          dictionary_content.each {|k,v| return true if k == key_name and v == value } unless dictionary_content.empty?
+      end
+    end
+    return false
+  end
+
+  def current_value
+    if dictionary_exists?
+      if key_exists?
+        return dictionary_content[key_name]
       end
     end
     return false

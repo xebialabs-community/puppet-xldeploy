@@ -3,7 +3,6 @@ require 'pathname'
 Puppet::Type.newtype(:xldeploy_role_permission) do
   @doc = 'Manage a XL Deploy Role'
 
-  feature :restclient, 'Use REST to update XL Deploy repository'
 
   autorequire (:class) do
     'xldeploy'
@@ -40,7 +39,7 @@ Puppet::Type.newtype(:xldeploy_role_permission) do
     desc 'The permissions this role has specified on this ci'
   end
 
-  newparam(:rest_url, :required_features => ['restclient']) do
+  newparam(:rest_url) do
     desc 'The rest url for making changes to XL Deploy'
   end
   newparam(:ssl) do

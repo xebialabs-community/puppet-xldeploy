@@ -4,50 +4,48 @@ require File.join(File.dirname(__FILE__), 'xldeploy')
 
 class Ci < Xldeploy
 
-  attr_accessor :desired_properties, :id, :type, :ssl, :verify_ssl
+  attr_accessor :desired_properties, :id, :type
 
   #initialize the ci
   # pass the rest_url for communication to xldeploy
   # id is the id in the xldeploy repo
   # type is the type of the ci
   # properties is optional.. these represent the properties in xldeploy if needed
-  def initialize(rest_url,id,type, properties={}, ssl, verify_ssl)
+  def initialize(rest_url,id,type, properties={})
+    super(rest_url)
     @id   = id
     @type = type
     @desired_properties = properties
-    @ssl = ssl
-    @verify_ssl = verify_ssl
-    super(rest_url, ssl, verify_ssl)
   end
 
   # check wheter the ci already exists in xldeploy
   def exists?
-    xml = rest_get "repository/exists/#{@id}"
+    xml = rest_get "repository/exists/#{id}"
     return xml =~ /true/
   end
 
   # return the actual properties the ci has in xldeploy
   # this construct makes sure the propertys are only
-  # def actual_properties
-  #   @actual_properties || @actual_properties = get_actual_properties
-  # end
+  def actual_properties
+    @actual_properties || @actual_properties = get_actual_properties
+  end
 
   # fetch the actual properties if needed
-  def actual_properties
+  def get_actual_properties
     xml = actual_xml
     return {} if xml.nil?
     to_hash(xml)
   end
 
   # return the actual xml of the xldeploy ci
-  # def actual_xml
-  #   @actual_xml || @actual_xml = get_actual_xml
-  # end
+  def actual_xml
+    @actual_xml || @actual_xml = get_actual_xml
+  end
 
   # fetch the actual xml from xldeploy
-  def actual_xml
+  def get_actual_xml
     if exists?
-      rest_get "repository/ci/#{@id}"
+      rest_get "repository/ci/#{id}"
     else
       nil
     end
@@ -55,31 +53,27 @@ class Ci < Xldeploy
 
   # translate the desired properties into xml
   def desired_xml
-    to_xml(@id, @type, @desired_properties)
+    to_xml(id, type, desired_properties)
   end
 
   # persist the ci to xldeploy
   def persist
-
     ensure_parent_directory
     if exists?
-      rest_put "repository/ci/#{@id}", desired_xml
+      rest_put "repository/ci/#{id}", desired_xml
     else
-      rest_post "repository/ci/#{@id}", desired_xml
+      rest_post "repository/ci/#{id}", desired_xml
     end
   end
 
-  # destroy's the ci in xldeploy
-  def destroy
-    rest_delete "repository/ci/#{@id}"
-  end
 
   # make sure the ci's parent structure is in place
   def ensure_parent_directory
     # check if the parent tree parent of this ci exists.
 
     # get the parent name
-    parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory', ssl = false, verify_ssl = true)
+    parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory')
+
     # if the parent exists do nothing
     unless parent.exists?
       parent.persist
