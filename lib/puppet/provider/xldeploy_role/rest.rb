@@ -80,8 +80,11 @@ Puppet::Type.type(:xldeploy_role).provide :rest do
 
   def to_hash(input)
     doc = REXML::Document.new input
-    p doc.elements
-    p doc.elements['string'].text
+   
+    doc.elements.each("/*/*") do |prop|
+      p prop.name
+      p prop.text
+    end
     {'string' => doc.elements['string'].text}
   end
   private
