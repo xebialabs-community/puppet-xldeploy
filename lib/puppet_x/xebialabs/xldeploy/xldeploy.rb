@@ -117,6 +117,7 @@ class Xldeploy
 
 
   def to_hash(input, output='properties')
+    p "to_hash"
     doc = REXML::Document.new input
     data_hash = { 'name' => doc.root.name , 'id' => doc.root.attributes["id"], 'properties' => {}}
     pd=type_description(doc.root.name)
@@ -155,6 +156,7 @@ class Xldeploy
         end
       end
     end
+    p "to_hash_end"
     data_hash["#{output}"]
   end
 
