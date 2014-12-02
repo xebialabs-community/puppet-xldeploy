@@ -42,7 +42,7 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
     cache = {} if cache == nil
 
     unless cache.has_key?(passwordString)
-
+      p "testing to_xldeploy_md5"
       # check if deployit is reachable
 
       pw = Password.new(restUrl, passwordString, ssl, verify_ssl)
