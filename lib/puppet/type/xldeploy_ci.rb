@@ -11,7 +11,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
   end
 
   autorequire(:class) do
-    'xldeploy'
+    'xldeploy::client'
   end
 
   autorequire(:xldeploy_ci) do
@@ -51,6 +51,11 @@ Puppet::Type.newtype(:xldeploy_ci) do
     validate do |value|
      raise Puppet::Error, "Invalid id: #{value}" unless value =~ /^(Applications|Environments|Infrastructure|Configuration)\/.+$/
     end
+
+    validate do |value|
+     raise Puppet::Error, "Invalid id: #{value}. It shouldn't start with a /" if value =~ /^\//
+    end
+
   end
 
   newparam(:type) do
@@ -61,9 +66,6 @@ Puppet::Type.newtype(:xldeploy_ci) do
     desc 'Properties of the CI'
 
     defaultto({})
-
-
-
 
     validate do |value|
       raise Puppet::Error, "Invalid properties: #{value}, expected a hash" unless value.is_a? Hash

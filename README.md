@@ -93,7 +93,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
             ssl                 => false,
             cis                 => { 'project_folder' => { name => "/Infrastructure/projectx",
                                                            type => 'core.Directory',
-                                                           remove_when_expired => 'true'},
+                                                           },
                                      'host' => { name => "/Infrastructure/projectx/${hostname}_sshHost",
                                                  type => 'overthere.SshHost',
                                                  properties => { 'os' => 'UNIX',
