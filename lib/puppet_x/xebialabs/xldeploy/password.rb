@@ -2,12 +2,11 @@ require File.join(File.dirname(__FILE__), 'xldeploy')
 
 class Password < Xldeploy
 
-  attr_accessor :translated, :plain_text
+  attr_accessor :plain_text
 
   def initialize(rest_url, plain_text, ssl, verify_ssl)
     super(rest_url, ssl, verify_ssl)
     @plain_text = plain_text
-    # @translated = translate
   end
 
   def translate
@@ -17,9 +16,9 @@ class Password < Xldeploy
 
       #compose the xml
       xml = to_xml(tmpDict, deployitType, {'entries' => { plain_text => plain_text} })
-      p xml
+
       # create the dictionary in deployit
-      p rest_post("repository/ci/#{tmpDict}", xml)
+      rest_post("repository/ci/#{tmpDict}", xml)
 
       # get the dictionary from deployit
       xml = rest_get("repository/ci/#{tmpDict}")
