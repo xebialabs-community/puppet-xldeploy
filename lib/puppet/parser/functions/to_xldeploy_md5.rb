@@ -48,6 +48,7 @@ require File.join(File.dirname(__FILE__),'../../../puppet_x/xebialabs/xldeploy/'
       pw = Password.new(restUrl, passwordString, ssl, verify_ssl)
 
       if pw.reachable?
+        p "reachable"
         # if so .. do the translate thingy
         hashedPassword = pw.translate
 
