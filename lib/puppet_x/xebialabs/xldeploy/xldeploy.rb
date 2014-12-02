@@ -156,7 +156,7 @@ class Xldeploy
   end
 
   def reachable?
-
+    p "testing reachable"
     uri = URI(rest_url)
 
     begin
