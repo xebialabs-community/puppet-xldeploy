@@ -7,6 +7,8 @@ class Xldeploy
   attr_accessor :rest_url, :ssl , :verify_ssl
 
   def initialize(rest_url, ssl = false, verify_ssl = true)
+    p rest_url
+
     @rest_url   = rest_url
     @verify_ssl = verify_ssl
     @ssl        = ssl

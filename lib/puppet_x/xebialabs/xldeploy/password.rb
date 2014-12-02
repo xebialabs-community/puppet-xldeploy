@@ -17,9 +17,9 @@ class Password < Xldeploy
 
       #compose the xml
       xml = to_xml(tmpDict, deployitType, {'entries' => { plain_text => plain_text} })
-
+      p xml
       # create the dictionary in deployit
-      rest_post("repository/ci/#{tmpDict}", xml)
+      p rest_post("repository/ci/#{tmpDict}", xml)
 
       # get the dictionary from deployit
       xml = rest_get("repository/ci/#{tmpDict}")
