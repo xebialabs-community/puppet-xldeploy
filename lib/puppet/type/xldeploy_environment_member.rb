@@ -3,7 +3,6 @@ require 'pathname'
 Puppet::Type.newtype(:xldeploy_environment_member) do
   @doc = 'Manage XL Deploy Environment members'
 
-  feature :restclient, 'Use REST to update XL Deploy repository'
 
   ensurable do
     defaultvalues
@@ -93,7 +92,7 @@ Puppet::Type.newtype(:xldeploy_environment_member) do
 
   end
 
-  newparam(:rest_url, :required_features => ['restclient']) do
+  newparam(:rest_url) do
     desc 'The rest url for making changes to XL Deploy'
   end
   newparam(:ssl) do

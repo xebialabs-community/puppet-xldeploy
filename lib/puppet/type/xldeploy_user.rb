@@ -1,8 +1,7 @@
 Puppet::Type.newtype(:xldeploy_user) do
   @doc = 'Manage a XL Deploy User'
 
-  feature :restclient, 'Use REST to update XL Deploy repository'
-
+  
   ensurable do
     defaultvalues
     defaultto :present
