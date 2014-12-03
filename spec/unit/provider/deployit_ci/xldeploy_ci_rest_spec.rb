@@ -1,10 +1,7 @@
 require 'puppet'
 require 'rubygems'
-require 'xmlsimple'
-require 'rest_client'
 require 'pathname'
 require 'puppet/type/xldeploy_ci'
-
 describe 'The rest provider for the xldeploy_ci type' do
   id   = 'Infrastructure/TestHost'
   parent = 'Infrastructure'
@@ -80,22 +77,22 @@ describe 'The rest provider for the xldeploy_ci type' do
   let (:provider) { Puppet::Type.type(:xldeploy_ci).provider(:rest).new(resource) }
 
   it 'exists? should return true if repo exists' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url,
-                                'get').and_return(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url,
+                                'get').returns(xml_true_response)
     provider.exists?.should == true
   end
 
   it 'exists? should return false if repo doesnt exist' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url,
-                                'get').and_return(xml_false_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url,
+                                'get').returns(xml_false_response)
     provider.exists?.should == false
   end
 
   it 'create should try to determine if the parent ci for this ci exists' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_parent_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url, 'get').and_return(xml_false_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(type_description_url, 'get').and_return(xml_type_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(create_url, 'post', xml_response).and_return(xml_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_parent_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url, 'get').returns(xml_false_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(type_description_url, 'get').returns(xml_type_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(create_url, 'post', xml_response).returns(xml_response)
     provider.create
   end
 
@@ -103,35 +100,35 @@ describe 'The rest provider for the xldeploy_ci type' do
 
     resource[:discovery] = true
 
-    Xldeploy.any_instance.stub(:execute_rest).with(inspection_prepare_url, 'post', xml_response).and_return(xml_inspection_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(inspection_url, 'post', xml_inspection_response).and_return(inspection_id)
-    Xldeploy.any_instance.stub(:execute_rest).with(start_task_url, 'post', '')
-    Xldeploy.any_instance.stub(:execute_rest).with(check_task_url, 'get').and_return(xml_task_state_executed)
-    Xldeploy.any_instance.stub(:execute_rest).with(archive_task_url, 'post', '')
-    Xldeploy.any_instance.stub(:execute_rest).with(inspection_retrieve_url, 'get').and_return(xml_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_parent_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(create_cis_url, 'post', xml_response).and_return(xml_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(inspection_prepare_url, 'post', xml_response).returns(xml_inspection_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(inspection_url, 'post', xml_inspection_response).returns(inspection_id)
+    Xldeploy.any_instance.stubs(:execute_rest).with(start_task_url, 'post', '')
+    Xldeploy.any_instance.stubs(:execute_rest).with(check_task_url, 'get').returns(xml_task_state_executed)
+    Xldeploy.any_instance.stubs(:execute_rest).with(archive_task_url, 'post', '')
+    Xldeploy.any_instance.stubs(:execute_rest).with(inspection_retrieve_url, 'get').returns(xml_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_parent_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(create_cis_url, 'post', xml_response).returns(xml_response)
     provider.create
   end
 
 
   it 'destroy should try to destroy the ci ' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(create_url, 'delete').and_return(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(create_url, 'delete').returns(xml_true_response)
     provider.destroy
   end
 
   it 'should return the actual properties wich should not be equal to the properties given' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(type_description_url, 'get').and_return(xml_type_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(create_url, 'get').and_return(xml_invalid_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(type_description_url, 'get').returns(xml_type_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(create_url, 'get').returns(xml_invalid_response)
     provider.properties != properties
   end
 
   it 'should pass the correct xml to rest put when properties need amending' do
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_parent_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(exists_url, 'get').and_return(xml_true_response)
-    Xldeploy.any_instance.stub(:execute_rest).with(create_url,'put', xml_response).and_return(xml_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_parent_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(exists_url, 'get').returns(xml_true_response)
+    Xldeploy.any_instance.stubs(:execute_rest).with(create_url,'put', xml_response).returns(xml_response)
     provider.properties= properties
   end
 end

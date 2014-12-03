@@ -8,6 +8,6 @@ RSpec.configure do |c|
 
   # Readable test descriptions
   c.formatter = :documentation
-
+  c.mock_with :rspec
 end
 
