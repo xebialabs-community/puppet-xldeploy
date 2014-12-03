@@ -26,7 +26,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
 
       resource[:properties][k] = v unless resource[:properties].keys.include? k
 
-      if (resource[:type] == 'udm.Dictionary')( resource[:type] == 'udm.EncryptedDictionary') and ( k == 'entries' )
+      if (resource[:type] == 'udm.Dictionary') or ( resource[:type] == 'udm.EncryptedDictionary') and ( k == 'entries' )
        v.each {|key, value|
          resource[:properties][k][key] = value unless resource[:properties][k].keys.include? key
        } if resource[:properties].keys.include? k
