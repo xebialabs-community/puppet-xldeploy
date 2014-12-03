@@ -42,6 +42,7 @@ Puppet::Type.newtype(:xldeploy_role_permission) do
   newparam(:rest_url) do
     desc 'The rest url for making changes to XL Deploy'
   end
+
   newparam(:ssl) do
     desc 'indicate if ssl should be used'
 
