@@ -49,11 +49,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
     desc 'The ID/path of the CI'
 
     validate do |value|
-     raise Puppet::Error, "Invalid id: #{value}" unless value =~ /^(Applications|Environments|Infrastructure|Configuration)\/.+$/
-    end
-
-    validate do |value|
      raise Puppet::Error, "Invalid id: #{value}. It shouldn't start with a /" if value =~ /^\//
+     raise Puppet::Error, "Invalid id: #{value}" unless value =~ /^(Applications|Environments|Infrastructure|Configuration)\/.+$/
     end
 
   end

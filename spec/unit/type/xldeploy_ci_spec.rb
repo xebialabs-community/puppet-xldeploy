@@ -27,7 +27,8 @@ describe Puppet::Type.type(:xldeploy_ci) do
     subject[:id].should == 'Configuration/test'
   end
 
-  it 'should raise an error whe a invalid id is given' do
+  it 'should raise an error when an invalid id is given' do
+    expect  { subject[:id] = '/crap_in_a_box' }.to raise_error(Puppet::ResourceError)
     expect  { subject[:id] = 'crap_in_a_box' }.to raise_error(Puppet::ResourceError)
   end
 
