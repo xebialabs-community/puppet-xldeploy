@@ -88,7 +88,7 @@ class xldeploy::client (
   -> anchor { 'xldeploy::client::end': }
 
   if ($manage_user == true) {
-    Anchor['xldeploy::client::begin'] -> class {'xldeploy::client::user':} -> Class['xldeploy::client::gems']
+    Anchor['xldeploy::client::begin'] -> class {'xldeploy::client::user':} -> Class['xldeploy::client::config']
   }
 
 }
