@@ -3,8 +3,6 @@ require 'rubygems'
 require 'pathname'
 require 'puppet/type/xldeploy_ci'
 
-RSpec.configure {|config| config.mock_with :rspec }
-
 describe 'The rest provider for the xldeploy_ci type' do
   id   = 'Infrastructure/TestHost'
   parent = 'Infrastructure'
