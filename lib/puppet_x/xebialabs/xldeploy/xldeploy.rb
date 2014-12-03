@@ -156,7 +156,6 @@ class Xldeploy
   end
 
   def reachable?
-    p "testing reachable"
     uri = URI(rest_url)
 
     begin
@@ -166,7 +165,6 @@ class Xldeploy
           s.close
           return true
         rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-          p "not reachable"
           return false
         end
       end

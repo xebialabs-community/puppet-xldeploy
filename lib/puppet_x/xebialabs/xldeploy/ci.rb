@@ -11,7 +11,7 @@ class Ci < Xldeploy
   # id is the id in the xldeploy repo
   # type is the type of the ci
   # properties is optional.. these represent the properties in xldeploy if needed
-  def initialize(rest_url,id,type, properties={}, ssl, verify_ssl)
+  def initialize(rest_url, id, type, properties={}, ssl=false, verify_ssl=true)
     super(rest_url, ssl, verify_ssl)
     @id   = id
     @type = type
