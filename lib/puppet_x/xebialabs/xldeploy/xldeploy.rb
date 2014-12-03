@@ -166,6 +166,7 @@ class Xldeploy
           s.close
           return true
         rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          p "not reachable"
           return false
         end
       end
