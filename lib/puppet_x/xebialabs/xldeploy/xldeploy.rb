@@ -33,7 +33,6 @@ class Xldeploy
 
     http = Net::HTTP.new(uri.host, uri.port)
 
-
     http.use_ssl = ssl
     unless verify_ssl
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE

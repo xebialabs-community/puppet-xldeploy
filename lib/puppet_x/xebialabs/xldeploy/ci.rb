@@ -21,7 +21,7 @@ class Ci < Xldeploy
   # check wheter the ci already exists in xldeploy
   def exists?
     xml = rest_get "repository/exists/#{id}"
-    return xml =~ /true/
+    !!(xml =~ /true/)
   end
 
   # return the actual properties the ci has in xldeploy
@@ -63,6 +63,12 @@ class Ci < Xldeploy
       rest_put "repository/ci/#{id}", desired_xml
     else
       rest_post "repository/ci/#{id}", desired_xml
+    end
+  end
+
+  def destroy
+    if exists?
+      rest_delete "repository/ci/#{id}"
     end
   end
 
