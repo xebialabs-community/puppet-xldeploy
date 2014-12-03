@@ -2,7 +2,7 @@ require 'uri'
 require 'puppet_x/xebialabs/xldeploy/xldeploy.rb'
 
 
-Puppet::Type.type(:xldeploy_role_permission).provide :rest, :parent => Puppet::Provider::XLDeployRestProvider do
+Puppet::Type.type(:xldeploy_role_permission).provide :rest  do
 
   def initialize
     xldeploy = Xldeploy.new(resource[:rest_url], resource[:ssl], resource[:verify_ssl])
