@@ -70,7 +70,6 @@ class Ci < Xldeploy
   # make sure the ci's parent structure is in place
   def ensure_parent_directory
     # check if the parent tree parent of this ci exists.
-    unless
     # get the parent name
     parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory')
 
