@@ -1,7 +1,7 @@
 Puppet::Type.newtype(:xldeploy_user) do
   @doc = 'Manage a XL Deploy User'
 
-  
+
   ensurable do
     defaultvalues
     defaultto :present

@@ -96,28 +96,6 @@ class xldeploy::params {
   $install_license              = true
   $license_source               = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
 
-  # gem stuff .. will be removed when we get around to refactoring the gems
-  $gem_use_local   = true
-
-  $gem_hash        = {
-    'mime-types'  => {
-      'source'  => 'puppet:///modules/xldeploy/gems/mime-types-1.25.1.gem',
-      'version' => '1.25.1'
-  }
-  ,
-    'xml-simple'  => {
-      'source'  => 'puppet:///modules/xldeploy/gems/xml-simple-1.1.2.gem',
-      'version' => '1.1.2'
-  }
-  ,
-    'rest-client' => {
-      'source'  => 'puppet:///modules/xldeploy/gems/rest-client-1.6.7.gem',
-      'version' => '1.6.7'
-  }
-  }
-
-  $gem_array       = ['xml-simple', 'rest-client']
-
-
+  
 }
 

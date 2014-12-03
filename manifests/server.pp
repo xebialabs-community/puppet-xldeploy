@@ -66,9 +66,6 @@ class xldeploy::server (
   $datastore_schema                  = $xldeploy::params::datastore_schema,
   $datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
   $datastore_jdbc_driver_url         = $xldeploy::params::datastore_jdbc_driver_url,
-  $gem_use_local                     = $xldeploy::params::gem_use_local,
-  $gem_hash                          = $xldeploy::params::gem_hash,
-  $gem_array                         = $xldeploy::params::gem_array,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
   $ssl                               = $xldeploy::params::ssl,
   $verify_ssl                        = $xldeploy::params::verify_ssl,
@@ -170,7 +167,6 @@ class xldeploy::server (
     -> class  { 'xldeploy::server::repository': }
     ~> class  { 'xldeploy::server::security': }
     ~> class  { 'xldeploy::server::service': }
-    -> class  { 'xldeploy::server::gems': }
     -> class  { 'xldeploy::server::post_config': }
     -> anchor { 'xldeploy::server::end': }
 
