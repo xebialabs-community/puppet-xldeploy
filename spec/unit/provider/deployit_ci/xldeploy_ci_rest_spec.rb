@@ -2,6 +2,7 @@ require 'puppet'
 require 'rubygems'
 require 'pathname'
 require 'puppet/type/xldeploy_ci'
+
 describe 'The rest provider for the xldeploy_ci type' do
   id   = 'Infrastructure/TestHost'
   parent = 'Infrastructure'
