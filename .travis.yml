@@ -6,7 +6,7 @@ notifications:
   hipchat:
     rooms:
       secure: OoKJMDdxaVJJBeLSyGN1Yf3ks189c5rZ2wj8OtlqkHtYlWDr8ViumJTMxWFNl5EUbx+BKCMArTsx9u4ahYvdJzaDLNaKD0l4hXQ6NdxrziI8y2boQdAeRXzPK02jRo3b3GG3Nmia7k5xkXF7Oztb5kT/q5hPM+Lbrq+CEGmi60U=
-before_deploy: "puppet module build"
+before_deploy: "bundle exec rake build"
 deploy:
   provider: releases
   api_key:
