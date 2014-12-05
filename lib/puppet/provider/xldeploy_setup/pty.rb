@@ -59,7 +59,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
 
       }
 
-      chown('-R',"#{resource[:owner]}:#{resource[:group]}", "#{resource[:destinationdir]}" )
+      chown('-R',"#{resource[:owner]}:#{resource[:group]}", "#{resource[:homedir]}" )
 
 
     end
