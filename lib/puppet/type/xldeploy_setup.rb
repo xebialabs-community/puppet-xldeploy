@@ -56,8 +56,8 @@ Puppet::Type.newtype(:xldeploy_setup) do
     defaultto 'admin01'
   end
 
-  newparam(:http_content_root) do
-    desc 'the content root xldeploy is going to be listening to'
+  newparam(:http_context_root) do
+    desc 'the context root xldeploy is going to be listening to'
     defaultto '/'
   end
 

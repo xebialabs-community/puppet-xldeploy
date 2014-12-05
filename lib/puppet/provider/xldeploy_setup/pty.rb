@@ -47,11 +47,11 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
         output.puts(resource[:admin_password]) if line =~ /New password/
         output.puts(resource[:http_bind_address]) if line =~ /What http bind address would you like the server to listen on/
         output.puts(resource[:http_port]) if line =~ /What http port number would you like the server to listen on/
-        output.puts(resource[:http_content_root]) if line =~ /Enter the web context root where XL Deploy Server will run/
+        output.puts(resource[:http_context_root]) if line =~ /Enter the web context root where XL Deploy Server will run/
         output.puts('3') if line =~ /Enter the minimum number of threads the HTTP server should use/
         output.puts('24') if line =~ /Enter the maximum number of threads the HTTP server should use/
-        output.puts('repository') if line =~ /Where would you like to store the JCR repository/
-        output.puts('packages') if line =~ /Where would you like XL Deploy Server to import packages from/
+        output.puts(resource[:repository_loc]) if line =~ /Where would you like to store the JCR repository/
+        output.puts(resource[:packages_loc]) if line =~ /Where would you like XL Deploy Server to import packages from/
         output.puts('yes') if line =~ /Application import location is/
         break if line =~ /Finished setup/
 

@@ -83,9 +83,17 @@ class xldeploy::server::config (
 
   #setup
   xldeploy_setup{'default':
-    homedir   => $server_home_dir
+    homedir           => $server_home_dir,
+    ssl               => $ssl,
+    repository_loc    => regsubst($jcr_repository_path, '^/', 'file:///'),
+    packages_loc      => $importable_packages_path,
+    http_bind_address => $http_bind_address
+    http_context_root => $http_context_root,
+    http_port         => $http_port,
+    admin_password    => $admin_password
   }
 
+  # ini settings
   ini_setting {
     'xldeploy.admin.password':
       setting => 'admin.password',
