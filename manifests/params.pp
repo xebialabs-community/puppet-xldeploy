@@ -29,9 +29,9 @@ class xldeploy::params {
   $http_server_address      = $::fqdn
   $http_port                = '4516'
   $http_context_root        = '/deployit'
-  $rest_user                = 'admin'
-  $rest_password            = xldeploy_credentials('admin_password', 'admin')
-  $admin_password           = xldeploy_credentials('admin_password', 'admin')
+  $rest_user                = 'xebialabs'
+  $rest_password            = xldeploy_credentials('admin_password', 'xebialabs')
+  $admin_password           = xldeploy_credentials('admin_password', 'xebialabs')
   $jcr_repository_path      = 'repository'
   $importable_packages_path = 'importablePackages'
 
