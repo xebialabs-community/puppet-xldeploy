@@ -15,7 +15,7 @@ Puppet::Type.newtype(:xldeploy_setup) do
 
   end
 
-  newparam(:name, namevar => true) do
+  newparam(:name, :namevar => true) do
     desc 'just some random name'
   end
 
