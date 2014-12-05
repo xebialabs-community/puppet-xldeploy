@@ -126,7 +126,7 @@ Puppet::Type.type(:xldeploy_netinstall).provide(:curl)  do
   end
 
   def do_install
-    command = "#{resource[:destinationdir]}/bin/server.sh -setup"
+    command = "#{resource[:destinationdir]}/xldeploy-server/bin/server.sh -setup"
 
     PTY.spawn(command) do |input, output, pid|
 
