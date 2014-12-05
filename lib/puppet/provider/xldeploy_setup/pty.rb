@@ -50,10 +50,12 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
         output.puts('repository') if line =~ /Where would you like to store the JCR repository/
         output.puts('packages') if line =~ /Where would you like XL Deploy Server to import packages from/
         output.puts('yes') if line =~ /Application import location is/
-
+        break if line =~ /Finished setup/
+        
         line_array << line
 
       }
+
     end
   end
 
