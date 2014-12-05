@@ -1,4 +1,4 @@
-
+puppet
 require 'uri'
 require 'etc'
 require "digest/md5"

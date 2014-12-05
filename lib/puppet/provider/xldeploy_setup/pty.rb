@@ -17,7 +17,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
       line_array = []
       output.sync = true
       input.each { |line|
-        print line
+        Puppet.debug line
 
         # we do not want the password encryption key to be secured by a password because we can't work with that in puppet
         if line_array[-1] =~ /The password encryption key is optionally secured by a password./
