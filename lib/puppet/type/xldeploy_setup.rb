@@ -55,6 +55,7 @@ Puppet::Type.newtype(:xldeploy_setup) do
     desc 'admin password'
     defaultto 'admin01'
     validate do |value|
+      p value
       fail('password to short, should be at least 6 characters') unless value.length > 5
     end
   end
