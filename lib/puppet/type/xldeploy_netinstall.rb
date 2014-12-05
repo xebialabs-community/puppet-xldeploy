@@ -58,33 +58,6 @@ Puppet::Type.newtype(:xldeploy_netinstall) do
     defaultto 'xldeploy'
   end
 
-  newparam(:ssl) do
-    desc 'use ssl or not'
-    defaultto false
-  end
 
-  newparam(:repository_loc) do
-    desc 'location of the repository'
-    defaultto 'repository'
-  end
-
-  newparam(:admin_password) do
-    desc 'admin password'
-    defaultto 'admin01'
-  end
-
-  newparam(:http_content_root) do
-    desc 'the content root xldeploy is going to be listening to'
-    defaultto '/'
-  end
-
-  newparam(:http_bind_address) do
-    desc 'the address xldeploy is going to listen on'
-    defaultto '0.0.0.0'
-  end
-
-  newparam(:http_port) do
-    desc 'the http port xldeploy is going to listen on'
-  end
 
 end

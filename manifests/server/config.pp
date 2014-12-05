@@ -9,7 +9,6 @@ class xldeploy::server::config (
   $os_user                           = $xldeploy::server::os_user,
   $os_group                          = $xldeploy::server::os_group,
   $ssl                               = $xldeploy::server::ssl,
-  $verify_ssl                        = $xldeploy::server::verify_ssl,
   $http_bind_address                 = $xldeploy::server::http_bind_address,
   $http_port                         = $xldeploy::server::http_port,
   $http_context_root                 = $xldeploy::server::http_context_root,
@@ -25,8 +24,11 @@ class xldeploy::server::config (
 
   # Dependencies
   File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy default properties'
-    ] -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
-    ] -> Exec['init xldeploy']
+    ]
+  -> xldeploy_setup["default"]
+  -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
+    ]
+   #-> Exec['init xldeploy']
 
   # Resource defaults
   File {
@@ -79,10 +81,14 @@ class xldeploy::server::config (
     path   => "${server_home_dir}/conf/deployit-defaults.properties",
   }
 
+  #setup
+  xldeploy_setup{'default':
+  }
+
   ini_setting {
     'xldeploy.admin.password':
       setting => 'admin.password',
-      value   => to_xldeploy_md5($admin_password, $rest_url, $ssl, $verify_ssl);
+      value   => to_xldeploy_md5($admin_password, $rest_url);
 
     'xldeploy.http.port':
       setting => 'http.port',
@@ -109,21 +115,21 @@ class xldeploy::server::config (
       value   => $importable_packages_path;
   }
 
-  if str2bool($xldeploy_init_repo) {
-    exec { 'init xldeploy':
-      creates     => "${server_home_dir}/${jcr_repository_path}",
-      command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
-      user        => $os_user,
-      environment => ["JAVA_HOME=${java_home}"]
-    }
-  } else {
-    exec { 'init xldeploy':
-      creates     => "${server_home_dir}/${jcr_repository_path}",
-      command     => "${server_home_dir}/bin/server.sh -setup -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
-      user        => $os_user,
-      environment => ["JAVA_HOME=${java_home}"]
-    }
-  }
+#  if str2bool($xldeploy_init_repo) {
+#    exec { 'init xldeploy':
+#      creates     => "${server_home_dir}/${jcr_repository_path}",
+#      command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
+#      user        => $os_user,
+#      environment => ["JAVA_HOME=${java_home}"]
+#    }
+#  } else {
+#    exec { 'init xldeploy':
+#      creates     => "${server_home_dir}/${jcr_repository_path}",
+#      command     => "${server_home_dir}/bin/server.sh -setup -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
+#      user        => $os_user,
+#      environment => ["JAVA_HOME=${java_home}"]
+#    }
+#  }
 
   create_resources('xldeploy::resources::defaultsetting', $xldeploy_default_settings)
 
