@@ -83,6 +83,7 @@ class xldeploy::server::config (
 
   #setup
   xldeploy_setup{'default':
+    homedir   => $server_home_dir
   }
 
   ini_setting {
