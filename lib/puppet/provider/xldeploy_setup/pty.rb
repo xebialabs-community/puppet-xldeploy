@@ -58,7 +58,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
   end
 
   def exists?
-    File.directory?(target_dir)
+    return false
   end
 
   def destroy
