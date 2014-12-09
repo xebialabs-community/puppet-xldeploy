@@ -238,7 +238,7 @@ usage
 ######custom_download_server_url        = undef,
 ######custom_download_cli_url           = undef,
 ######server_plugins                    = { }
-    Example: server_plugins => { jbossdm-plugin => {'version' => '3.9.1', 'distribution' => true}, jbossas-plugin => { 'version' => '3.9.0', 'distribution' => true) )
+    Example: server_plugins = { 'tomcat-plugin' => {'version' => '4.5.0', 'distribution' => true}, 'command2-plugin' => {'version' => '3.9.1-1', 'distribution' => false} }
 ######cis                               = { } ,
 ######memberships                       = { } ,
 ######users                             = { } ,
