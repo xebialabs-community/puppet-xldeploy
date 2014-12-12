@@ -10,7 +10,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
             :chgrp    => '/bin/chgrp'
 
   def create
-    command = "sudo - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/server.sh -setup\'"
+    command = "/bin/su - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/server.sh -setup\'"
 
     PTY.spawn(command) do |input, output, pid|
 
