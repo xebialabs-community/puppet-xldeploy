@@ -29,7 +29,7 @@ class xldeploy::server::config (
     ]
   -> xldeploy_setup["default"]
   -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
-    . 'xldeploy.threads.min', 'xldeploy.threads.max' ]
+    , 'xldeploy.threads.min', 'xldeploy.threads.max' ]
    #-> Exec['init xldeploy']
 
   # Resource defaults
