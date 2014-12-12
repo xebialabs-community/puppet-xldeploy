@@ -78,6 +78,7 @@ class Ci < Xldeploy
     # check if the parent tree parent of this ci exists.
     # get the parent name
     parent = Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory')
+    p Pathname.new(id).dirname.to_s
     p parent
     p parent.exists?
     # if the parent exists do nothing
