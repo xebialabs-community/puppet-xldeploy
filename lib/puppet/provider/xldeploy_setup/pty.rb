@@ -10,7 +10,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
             :chgrp    => '/bin/chgrp'
 
   def create
-    command = "#{resource[:homedir]}/bin/server.sh -setup"
+    command = "sudo - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/server.sh -setup\'"
 
     PTY.spawn(command) do |input, output, pid|
 
@@ -54,7 +54,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
         output.puts(resource[:packages_loc]) if line =~ /Where would you like XL Deploy Server to import packages from/
         output.puts('yes') if line =~ /Application import location is/
         if line =~ /Finished setup/
-          chown('-R',"#{resource[:owner]}:#{resource[:group]}", "#{resource[:homedir]}" )
+          # chown('-R',"#{resource[:owner]}:#{resource[:group]}", "#{resource[:homedir]}" )
           break
         end
 
