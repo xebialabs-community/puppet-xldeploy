@@ -74,4 +74,12 @@ Puppet::Type.newtype(:xldeploy_setup) do
     desc 'the http port xldeploy is going to listen on'
   end
 
+  newparam(:max_threads) do
+    desc 'tells xldeploy the maximum number of theads it should use'
+  end
+
+  newparam(:min_threads) do
+    desc 'tells xldeploy the minimum number of theads it should use'
+  end
+
 end

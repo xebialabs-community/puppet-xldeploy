@@ -19,6 +19,8 @@ class xldeploy::server::config (
   $rest_url                          = $xldeploy::server::rest_url,
   $xldeploy_default_settings         = $xldeploy::server::xldeploy_default_settings,
   $xldeploy_init_repo                = $xldeploy::server::xldeploy_init_repo,
+  $xld_max_threads                   = $xldeploy::server::xld_max_threads,
+  $xld_min_threads                   = $xldeploy::server::xld_min_threads,
 ) {
 
 
@@ -27,7 +29,7 @@ class xldeploy::server::config (
     ]
   -> xldeploy_setup["default"]
   -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
-    ]
+    . 'xldeploy.threads.min', 'xldeploy.threads.max' ]
    #-> Exec['init xldeploy']
 
   # Resource defaults
@@ -90,6 +92,8 @@ class xldeploy::server::config (
     http_bind_address => $http_bind_address,
     http_context_root => $http_context_root,
     http_port         => $http_port,
+    min_threads       => $xld_min_threads,
+    max_threads       => $xld_max_threads,
     admin_password    => $admin_password
   }
 
@@ -122,6 +126,14 @@ class xldeploy::server::config (
     'xldeploy.importable.packages.path':
       setting => 'importable.packages.path',
       value   => $importable_packages_path;
+
+    'xldeploy.threads.min':
+      setting => 'threads.min',
+      value   => $xld_min_threads;
+
+    'xldeploy.threads.max':
+      setting => 'threads.max',
+      value   => $xld_max_threads;
   }
 
 #  if str2bool($xldeploy_init_repo) {

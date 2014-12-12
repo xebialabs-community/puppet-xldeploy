@@ -69,6 +69,8 @@ class xldeploy::server (
   $disable_firewall                  = $xldeploy::params::disable_firewall,
   $ssl                               = $xldeploy::params::ssl,
   $verify_ssl                        = $xldeploy::params::verify_ssl,
+  $xld_max_threads                   = $xldeploy::params::xld_max_threads,
+  $xld_min_threads                   = $xldeploy::params::xld_min_threads,
   $custom_productname                = undef,
   $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef,

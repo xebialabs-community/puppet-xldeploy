@@ -35,6 +35,9 @@ class xldeploy::params {
   $jcr_repository_path      = 'repository'
   $importable_packages_path = 'importablePackages'
 
+  $xld_max_threads          = '24'
+  $xld_min_threads          = '4'
+
   $manage_user                = true
   $os_user                    = 'xldeploy'
   $os_group                   = 'xldeploy'
