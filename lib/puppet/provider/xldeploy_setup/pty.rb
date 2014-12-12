@@ -62,13 +62,15 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
 
       }
 
-
-
     end
   end
 
   def exists?
-    return false
+    return false unless File.exist?("#{resource[:homedir]}/repository")
+    if resource[:ssl]
+      return false unless File.exist?("#{resource[:homedir]}/conf/repository-keystore.jceks")
+    end
+    return true
   end
 
   def destroy
