@@ -37,9 +37,7 @@ class Xldeploy
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
 
-
     request = case method
-
                 when 'get'    then Net::HTTP::Get.new(uri.request_uri)
                 when 'post'   then Net::HTTP::Post.new(uri.request_uri)
                 when 'put'    then Net::HTTP::Put.new(uri.request_uri)
