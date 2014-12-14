@@ -13,6 +13,7 @@ class Xldeploy
   end
 
   def rest_get(service)
+    p service
     execute_rest(service, 'get')
   end
 
