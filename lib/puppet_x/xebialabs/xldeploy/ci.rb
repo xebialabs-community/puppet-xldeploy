@@ -77,8 +77,8 @@ class Ci < Xldeploy
   def ensure_parent_directory
     # check if the parent tree parent of this ci exists.
     # get the parent name
-    p parent.id
-    unless parent.id == "."
+
+    unless parent.id == '.'
 
       # if the parent exists do nothing
       unless parent.exists?
