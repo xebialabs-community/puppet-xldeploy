@@ -29,7 +29,7 @@ class xldeploy::params {
   $http_server_address      = $::fqdn
   $http_port                = '4516'
   $http_context_root        = '/deployit'
-  $rest_user                = 'xebialabs'
+  $rest_user                = 'admin'
   $rest_password            = xldeploy_credentials('admin_password', 'xebialabs')
   $admin_password           = xldeploy_credentials('admin_password', 'xebialabs')
   $jcr_repository_path      = 'repository'
