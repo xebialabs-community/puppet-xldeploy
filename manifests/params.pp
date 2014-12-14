@@ -30,10 +30,13 @@ class xldeploy::params {
   $http_port                = '4516'
   $http_context_root        = '/deployit'
   $rest_user                = 'admin'
-  $rest_password            = xldeploy_credentials('admin_password', 'admin')
-  $admin_password           = xldeploy_credentials('admin_password', 'admin')
+  $rest_password            = xldeploy_credentials('admin_password', 'xebialabs')
+  $admin_password           = xldeploy_credentials('admin_password', 'xebialabs')
   $jcr_repository_path      = 'repository'
   $importable_packages_path = 'importablePackages'
+
+  $xld_max_threads          = '24'
+  $xld_min_threads          = '4'
 
   $manage_user                = true
   $os_user                    = 'xldeploy'

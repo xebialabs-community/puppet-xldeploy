@@ -46,6 +46,8 @@ Puppet::Type.newtype(:xldeploy_netinstall) do
     end
   end
 
+
+
   newproperty(:owner) do
     desc 'the owner setting of the license file'
     defaultto 'xldeploy'
@@ -55,5 +57,7 @@ Puppet::Type.newtype(:xldeploy_netinstall) do
     desc 'the group setting of the license file'
     defaultto 'xldeploy'
   end
+
+
 
 end

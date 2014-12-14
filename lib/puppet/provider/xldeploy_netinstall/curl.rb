@@ -2,7 +2,6 @@ require 'uri'
 require 'etc'
 require "digest/md5"
 
-
 Puppet::Type.type(:xldeploy_netinstall).provide(:curl)  do
 
 
@@ -39,7 +38,6 @@ Puppet::Type.type(:xldeploy_netinstall).provide(:curl)  do
       unzip("#{download_dir}/archive#{file_type}", '-d', "#{resource[:destinationdir]}")
 
       chown('-R',"#{resource[:owner]}:#{resource[:group]}", "#{resource[:destinationdir]}" )
-
     rescue Exception => e
 
       rm('-rf', download_dir) unless download_dir.nil?
@@ -122,4 +120,6 @@ Puppet::Type.type(:xldeploy_netinstall).provide(:curl)  do
       ENV['https_proxy'] = resource[:proxy_url]
     end
   end
+
+
 end
