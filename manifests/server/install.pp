@@ -19,6 +19,7 @@ class xldeploy::server::install (
   $productname                 = $xldeploy::server::productname,
   $server_plugins              = $xldeploy::server::server_plugins,
   $disable_firewall            = $xldeploy::server::disable_firewall,
+  $xld_community_edition       = $xldeploy::server::xld_community_edition
 ) {
 
   # Refactor .. stuff getting out of hand
@@ -83,14 +84,19 @@ class xldeploy::server::install (
     -> Anchor['server::postinstall']
   }
     'download'    : {
+      if $xld_community_edition == false {
+        Xldeploy_netinstall{
+          user           => $download_user,
+          password       => $download_password,
+        }
+      }
 
       Anchor['server::install']
+
 
       -> xldeploy_netinstall{$download_server_url:
           owner          => $os_user,
           group          => $os_group,
-          user           => $download_user,
-          password       => $download_password,
           destinationdir => $base_dir,
           proxy_url      => $download_proxy_url
         }
@@ -144,13 +150,18 @@ class xldeploy::server::install (
     if str2bool($install_license) {
       case $license_source {
       /^http/ : {
+                  if $xld_community_edition == false {
+                    Xldeploy_license_install{
+                      user           => $download_user,
+                      password       => $download_password,
+                    }
+                  }
+
                   File[$server_home_dir]
 
                   -> xldeploy_license_install{$license_source:
                       owner                => $os_user,
                       group                => $os_group,
-                      user                 => $download_user,
-                      password             => $download_password,
                       destinationdirectory => "${server_home_dir}/conf"
                     }
                   -> Anchor['server::installend']

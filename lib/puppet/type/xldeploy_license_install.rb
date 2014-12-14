@@ -41,9 +41,6 @@ Puppet::Type.newtype(:xldeploy_license_install) do
 
   newparam(:password) do
     desc 'download password'
-    validate do |value|
-      fail('xebialabs download password should be set') if value.nil?
-    end
   end
 
   newproperty(:owner) do

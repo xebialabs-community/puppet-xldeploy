@@ -49,6 +49,7 @@ class xldeploy::server::validation (
   validate_bool(str2bool($xldeploy::server::install_java))
   validate_bool(str2bool($xldeploy::server::client_propagate_key))
   validate_bool(str2bool($xldeploy::server::disable_firewall))
+  validate_bool(str2bool($xldeploy::server::xld_community_edition))
 
   # hash validation
   validate_hash($xldeploy::server::cis)
@@ -94,5 +95,10 @@ class xldeploy::server::validation (
     if $xldeploy::server::datastore_databasetype == nil { fail 'Database database type must be specified when using database repository type' }
     if $xldeploy::server::datastore_schema       == nil { fail 'Database schema must be specified when using database repository type' }
     if $xldeploy::server::datastore_persistencemanagerclass == nil { fail 'Database persistence manager class must be specified when using database repository type' }
+  }
+
+  if $xld_community_edition == true {
+    if versioncmp($xldeploy::server::version , '4.5.0') > 0 {fail "this version ${version} is not available as community edition"}
+    if $custom_license_source == nil { fail 'use of the community edition requires a custom license source, one can be obtaind from http://xebialabs.com/download/xl-deploy/'}
   }
 }

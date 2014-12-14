@@ -39,7 +39,6 @@ class xldeploy::server (
   $java_home                         = $xldeploy::params::java_home,
   $install_java                      = $xldeploy::params::install_java,
   $install_license                   = $xldeploy::params::install_license,
-  $license_source                    = $xldeploy::params::license_source,
   $enable_housekeeping               = $xldeploy::params::enable_housekeeping,
   $housekeeping_minute               = $xldeploy::params::housekeeping_minute,
   $housekeeping_hour                 = $xldeploy::params::housekeeping_hour,
@@ -71,11 +70,13 @@ class xldeploy::server (
   $verify_ssl                        = $xldeploy::params::verify_ssl,
   $xld_max_threads                   = $xldeploy::params::xld_max_threads,
   $xld_min_threads                   = $xldeploy::params::xld_min_threads,
+  $xld_community_edition             = $xldeploy::params::xld_community_edition,
   $custom_productname                = undef,
   $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef,
   $custom_os_user                    = undef,
   $custom_os_group                   = undef,
+  $custom_license_source             = undef,
   $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
@@ -87,19 +88,28 @@ class xldeploy::server (
   ) inherits xldeploy::params {
   # composed variables
 
-  #we need to support the two different download urls for xldeploy and deployit
-  if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
-    if versioncmp($version , '3.9.90') > 0 {
-      $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
-      $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
-    } else {
-      $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
-      $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
-    }
+  # support the community edition of xl-deploy
+  if $xld_community_edtion == true {
+    $community_addon = "-free-edition"
+    $license_source = $custom_license_source
   } else {
-      $download_server_url = $custom_download_server_url
-      $download_cli_url    = $custom_download_cli_url
+    $community_addon = ""
+    $license_source  = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
   }
+
+  #we need to support the two different download urls for xldeploy and deployit
+    if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
+      if versioncmp($version , '3.9.90') > 0 {
+        $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server${community_addon}.zip"
+        $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli${community_addon}.zip"
+      } else {
+        $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
+        $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+      }
+    } else {
+        $download_server_url = $custom_download_server_url
+        $download_cli_url    = $custom_download_cli_url
+    }
 
   # we need to support two different productnames
   if ($custom_productname == undef) {

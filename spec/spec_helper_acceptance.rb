@@ -64,11 +64,34 @@ RSpec.configure do |c|
 
   # Configure all nodes in nodeset
   c.before :suite do
+
+    # setup master
+    on master, "echo '*' > /etc/puppet/autosign.conf"
+    master_name = "#{master}.test.local"
+    config = {
+        'main' => {
+            'server'   => master_name,
+            'certname' => master_name,
+            'logdir'   => '/var/log/puppet',
+            'vardir'   => '/var/lib/puppet',
+            'ssldir'   => '/var/lib/puppet/ssl',
+            'rundir'   => '/var/run/puppet'
+        },
+        'agent' => {
+            'environment' => 'vagrant'
+        }
+    }
+
+    configure_puppet(master, config)
+
+    on master, "/etc/init.d/puppetmaster restart"
+
     # Install module and dependencies
     puppet_module_install(:source => proj_root, :module_name => 'xldeploy')
 
     hosts.each do |host|
       on host, "/bin/touch #{default['puppetpath']}/hiera.yaml"
+      on host, "/bin/mkdir -p #{default['puppetpath']}/manifests"
       on host, 'chmod 755 /root'
       if fact('osfamily') == 'Debian'
         on host, "echo \"en_US ISO-8859-1\nen_NG.UTF-8 UTF-8\nen_US.UTF-8 UTF-8\n\" > /etc/locale.gen"

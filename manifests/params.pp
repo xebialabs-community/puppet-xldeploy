@@ -97,7 +97,6 @@ class xldeploy::params {
 
   # license stuff
   $install_license              = true
-  $license_source               = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
 
 
 }
