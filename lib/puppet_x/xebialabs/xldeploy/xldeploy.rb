@@ -13,7 +13,6 @@ class Xldeploy
   end
 
   def rest_get(service)
-    p service
     execute_rest(service, 'get')
   end
 
@@ -31,7 +30,6 @@ class Xldeploy
 
   def execute_rest(service, method, body='')
     uri = URI.parse("#{rest_url}/#{service}")
-    p rest_url
     http = Net::HTTP.new(uri.host, uri.port)
 
     http.use_ssl = ssl
