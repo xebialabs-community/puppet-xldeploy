@@ -61,6 +61,7 @@ class Xldeploy
   def type_description(type=@type)
     output = rest_get("metadata/type/#{type}")
     doc = REXML::Document.new output
+    p doc
     Hash[doc.elements.to_a('/descriptor/property-descriptors/property-descriptor').map { |x| [x.attributes['name'], x] }]
   end
 
@@ -83,6 +84,7 @@ class Xldeploy
       property = root.add_element(key)
 
       #Puppet.debug(" to_xml::processing #{key}:#{value}")
+
       case type_description(type)[key].attributes['kind']
         when 'SET_OF_STRING', 'LIST_OF_STRING'
           value = [value] if value.is_a?(String)
