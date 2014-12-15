@@ -94,16 +94,13 @@ class xldeploy::server (
       if str2bool($xld_community_edition) {
         $download_server_url = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-server-free-edition.zip"
         $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
-        $license_source = $custom_license_source
       } else {
         if versioncmp($version , '3.9.90') > 0 {
           $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
           $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
-          $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
         }else {
           $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
           $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
-          $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
         }
       }
     } else {
