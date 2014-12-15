@@ -154,8 +154,8 @@ class xldeploy::server::install (
                   File[$server_home_dir]
 
                   -> xldeploy_license_install{$license_source:
-                      user           => $download_user,
-                      password       => $download_password,
+                      user                 => $download_user,
+                      password             => $download_password,
                       owner                => $os_user,
                       group                => $os_group,
                       destinationdirectory => "${server_home_dir}/conf"
