@@ -89,25 +89,22 @@ class xldeploy::server (
   # composed variables
 
   # support the community edition of xl-deploy
-  if str2bool($xld_community_edition) {
-    notify{'true':}
-    $community_addon = "-free-edition"
-    $license_source = $custom_license_source
-  } else {
-    notify{'false':}
-    notify{$xld_community_edition:}
-    $community_addon = ""
-    $license_source  = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
-  }
-
   #we need to support the two different download urls for xldeploy and deployit
     if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
-      if versioncmp($version , '3.9.90') > 0 {
-        $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server${community_addon}.zip"
-        $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli${community_addon}.zip"
+      if str2bool($xld_community_edition) {
+        $download_server_url = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-server-free-edition.zip"
+        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
+        $license_source = $custom_license_source
       } else {
-        $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
-        $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+        if versioncmp($version , '3.9.90') > 0 {
+          $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
+          $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+          $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+        }else {
+          $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
+          $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+          $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+        }
       }
     } else {
         $download_server_url = $custom_download_server_url
@@ -143,6 +140,12 @@ class xldeploy::server (
     }
   } else {
       $os_group = $custom_os_group
+  }
+
+  if ($custom_license_source == undef) {
+    $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+  } else {
+    $license_source = $custom_license_source
   }
 
   if str2bool($::ssl) {
