@@ -84,7 +84,9 @@ class xldeploy::server::install (
     -> Anchor['server::postinstall']
   }
     'download'    : {
-      notify{"xld_community_edition: ${xld_community_edition}": withpath => true} ->
+
+
+
       if str2bool($xld_community_edition) == false {
         Xldeploy_netinstall{
           user           => $download_user,
@@ -93,7 +95,7 @@ class xldeploy::server::install (
       }
 
       Anchor['server::install']
-
+      -> notify{"xld_community_edition: ${xld_community_edition}": withpath => true } 
 
       -> xldeploy_netinstall{$download_server_url:
           owner          => $os_user,
