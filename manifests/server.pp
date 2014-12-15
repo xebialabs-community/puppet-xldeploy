@@ -95,6 +95,7 @@ class xldeploy::server (
     $license_source = $custom_license_source
   } else {
     notify{'false':}
+    notify{$xld_community_edition:}
     $community_addon = ""
     $license_source  = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
   }
