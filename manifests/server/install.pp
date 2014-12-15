@@ -156,7 +156,6 @@ class xldeploy::server::install (
     if str2bool($install_license) {
       case $license_source {
       /^http/ : {
-                  notice($xld_community_edition)
                   if str2bool($xld_community_edition) == false {
                     Xldeploy_license_install{
                       user           => $download_user,
