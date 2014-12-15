@@ -95,7 +95,8 @@ class xldeploy::server::install (
       }
 
       Anchor['server::install']
-      -> notify{"xld_community_edition: ${xld_community_edition}": withpath => true } 
+
+      -> notify{"xld_community_edition ${xld_community_edition}": withpath => true }
 
       -> xldeploy_netinstall{$download_server_url:
           owner          => $os_user,
