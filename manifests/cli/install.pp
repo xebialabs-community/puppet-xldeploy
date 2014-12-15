@@ -14,16 +14,20 @@ class xldeploy::cli::install (
   $download_password           = $xldeploy::cli::download_password,
   $download_proxy_url          = $xldeploy::cli::download_proxy_url,
   $download_cli_url            = $xldeploy::cli::download_cli_url,
-  $productname                 = $xldeploy::cli::productname
+  $productname                 = $xldeploy::cli::productname,
+  $xld_community_edition       = $xldeploy::cli::xld_community_edition
 
 ){
 
   # Refactor .. stuff getting out of hand
 
   # Variables
-
-  $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
-
+  if str2bool($xld_community_edition) {
+     $cli_install_dir      = "${base_dir}/${productname}-${version}-cli-free-edition"
+  } else {
+    $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
+  }
+  
   # Flow controll
   anchor{'cli::install':}
   -> anchor{'cli::postinstall':}

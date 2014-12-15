@@ -25,9 +25,11 @@ class xldeploy::server::install (
   # Refactor .. stuff getting out of hand
 
   # Variables
-
-  $server_install_dir   = "${base_dir}/${productname}-${version}-server"
-
+  if str2bool($xld_community_edition) {
+    $server_install_dir   = "${base_dir}/${productname}-${version}-server-free-edition"
+  } else {
+    $server_install_dir   = "${base_dir}/${productname}-${version}-server"
+  }
   # Flow controll
 
   anchor{'server::preinstall':}

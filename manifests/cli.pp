@@ -13,21 +13,23 @@
 # Copyright (c) 2013, Xebia Nederland b.v., All rights reserved.
 #
 class xldeploy::cli (
-$version                           = $xldeploy::params::version,
-$xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
-$tmp_dir                           = $xldeploy::params::tmp_dir,
-$install_type                      = $xldeploy::params::install_type,
-$puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
-$download_user                     = $xldeploy::params::download_user,
-$download_password                 = $xldeploy::params::download_password,
-$download_proxy_url                = $xldeploy::params::download_proxy_url,
-$java_home                         = $xldeploy::params::java_home,
-$install_java                      = $xldeploy::params::install_java,
-$custom_os_user                    = undef,
-$custom_os_group                   = undef,
-$custom_productname                = undef,
-$custom_download_server_url        = undef,
-$custom_download_cli_url           = undef,
+  $version                           = $xldeploy::params::version,
+  $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
+  $tmp_dir                           = $xldeploy::params::tmp_dir,
+  $install_type                      = $xldeploy::params::install_type,
+  $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
+  $download_user                     = $xldeploy::params::download_user,
+  $download_password                 = $xldeploy::params::download_password,
+  $download_proxy_url                = $xldeploy::params::download_proxy_url,
+  $java_home                         = $xldeploy::params::java_home,
+  $install_java                      = $xldeploy::params::install_java,
+  $xld_community_edition             = $xldeploy::params::xld_community_edition,
+  $custom_os_user                    = undef,
+  $custom_os_group                   = undef,
+  $custom_productname                = undef,
+  $custom_download_server_url        = undef,
+  $custom_download_cli_url           = undef,
+  $custom_license_source             = undef,
 ) inherits xldeploy::params {
 
 
@@ -35,13 +37,17 @@ $custom_download_cli_url           = undef,
 
   #we need to support the two different download urls for xldeploy and deployit
     if ($custom_download_cli_url == undef) {
-      if versioncmp($version , '3.9.90') > 0 {
-        $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+      if str2bool($xld_community_edition) {
+        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
       } else {
-        $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+        if versioncmp($version , '3.9.90') > 0 {
+          $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+        }else {
+          $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+        }
       }
     } else {
-      $download_cli_url    = $custom_download_cli_url
+        $download_cli_url    = $custom_download_cli_url
     }
 
 
@@ -74,6 +80,12 @@ $custom_download_cli_url           = undef,
       }
     } else {
       $os_group = $custom_os_group
+    }
+
+    if ($custom_license_source == undef) {
+      $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+    } else {
+      $license_source      = $custom_license_source
     }
 
   $base_dir            = "${xldeploy_base_dir}/${productname}"
