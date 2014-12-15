@@ -92,8 +92,8 @@ class xldeploy::server (
   #we need to support the two different download urls for xldeploy and deployit
     if ($custom_download_server_url == undef) or ($custom_download_cli_url == undef) {
       if str2bool($xld_community_edition) {
-        $download_server_url = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-server-free-edition.zip"
-        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
+        $download_server_url = "https://download.xebialabs.com/files/Generic/xl-deploy-${version}-server-free-edition.zip"
+        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-${version}-cli-free-edition.zip"
       } else {
         if versioncmp($version , '3.9.90') > 0 {
           $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
