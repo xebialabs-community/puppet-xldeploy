@@ -202,6 +202,7 @@ class xldeploy::server (
         java_home                   => $java_home,
         custom_download_cli_url     => $custom_download_cli_url,
         custom_productname          => $custom_productname,
+        xld_community_edition       => $xld_community_edition
       }
 
       -> Class['xldeploy::server::housekeeping']
