@@ -90,9 +90,11 @@ class xldeploy::server (
 
   # support the community edition of xl-deploy
   if str2bool($xld_community_edtion) == true {
+    notify{'true':}
     $community_addon = "-free-edition"
     $license_source = $custom_license_source
   } else {
+    notify{'false':}
     $community_addon = ""
     $license_source  = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
   }
