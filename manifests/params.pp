@@ -37,6 +37,7 @@ class xldeploy::params {
 
   $xld_max_threads          = '24'
   $xld_min_threads          = '4'
+  $xld_community_edition    = false
 
   $manage_user                = true
   $os_user                    = 'xldeploy'

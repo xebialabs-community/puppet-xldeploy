@@ -84,7 +84,7 @@ class xldeploy::server::install (
     -> Anchor['server::postinstall']
   }
     'download'    : {
-      if $xld_community_edition == false {
+      if str2bool($xld_community_edition) == false {
         Xldeploy_netinstall{
           user           => $download_user,
           password       => $download_password,
@@ -150,12 +150,19 @@ class xldeploy::server::install (
     if str2bool($install_license) {
       case $license_source {
       /^http/ : {
+                  notice($xld_community_edition)
+                  if str2bool($xld_community_edition) == false {
+                    Xldeploy_license_install{
+                      user           => $download_user,
+                      password       => $download_password,
+                    }
+                  }
 
                   File[$server_home_dir]
 
                   -> xldeploy_license_install{$license_source:
-                      user                 => $download_user,
-                      password             => $download_password,
+                      user           => $download_user,
+                      password       => $download_password,
                       owner                => $os_user,
                       group                => $os_group,
                       destinationdirectory => "${server_home_dir}/conf"
