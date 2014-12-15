@@ -89,7 +89,7 @@ class xldeploy::server (
   # composed variables
 
   # support the community edition of xl-deploy
-  if $xld_community_edtion == true {
+  if str2bool($xld_community_edtion)  {
     $community_addon = "-free-edition"
     $license_source = $custom_license_source
   } else {
