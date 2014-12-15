@@ -84,7 +84,7 @@ class xldeploy::server::install (
     -> Anchor['server::postinstall']
   }
     'download'    : {
-      notice($xld_community_edition)
+      notice("xld_community_edition: ${xld_community_edition}")
       if str2bool($xld_community_edition) == false {
         Xldeploy_netinstall{
           user           => $download_user,
