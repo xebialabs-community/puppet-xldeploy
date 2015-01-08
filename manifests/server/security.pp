@@ -34,7 +34,7 @@ class xldeploy::server::security(
     owner  => $os_user,
     group  => $os_group,
     mode   => '0640'
-    }
+  }
 
   #if where dealing with a 4.x release the header of the deployit-securtity file is different
   # issuenr: 16
