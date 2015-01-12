@@ -187,7 +187,7 @@ class xldeploy::server (
 
   if str2bool($enable_housekeeping)  {
 
-    class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
+    Class{'xldeploy::server::service':} -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
 
     if !defined(Class['Xldeploy::Cli']) {
       class {'xldeploy::cli':
