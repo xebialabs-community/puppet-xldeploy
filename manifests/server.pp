@@ -17,6 +17,7 @@
 #
 class xldeploy::server (
   $version                           = $xldeploy::params::version,
+  $manage_keys                       = $xldeploy::params::manage_keys,
   $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $xldeploy_init_repo                = $xldeploy::params::xldeploy_init_repo,
   $tmp_dir                           = $xldeploy::params::tmp_dir,

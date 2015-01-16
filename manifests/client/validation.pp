@@ -20,7 +20,7 @@ class xldeploy::client::validation (
   validate_string($xldeploy::client::os_user_home)
   validate_string($xldeploy::client::rest_user)
   validate_string($xldeploy::client::rest_password)
-  validate_string($xldeploy::client::client::importable_packages_path)
+  validate_string($xldeploy::client::importable_packages_path)
   validate_string($xldeploy::client::client_user_password)
   validate_string($xldeploy::client::client_user_password_salt)
 
