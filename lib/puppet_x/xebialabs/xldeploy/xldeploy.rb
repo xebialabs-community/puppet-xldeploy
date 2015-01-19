@@ -82,7 +82,11 @@ class Xldeploy
     properties.each do |key, value|
       property = root.add_element(key)
 
-      #Puppet.debug(" to_xml::processing #{key}:#{value}")
+      if value == nil
+        Puppet.debug(" to_xml::processing skiping #{key} nil")
+        next
+      end
+      Puppet.debug(" to_xml::processing #{key}:#{value}")
 
       case type_description(type)[key].attributes['kind']
         when 'SET_OF_STRING', 'LIST_OF_STRING'
