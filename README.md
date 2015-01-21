@@ -85,7 +85,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
   all in one go:
 
     class{xldeploy::client:
-            http_context_root   => '/xldeploy',
+            http_context_root   => '/',
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
             rest_user           => 'admin',
