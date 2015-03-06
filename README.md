@@ -101,7 +101,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                                                  'username' => 'deployit',
                                                                  'tags' => 'projectx',
                                                                  'connectionType' => 'SCP',
-                                                                 'address' => '${hostname}' }
+                                                                 'address' => $hostname }
                                       }
                                      }
     }
@@ -124,7 +124,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                   'username' => 'deployit',
                                   'tags' => 'projectx',
                                   'connectionType' => 'SCP',
-                                  'address' => '${hostname}' },
+                                  'address' => $hostname },
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 
