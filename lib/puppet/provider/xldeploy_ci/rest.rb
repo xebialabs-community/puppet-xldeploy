@@ -37,7 +37,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
       if (resource[:type] == 'udm.Environment')
         p resource
         p  Hash[resource[:properties].sort]
-        
+        p ci.actual_properties
       end
 
       # Temporarily replace password properties as well, until we can
