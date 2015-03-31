@@ -78,7 +78,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
       return false unless is.class == should.class
       p "should"
       p should
-      p"is"
+      p "is"
       p is
       if should.is_a? Hash
         should.each do |k, v|
@@ -100,6 +100,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     def is_to_s(currentvalue)
+      p "currentvalue"
+      p currentvalue
       currentvalue.inspect
     end
   end
