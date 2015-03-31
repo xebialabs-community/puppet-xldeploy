@@ -76,7 +76,10 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     def compare(is, should)
       return false unless is.class == should.class
-      p should 
+      p "should"
+      p should
+      p"is"
+      p is
       if should.is_a? Hash
         should.each do |k, v|
           return false unless is.has_key? k and compare(is[k], should[k])
