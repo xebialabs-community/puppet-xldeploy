@@ -96,6 +96,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     def should_to_s(newvalue)
+      p "newvalue"
+      p newvalue
       newvalue.inspect
     end
 
