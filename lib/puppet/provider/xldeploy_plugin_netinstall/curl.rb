@@ -66,7 +66,7 @@ Puppet::Type.type(:xldeploy_plugin_netinstall).provide(:curl)  do
   def single
     begin
 
-      plugin_url = "#{resource[:base_download_url]}/customer/#{resource[:name]}/#{resource[:version]}/#{plugin_file_name}"
+      plugin_url = "#{resource[:base_download_url]}/#{resource[:name]}/#{resource[:version]}/#{plugin_file_name}"
 
 
 
@@ -90,7 +90,7 @@ Puppet::Type.type(:xldeploy_plugin_netinstall).provide(:curl)  do
   def distribution
     begin
 
-      distribution_url = "#{resource[:base_download_url]}/customer/#{resource[:name]}/#{resource[:version]}/#{distribution_file_name}"
+      distribution_url = "#{resource[:base_download_url]}/#{resource[:name]}/#{resource[:version]}/#{distribution_file_name}"
 
       #setup temp dir
       download_dir = mktemp('-d').strip
