@@ -81,7 +81,12 @@ Puppet::Type.newtype(:xldeploy_ci) do
       p "is"
       p is
       if should.is_a? Hash
+
         should.each do |k, v|
+          p "inside if "
+          p k
+          p v
+          p "------"
           return false unless is.has_key? k and compare(is[k], should[k])
         end
       elsif should.is_a? Array
