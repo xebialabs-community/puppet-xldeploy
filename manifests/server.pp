@@ -97,11 +97,11 @@ class xldeploy::server (
         $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-${version}-cli-free-edition.zip"
       } else {
         if versioncmp($version , '3.9.90') > 0 {
-          $download_server_url = "https://dist.xebialabs.com/xl-deploy/${version}/xl-deploy-${version}-server.zip"
-          $download_cli_url    = "https://dist.xebialabs.com/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+          $download_server_url = "https://dist.xebialabs.com/customer/xl-deploy/${version}/xl-deploy-${version}-server.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
         }else {
-          $download_server_url = "https://dist.xebialabs.com/deployit/${version}/deployit-${version}-server.zip"
-          $download_cli_url    = "https://dist.xebialabs.com/deployit/${version}/deployit-${version}-cli.zip"
+          $download_server_url = "https://dist.xebialabs.com/customer/deployit/${version}/deployit-${version}-server.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/deployit/${version}/deployit-${version}-cli.zip"
         }
       }
     } else {
