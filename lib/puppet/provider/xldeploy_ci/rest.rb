@@ -32,12 +32,10 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
        } if resource[:properties].keys.include? k
       end
 
-      # working on issue #53
-      # dictionaries should be ordered in the way there presented to puppet.
+      # some debug code
       if (resource[:type] == 'udm.Environment')
-        p resource
-        p  Hash[resource[:properties].sort]
-        p ci.actual_properties
+        p ci.actual_properties.keys
+        p resource[:properties]
       end
 
       # Temporarily replace password properties as well, until we can
