@@ -141,7 +141,7 @@ class xldeploy::server (
   }
 
   if ($custom_license_source == undef) {
-    $license_source      = 'https://dist.xebialabs.com/licenses/download/deployit-license.lic'
+    $license_source      = 'https://dist.xebialabs.com/customer/licenses/download/deployit-license.lic'
   } else {
     $license_source = $custom_license_source
   }
