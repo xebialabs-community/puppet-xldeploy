@@ -42,9 +42,9 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     # Add all @ref attributes as required
     required = required + recursive_values(self[:properties], '@ref')
-
+    p catalog.refs
     # select all dictionaries to be required if the current type is a environment
-    
+
     required
   end
 
