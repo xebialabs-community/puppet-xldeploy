@@ -48,6 +48,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     p self.type
     p self.parameters_with_value
     p self.parameters_with_value.pretty_print_inspect
+    p self.eachparameter
     p self.parameters_with_value.methods
     p self.properties
     if self.type =~ /udm.Environment/i
