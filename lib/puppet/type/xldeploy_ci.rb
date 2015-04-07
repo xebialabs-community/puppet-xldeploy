@@ -47,6 +47,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
     required = required + catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i } if self.type =~ /udm.Environment/i
     p self.type
     p self.parameters_with_value
+    p self.parameters_with_value.methods
     p self.properties
     if self.type =~ /udm.Environment/i
         p 'test'
