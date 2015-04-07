@@ -41,7 +41,13 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     # Add all @ref attributes as required
     required = required + recursive_values(self[:properties], '@ref')
+
+
     required
+  end
+
+  autorequire(:xldeploy_ci) do
+    catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i } if self.type =~ /udm.Environment/i
   end
 
   newparam(:id, :namevar => true) do
