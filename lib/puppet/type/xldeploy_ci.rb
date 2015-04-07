@@ -45,7 +45,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     # select all dictionaries to be required if the current type is a environment
     p self.type
-    p self.parameters[type]
+    p self.parameters
+    p self.parameters[:type]
     required =  catalog.resource_refs.select {|ref| ref.id != self[:id] } if self.type =~ /udm.Environment/i
     p catalog.resource_refs  if self.type =~ /udm.Environment/i
     p required if self.type =~ /udm.Environment/i
