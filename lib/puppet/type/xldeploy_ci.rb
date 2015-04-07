@@ -44,17 +44,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
     required = required + recursive_values(self[:properties], '@ref')
 
     # select all dictionaries to be required if the current type is a environment
-    required = required + catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i } if self.type =~ /udm.Environment/i
-    p self.type
-    p self.parameters_with_value
-    p self.parameters_with_value.pretty_print_inspect
-    p self.eachparameter
-    p self.parameters_with_value.methods
-    p self.properties
-    if self.type =~ /udm.Environment/i
-        p 'test'
-        catalog.resource_refs.each {|ref| p catalog.resource(ref)}
-    end
+    required =  catalog.resource_refs.select {|ref| ref.type != self[:id] } if self.type =~ /udm.Environment/i
+    p required
 
     #p catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i }
 
