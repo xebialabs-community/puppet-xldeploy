@@ -47,6 +47,7 @@ Puppet::Type.newtype(:xldeploy_ci) do
   end
 
   autorequire(:xldeploy_ci) do
+    p catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i } if self.type =~ /udm.Environment/i
     catalog.resource_refs.select {|ref| ref.has_key(type) and ref.type =~ /udm.dictionary/i } if self.type =~ /udm.Environment/i
   end
 
