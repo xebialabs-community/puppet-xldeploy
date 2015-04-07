@@ -76,17 +76,9 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     def compare(is, should)
       return false unless is.class == should.class
-      p "should"
-      p should
-      p "is"
-      p is
       if should.is_a? Hash
 
         should.each do |k, v|
-          p "inside if "
-          p k
-          p v
-          p "------"
           return false unless is.has_key? k and compare(is[k], should[k])
         end
       elsif should.is_a? Array
@@ -101,14 +93,10 @@ Puppet::Type.newtype(:xldeploy_ci) do
     end
 
     def should_to_s(newvalue)
-      p "newvalue"
-      p newvalue
       newvalue.inspect
     end
 
     def is_to_s(currentvalue)
-      p "currentvalue"
-      p currentvalue
       currentvalue.inspect
     end
   end
