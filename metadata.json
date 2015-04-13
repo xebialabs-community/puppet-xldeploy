@@ -1,0 +1,19 @@
+{
+  "name": "xebialabs-xldeploy",
+  "version": "1.2.4",
+  "author": "xebialabs",
+  "summary": "Puppet module for xldeploy",
+  "license": "Apache V2.0",
+  "source": "https://github.com/xebialabs/xebia-deployit.git",
+  "project_page": "https://github.com/xebialabs/xebia-deployit.git",
+  "issues_url": "https://github.com/xebialabs/xebia-deployit/issues",
+  "description": "This module can be used to install and configure a xldeploy infrastructure",
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.1.0"},
+    {"name":"puppetlabs/inifile","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs/concat","version_requirement":">= 1.0.0"},
+    {"name":"dalen/puppetdbquery","version_requirement":">= 1.4.0"},
+    {"name":"jtopjian/sshkeys","version_requirement":"0.5.0"},
+    {"name":"puppetlabs/pe_gem","version_requirement":">= 0.1.0"}
+  ]
+}
