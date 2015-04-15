@@ -1,6 +1,8 @@
 puppet-xldeploy
 ===============
-![build status]: https://travis-ci.org/xebialabs/puppet-xldeploy.svg?branch=master
+
+[![Build Status](https://travis-ci.org/xebialabs/puppet-xldeploy.svg?branch=master)](https://travis-ci.org/xebialabs/puppet-xldeploy)
+
 ####Table of Contents
 
 1. [License](#license)
