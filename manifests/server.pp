@@ -29,8 +29,8 @@ class xldeploy::server (
   $admin_password                    = $xldeploy::params::admin_password,
   $jcr_repository_path               = $xldeploy::params::jcr_repository_path,
   $importable_packages_path          = $xldeploy::params::importable_packages_path,
-  $install_type                      = $xldeploy::params::install_type,
-  $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
+  #$install_type                      = $xldeploy::params::install_type,
+  #$puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
   $download_user                     = $xldeploy::params::download_user,
   $download_password                 = $xldeploy::params::download_password,
   $download_proxy_url                = $xldeploy::params::download_proxy_url,
@@ -72,6 +72,8 @@ class xldeploy::server (
   $xld_max_threads                   = $xldeploy::params::xld_max_threads,
   $xld_min_threads                   = $xldeploy::params::xld_min_threads,
   $xld_community_edition             = $xldeploy::params::xld_community_edition,
+  $rest_user                         = $xldeploy::params::rest_user,
+  $rest_password                     = $xldeploy::params::rest_password,
   $custom_productname                = undef,
   $custom_download_server_url        = undef,
   $custom_download_cli_url           = undef,
@@ -201,18 +203,16 @@ class xldeploy::server (
 
     if !defined(Class['Xldeploy::Cli']) {
       class {'xldeploy::cli':
-        install_java                => $install_java,
-        version                     => $version,
-        xldeploy_base_dir           => $xldeploy_base_dir,
-        install_type                => $install_type,
-        puppetfiles_xldeploy_source => $puppetfiles_xldeploy_source,
-        download_user               => $download_user,
-        download_password           => $download_password,
-        download_proxy_url          => $download_proxy_url,
-        java_home                   => $java_home,
-        custom_download_cli_url     => $custom_download_cli_url,
-        custom_productname          => $custom_productname,
-        xld_community_edition       => $xld_community_edition
+        install_java            => $install_java,
+        version                 => $version,
+        xldeploy_base_dir       => $xldeploy_base_dir,
+        download_user           => $download_user,
+        download_password       => $download_password,
+        download_proxy_url      => $download_proxy_url,
+        java_home               => $java_home,
+        custom_download_cli_url => $custom_download_cli_url,
+        custom_productname      => $custom_productname,
+        xld_community_edition   => $xld_community_edition
       }
 
       -> Class['xldeploy::server::housekeeping']

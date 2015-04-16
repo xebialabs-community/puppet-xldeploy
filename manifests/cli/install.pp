@@ -7,9 +7,7 @@ class xldeploy::cli::install (
   $tmp_dir                     = $xldeploy::cli::tmp_dir,
   $os_user                     = $xldeploy::cli::os_user,
   $os_group                    = $xldeploy::cli::os_group,
-  $install_type                = $xldeploy::cli::install_type,
   $cli_home_dir                = $xldeploy::cli::cli_home_dir,
-  $puppetfiles_xldeploy_source = $xldeploy::cli::puppetfiles_xldeploy_source,
   $download_user               = $xldeploy::cli::download_user,
   $download_password           = $xldeploy::cli::download_password,
   $download_proxy_url          = $xldeploy::cli::download_proxy_url,
@@ -23,7 +21,7 @@ class xldeploy::cli::install (
 
   # Variables
   if str2bool($xld_community_edition) {
-     $cli_install_dir      = "${base_dir}/${productname}-${version}-cli-free-edition"
+    $cli_install_dir      = "${base_dir}/${productname}-${version}-cli-free-edition"
   } else {
     $cli_install_dir      = "${base_dir}/${productname}-${version}-cli"
   }
@@ -46,46 +44,90 @@ class xldeploy::cli::install (
   }
 
   # check the install_type and act accordingly
-  case $install_type {
-    'puppetfiles' : {
+#  case $install_type {
+#    'puppetfiles' : {
+#
+#    $cli_zipfile    = "${productname}-${version}-cli.zip"
+#
+#    Anchor['cli::install']
+#
+#    -> file { "${tmp_dir}/${cli_zipfile}": source => "${puppetfiles_xldeploy_source}/${cli_zipfile}" }
+#
+#    -> file { $cli_install_dir: ensure => directory }
+#
+#    # ... and cli packages
+#    -> exec { 'unpack cli file':
+#      command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
+#      creates => "${cli_install_dir}/bin",
+#      cwd     => $tmp_dir,
+#      user    => $os_user
+#    }
+#    -> Anchor['cli::postinstall']
+#  }
+#    'download'    : {
+#
+#      Anchor['cli::install']
+#
+#      -> xldeploy_netinstall{$download_cli_url:
+#          owner          => $os_user,
+#          group          => $os_group,
+#          user           => $download_user,
+#          password       => $download_password,
+#          destinationdir => $base_dir,
+#          proxy_url      => $download_proxy_url
+#        }
+#
+#      -> Anchor['cli::postinstall']
+#    }
+#    default       : {
+#    }
+#  }
 
-    $cli_zipfile    = "${productname}-${version}-cli.zip"
+  case $download_cli_url {
+      /^http/ : {
+          if str2bool($xld_community_edition) == false {
+            Xldeploy_netinstall{
+              user           => $download_user,
+              password       => $download_password,
+            }
+          }
+  
+          Anchor['cli::install']
 
-    Anchor['cli::install']
-
-    -> file { "${tmp_dir}/${cli_zipfile}": source => "${puppetfiles_xldeploy_source}/${cli_zipfile}" }
-
-    -> file { $cli_install_dir: ensure => directory }
-
-    # ... and cli packages
-    -> exec { 'unpack cli file':
-      command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
-      creates => "${cli_install_dir}/bin",
-      cwd     => $tmp_dir,
-      user    => $os_user
-    }
-    -> Anchor['cli::postinstall']
-  }
-    'download'    : {
-
-      Anchor['cli::install']
-
-      -> xldeploy_netinstall{$download_cli_url:
-          owner          => $os_user,
-          group          => $os_group,
-          user           => $download_user,
-          password       => $download_password,
-          destinationdir => $base_dir,
-          proxy_url      => $download_proxy_url
+          -> xldeploy_netinstall{$download_cli_url:
+              owner          => $os_user,
+              group          => $os_group,
+              destinationdir => $base_dir,
+              proxy_url      => $download_proxy_url
+            }
+  
+          -> Anchor['cli::postinstall']
+  
         }
-
-      -> Anchor['cli::postinstall']
+      /^puppet/ : {
+          $cli_zipfile = "${productname}-${version}-cli.zip"
+  
+          Anchor['cli::install']
+  
+          -> file { "${tmp_dir}/${cli_zipfile}": source => $download_cli_url }
+  
+          -> file { $cli_install_dir: ensure => directory }
+  
+          -> exec { 'unpack cli file':
+            command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
+            creates => "${cli_install_dir}/bin",
+            cwd     => $tmp_dir,
+            user    => $os_user
+          }
+  
+          -> Anchor['cli::postinstall']
+        }
+      default : {
+          fail 'either specify a valid http or puppetfiles(puppet:) url'
+            }
     }
-    default       : {
-    }
-  }
-
-
+  
+    
   file { $cli_home_dir:
     ensure => link,
     target => $cli_install_dir,

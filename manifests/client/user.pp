@@ -31,8 +31,8 @@ class xldeploy::client::user(
   }
 
   user{ $os_user :
-    name       => $os_user,
     ensure     => present,
+    name       => $os_user,
     gid        => $os_group ,
     managehome => true,
     password   => md5pass($client_user_password,$client_user_password_salt)
@@ -52,7 +52,7 @@ class xldeploy::client::user(
   sshkeys::set_authorized_key { "${os_user}@${http_server_address}":
     local_user  => $os_user,
     remote_user => "${os_user}@${http_server_address}",
-    home        => "${os_user_home}",
+    home        => $os_user_home,
   }
 
 

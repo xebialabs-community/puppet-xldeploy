@@ -70,15 +70,15 @@ class xldeploy::server::validation (
   }
 
   # install_type should be valid
-  case $xldeploy::server::install_type {
-    'puppetfiles' : {
-    }
-    'download'    : {
-    }
-    default       : {
-      fail("unsupported install_type parameter ${xldeploy::server::install_type} specified, should be one of: [puppetfiles, download]")
-    }
-  }
+#  case $xldeploy::server::install_type {
+#    'puppetfiles' : {
+#    }
+#    'download'    : {
+#    }
+#    default       : {
+#      fail("unsupported install_type parameter ${xldeploy::server::install_type} specified, should be one of: [puppetfiles, download]")
+#    }
+#  }
 
   # repository_type should be valid
   case $xldeploy::server::repository_type {
@@ -98,8 +98,8 @@ class xldeploy::server::validation (
     if $xldeploy::server::datastore_persistencemanagerclass == nil { fail 'Database persistence manager class must be specified when using database repository type' }
   }
 
-  if $xld_community_edition == true {
-    if versioncmp($xldeploy::server::version , '4.5.0') > 0 {fail "this version ${version} is not available as community edition"}
-    if $custom_license_source == nil { fail 'use of the community edition requires a custom license source, one can be obtaind from http://xebialabs.com/download/xl-deploy/'}
+  if $xldeploy::server::xld_community_edition == true {
+    if versioncmp($xldeploy::server::version , '4.5.0') > 0 {fail "this version ${xldeploy::server::version} is not available as community edition"}
+    if $xldeploy::server::custom_license_source == nil { fail 'use of the community edition requires a custom license source, one can be obtaind from http://xebialabs.com/download/xl-deploy/'}
   }
 }

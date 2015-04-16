@@ -113,6 +113,7 @@ describe 'xldeploy::server' do
       it { should contain_file('/opt/xl-deploy/xl-deploy-server/conf/deployit-license.lic').with_source('puppet:///modules/xldeploy/licenses')}
 
     end
+
  end
 
   context "Debian OS" do
