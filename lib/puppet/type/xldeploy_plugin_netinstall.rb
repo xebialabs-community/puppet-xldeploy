@@ -58,7 +58,7 @@ Puppet::Type.newtype(:xldeploy_plugin_netinstall) do
 
   newparam(:base_download_url) do
     desc 'the base url where the plugins can be found'
-    defaultto 'https://tech.xebialabs.com/download/plugins'
+    defaultto 'https://dist.xebialabs.com/customer/xl-deploy/plugins'
   end
 
   newparam(:distribution) do

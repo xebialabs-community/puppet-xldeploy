@@ -99,6 +99,7 @@ class xldeploy::params {
   # license stuff
   $install_license              = true
 
-
+  # manage_keys
+  $manage_keys                  = true
 }
 

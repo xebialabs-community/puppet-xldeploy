@@ -47,8 +47,6 @@ class xldeploy::client::user(
       ensure  => present,
       content => template('xldeploy/xldeploy_sudoers.erb')
     }
-
-
   }
 
   sshkeys::set_authorized_key { "${os_user}@${http_server_address}":

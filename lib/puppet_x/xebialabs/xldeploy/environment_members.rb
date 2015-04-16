@@ -44,23 +44,22 @@ class Environment_members < Xldeploy
   end
 
   def persist
+      environment_properties = get_environment
 
-    environment_properties = get_environment
+      unless members_correct?
+        environment_properties["members"].concat(@members)
+      end
 
-    unless members_correct?
-      environment_properties["members"].concat(@members)
-    end
+      unless dictionaries_correct?
+        environment_properties["dictionaries"].concat(@dictionaries)
+      end
 
-    unless dictionaries_correct?
-      environment_properties["dictionaries"].concat(@dictionaries)
-    end
-
-    env_xml = to_xml(@environment, "udm.Environment", environment_properties)
-    if environment_exists?
-      rest_put "repository/ci/#{@environment}", env_xml
-    else
-      rest_post "repository/ci/#{@environment}", env_xml
-    end
+      env_xml = to_xml(@environment, "udm.Environment", environment_properties)
+      if environment_exists?
+        rest_put "repository/ci/#{@environment}", env_xml
+      else
+        rest_post "repository/ci/#{@environment}", env_xml
+      end
 
   end
 

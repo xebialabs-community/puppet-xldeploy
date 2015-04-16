@@ -17,6 +17,7 @@
 #
 class xldeploy::server (
   $version                           = $xldeploy::params::version,
+  $manage_keys                       = $xldeploy::params::manage_keys,
   $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $xldeploy_init_repo                = $xldeploy::params::xldeploy_init_repo,
   $tmp_dir                           = $xldeploy::params::tmp_dir,
@@ -96,11 +97,11 @@ class xldeploy::server (
         $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-${version}-cli-free-edition.zip"
       } else {
         if versioncmp($version , '3.9.90') > 0 {
-          $download_server_url = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-server.zip"
-          $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+          $download_server_url = "https://dist.xebialabs.com/customer/xl-deploy/server/${version}/xl-deploy-${version}-server.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/xl-deploy/server/${version}/xl-deploy-${version}-cli.zip"
         }else {
-          $download_server_url = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-server.zip"
-          $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+          $download_server_url = "https://dist.xebialabs.com/customer/deployit/server/${version}/deployit-${version}-server.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/deployit/server/${version}/deployit-${version}-cli.zip"
         }
       }
     } else {
@@ -140,7 +141,7 @@ class xldeploy::server (
   }
 
   if ($custom_license_source == undef) {
-    $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+    $license_source      = 'https://dist.xebialabs.com/customer/licenses/download/deployit-license.lic'
   } else {
     $license_source = $custom_license_source
   }
@@ -185,9 +186,18 @@ class xldeploy::server (
     -> class  { 'xldeploy::server::post_config': }
     -> anchor { 'xldeploy::server::end': }
 
+  class{'xldeploy::shared_prereq':
+    base_dir     => $base_dir,
+    os_user      => $os_user,
+    os_group     => $os_group,
+    os_user_home => $server_home_dir,
+    install_java => $install_java,
+    java_home    => $java_home
+  }
+
   if str2bool($enable_housekeeping)  {
 
-    class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
+    Class['xldeploy::server::service'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
 
     if !defined(Class['Xldeploy::Cli']) {
       class {'xldeploy::cli':
@@ -210,14 +220,5 @@ class xldeploy::server (
   }
 
   #class to setup shared stuff between cli and server installations
-  if !defined(Class['xldeploy::shared_prereq']) {
-    class{'xldeploy::shared_prereq':
-      base_dir     => $base_dir,
-      os_user      => $os_user,
-      os_group     => $os_group,
-      os_user_home => $server_home_dir,
-      install_java => $install_java,
-      java_home    => $java_home
-    }
-  }
+
 }

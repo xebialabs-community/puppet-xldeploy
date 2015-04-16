@@ -41,9 +41,9 @@ class xldeploy::cli (
         $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
       } else {
         if versioncmp($version , '3.9.90') > 0 {
-          $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/xl-deploy/server/${version}/xl-deploy-${version}-cli.zip"
         }else {
-          $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/deployit/server/${version}/deployit-${version}-cli.zip"
         }
       }
     } else {
@@ -83,7 +83,7 @@ class xldeploy::cli (
     }
 
     if ($custom_license_source == undef) {
-      $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+      $license_source      = 'https://tech.xebialabs.com/customer/licenses/download/deployit-license.lic'
     } else {
       $license_source      = $custom_license_source
     }

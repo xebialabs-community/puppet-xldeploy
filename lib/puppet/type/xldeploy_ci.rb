@@ -1,4 +1,5 @@
 require 'pathname'
+require 'pp'
 
 Puppet::Type.newtype(:xldeploy_ci) do
   @doc = 'Manage a XL Deploy Configuration Item'
@@ -41,8 +42,12 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     # Add all @ref attributes as required
     required = required + recursive_values(self[:properties], '@ref')
+
+    # select all dictionaries to be required if the current type is a environment
+
     required
   end
+
 
   newparam(:id, :namevar => true) do
     desc 'The ID/path of the CI'
@@ -76,8 +81,8 @@ Puppet::Type.newtype(:xldeploy_ci) do
 
     def compare(is, should)
       return false unless is.class == should.class
-
       if should.is_a? Hash
+
         should.each do |k, v|
           return false unless is.has_key? k and compare(is[k], should[k])
         end

@@ -12,7 +12,7 @@ deploy:
   provider: releases
   api_key:
     secure: mNUgeZTU9Pff8ECKGg25rbriah62TkHUBF01o26PMvXnF1P59Eho5+K9+M4NJftiXVipDbDTgWq6/vr6k20IEXqBXtnj3Ez9PM89vEtW4lQRhIdc3aOO5MzTifk/zOAAaLftbwW6gkZ1/dw23zNMLTVkIMntnxk2/vTlex5noDU=
-  file: pkg/puppet-xldeploy-1.2.2.tar.gz
+  file: pkg/puppet-xldeploy-1.2.3.tar.gz
   skip_cleanup: true
   on:
     all_branches: true

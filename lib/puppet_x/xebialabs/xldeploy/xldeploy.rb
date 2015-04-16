@@ -30,6 +30,7 @@ class Xldeploy
 
   def execute_rest(service, method, body='')
     uri = URI.parse("#{rest_url}/#{service}")
+    #Puppet.debug(" execute_rest call on #{uri}")
     http = Net::HTTP.new(uri.host, uri.port)
 
     http.use_ssl = ssl
@@ -50,10 +51,10 @@ class Xldeploy
 
     begin
       res = http.request(request)
-      #raise Puppet::Error, "cannot send request to deployit server #{res.code}/#{res.message}:#{res.body}" unless res.is_a?(Net::HTTPSuccess)
+      raise Puppet::Error, "cannot send request to deployit server #{res.code}/#{res.message}:#{res.body}" unless res.is_a?(Net::HTTPSuccess)
       return res.body
     rescue Exception => e
-      return e.message
+      raise Puppet::Error, e.message
     end
 
   end
@@ -77,14 +78,24 @@ class Xldeploy
 
 
   def to_xml(id, type, properties)
+    Puppet.debug("serialize to xml [#{id}][#{type}][#{properties}]")
     doc = REXML::Document.new
     root = doc.add_element type, {'id' => id}
     properties.each do |key, value|
       property = root.add_element(key)
 
-      #Puppet.debug(" to_xml::processing #{key}:#{value}")
+      if value == nil
+        Puppet.debug(" [#{id}][#{type}]:to_xml::processing skiping #{key}:nil")
+        next
+      end
+      Puppet.debug(" [#{id}][#{type}]:to_xml::processing #{key}:#{value}")
 
-      case type_description(type)[key].attributes['kind']
+      descriptor =  type_description(type)
+      if not descriptor.has_key?(key)
+        raise Puppet::Error, "'[#{id}]:#{key}' is not a property from '#{type}'"
+      end
+
+      case descriptor[key].attributes['kind']
         when 'SET_OF_STRING', 'LIST_OF_STRING'
           value = [value] if value.is_a?(String)
           value.each do |v|
@@ -184,5 +195,4 @@ class Xldeploy
   end
 
 end
-
 

@@ -1,6 +1,8 @@
 puppet-xldeploy
 ===============
 
+[![Build Status](https://travis-ci.org/xebialabs/puppet-xldeploy.svg?branch=master)](https://travis-ci.org/xebialabs/puppet-xldeploy)
+
 ####Table of Contents
 
 1. [License](#license)
@@ -85,7 +87,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
   all in one go:
 
     class{xldeploy::client:
-            http_context_root   => '/xldeploy',
+            http_context_root   => '/', # set '/' if you've not changed the XL Deploy context else set its value here
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
             rest_user           => 'admin',
@@ -101,7 +103,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                                                  'username' => 'deployit',
                                                                  'tags' => 'projectx',
                                                                  'connectionType' => 'SCP',
-                                                                 'address' => '${hostname}' }
+                                                                 'address' => $hostname }
                                       }
                                      }
     }
@@ -124,7 +126,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                   'username' => 'deployit',
                                   'tags' => 'projectx',
                                   'connectionType' => 'SCP',
-                                  'address' => '${hostname}' },
+                                  'address' => $hostname },
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 
