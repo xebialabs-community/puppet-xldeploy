@@ -24,18 +24,26 @@ class xldeploy::client::config(
   $use_exported_keys      = $xldeploy::client::use_exported_keys,
   $os_user                = $xldeploy::client::os_user,){
 
+  # set rest_url as a default to use with configurable stuff
+  $defaults = { rest_url => $rest_url,
+                require  => Xldeploy_check_connection['default']}
 
-  create_resources(xldeploy::client::config_ci, $cis)
+  # Check connection
+  xldeploy_check_connection{'default':
+    rest_url => $rest_url
+  }
 
-  create_resources(xldeploy::client::config_members, $memberships)
+  create_resources(xldeploy::client::config_ci, $cis, $defaults)
 
-  create_resources(xldeploy::client::config_user, $users)
+  create_resources(xldeploy::client::config_members, $memberships, $defaults)
 
-  create_resources(xldeploy::client::config_role, $roles)
+  create_resources(xldeploy::client::config_user, $users, $defaults)
 
-  create_resources(xldeploy::client::config_role_permission, $role_permissions)
+  create_resources(xldeploy::client::config_role, $roles, $defaults)
 
-  create_resources(xldeploy::client::config_dictionary_entry, $dictionary_settings)
+  create_resources(xldeploy::client::config_role_permission, $role_permissions, $defaults)
+
+  create_resources(xldeploy::client::config_dictionary_entry, $dictionary_settings, $defaults)
 
 
 

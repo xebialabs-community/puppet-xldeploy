@@ -7,9 +7,9 @@ class xldeploy::server::install (
   $tmp_dir                     = $xldeploy::server::tmp_dir,
   $os_user                     = $xldeploy::server::os_user,
   $os_group                    = $xldeploy::server::os_group,
-  $install_type                = $xldeploy::server::install_type,
+  #$install_type                = $xldeploy::server::install_type,
   $server_home_dir             = $xldeploy::server::server_home_dir,
-  $puppetfiles_xldeploy_source = $xldeploy::server::puppetfiles_xldeploy_source,
+  #$puppetfiles_xldeploy_source = $xldeploy::server::puppetfiles_xldeploy_source,
   $download_user               = $xldeploy::server::download_user,
   $download_password           = $xldeploy::server::download_password,
   $download_proxy_url          = $xldeploy::server::download_proxy_url,
@@ -65,53 +65,99 @@ class xldeploy::server::install (
 
 
   # check the install_type and act accordingly
-  case $install_type {
-    'puppetfiles' : {
+#  case $install_type {
+#    'puppetfiles' : {
+#
+#    $server_zipfile = "${productname}-${version}-server.zip"
+#
+#    Anchor['server::install']
+#
+#    -> file { "${tmp_dir}/${server_zipfile}": source => "${puppetfiles_xldeploy_source}/${server_zipfile}" }
+#
+#    -> file { $server_install_dir: ensure => directory }
+#
+#    -> exec { 'unpack server file':
+#      command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
+#      creates => "${server_install_dir}/bin",
+#      cwd     => $tmp_dir,
+#      user    => $os_user
+#    }
+#
+#    -> Anchor['server::postinstall']
+#  }
+#    'download'    : {
+#
+#
+#
+#      if str2bool($xld_community_edition) == false {
+#        Xldeploy_netinstall{
+#          user           => $download_user,
+#          password       => $download_password,
+#        }
+#      }
+#
+#      Anchor['server::install']
+#
+#      -> notify{"xld_community_edition ${xld_community_edition}": withpath => true }
+#
+#      -> xldeploy_netinstall{$download_server_url:
+#          owner          => $os_user,
+#          group          => $os_group,
+#          destinationdir => $base_dir,
+#          proxy_url      => $download_proxy_url
+#        }
+#
+#      -> Anchor['server::postinstall']
+#    }
+#    default       : {
+#    }
+#  }
 
-    $server_zipfile = "${productname}-${version}-server.zip"
-
-    Anchor['server::install']
-
-    -> file { "${tmp_dir}/${server_zipfile}": source => "${puppetfiles_xldeploy_source}/${server_zipfile}" }
-
-    -> file { $server_install_dir: ensure => directory }
-
-    -> exec { 'unpack server file':
-      command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
-      creates => "${server_install_dir}/bin",
-      cwd     => $tmp_dir,
-      user    => $os_user
-    }
-
-    -> Anchor['server::postinstall']
-  }
-    'download'    : {
-
-
-
-      if str2bool($xld_community_edition) == false {
-        Xldeploy_netinstall{
-          user           => $download_user,
-          password       => $download_password,
+  case $download_server_url {
+    /^http/ : {
+        if str2bool($xld_community_edition) == false {
+          Xldeploy_netinstall{
+            user           => $download_user,
+            password       => $download_password,
+          }
         }
+
+        Anchor['server::install']
+
+
+        -> xldeploy_netinstall{$download_server_url:
+            owner          => $os_user,
+            group          => $os_group,
+            destinationdir => $base_dir,
+            proxy_url      => $download_proxy_url
+          }
+
+        -> Anchor['server::postinstall']
+
       }
+    /^puppet/ : {
+        $server_zipfile = "${productname}-${version}-server.zip"
 
-      Anchor['server::install']
+        Anchor['server::install']
 
-      -> notify{"xld_community_edition ${xld_community_edition}": withpath => true }
+        -> file { "${tmp_dir}/${server_zipfile}": source => $download_server_url }
 
-      -> xldeploy_netinstall{$download_server_url:
-          owner          => $os_user,
-          group          => $os_group,
-          destinationdir => $base_dir,
-          proxy_url      => $download_proxy_url
+        -> file { $server_install_dir: ensure => directory }
+
+        -> exec { 'unpack server file':
+          command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
+          creates => "${server_install_dir}/bin",
+          cwd     => $tmp_dir,
+          user    => $os_user
         }
 
-      -> Anchor['server::postinstall']
-    }
-    default       : {
-    }
+        -> Anchor['server::postinstall']
+      }
+    default : {
+        fail 'either specify a valid http or puppetfiles(puppet:) url'
+          }
   }
+
 
   # convenience links
 
@@ -166,8 +212,8 @@ class xldeploy::server::install (
                   File[$server_home_dir]
 
                   -> xldeploy_license_install{$license_source:
-                      user           => $download_user,
-                      password       => $download_password,
+                      user                 => $download_user,
+                      password             => $download_password,
                       owner                => $os_user,
                       group                => $os_group,
                       destinationdirectory => "${server_home_dir}/conf"

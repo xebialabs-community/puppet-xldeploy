@@ -32,6 +32,7 @@ Puppet::Type.type(:xldeploy_ci).provide :rest do
        } if resource[:properties].keys.include? k
       end
 
+      
       # Temporarily replace password properties as well, until we can
       # encode passwords ourselves
       resource[:properties][k] = v if (k == 'password' or k == 'passphrase') and v.start_with?('{b64}')

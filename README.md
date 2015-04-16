@@ -1,6 +1,8 @@
 puppet-xldeploy
 ===============
 
+[![Build Status](https://travis-ci.org/xebialabs/puppet-xldeploy.svg?branch=master)](https://travis-ci.org/xebialabs/puppet-xldeploy)
+
 ####Table of Contents
 
 1. [License](#license)
@@ -85,7 +87,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
   all in one go:
 
     class{xldeploy::client:
-            http_context_root   => '/xldeploy',
+            http_context_root   => '/', # set '/' if you've not changed the XL Deploy context else set its value here
             http_server_address => 'xldeploy.local.domain',
             http_port           => '4516',
             rest_user           => 'admin',
@@ -101,7 +103,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                                                  'username' => 'deployit',
                                                                  'tags' => 'projectx',
                                                                  'connectionType' => 'SCP',
-                                                                 'address' => '${hostname}' }
+                                                                 'address' => $hostname }
                                       }
                                      }
     }
@@ -124,12 +126,29 @@ From a potential xldeploy client machine using the module to register a ci in wi
                                   'username' => 'deployit',
                                   'tags' => 'projectx',
                                   'connectionType' => 'SCP',
-                                  'address' => '${hostname}' },
+                                  'address' => $hostname },
           rest_url           => 'http://admin:password@xldeploy.domain.local:4516/xldeploy' }
     }
 
   Both class parameters and types and providers are available for defining memberships,users, roles, dictionary_settings and role_permissions wich work in the same way as the above specified method for defining a ci.
+
+**running with a custom license source**
+
+In some cases you may want to override the default urls provided by the module to download the various components used in the installation. 
+For both installation sources and licenses you can specify either a http or a puppetfiles url. 
+When specifying a puppetfiles url , the module will get the sources from puppet file serving. 
+Please take notice of the fact that zip files need to be supplied in order for the installation to work.
+
+      class{xldeploy::server:
+              install_java                => true,
+              install_license             => true,
+              custom_license_source       => 'puppet:///<some_file_location>/deployit-license.lic',
+              custom_download_server_url  => 'puppet:///<some_puppetfile_location/some_xldeploy_server.zip',
+              custom_download_cli_url     => 'puppet:///<some_puppetfile_location/some_xldeploy_cli.zip',
+           }  
   
+
+
 usage
 -----
   
@@ -204,23 +223,71 @@ usage
     export a locally generated public key of a ssh key pair that can be used to import on client nodes to setup secure communication
     default: false
 ######client_propagate_key
-   
-######java_home              
-######install_java           
-######install_license        
-######license_source         
-######enable_housekeeping    
-######ldap_server_id         
-######ldap_server_url        
-######ldap_server_root             
-######ldap_manager_dn              
-######ldap_manager_password             = $xldeploy::params::ldap_manager_password,
-######ldap_user_search_filter           = $xldeploy::params::ldap_user_search_filter,
-######ldap_user_search_base             = $xldeploy::params::ldap_user_search_base,
-######ldap_group_search_filter          = $xldeploy::params::ldap_group_search_filter,
-######ldap_group_search_base            = $xldeploy::params::ldap_group_search_base,
-######ldap_role_prefix                  = $xldeploy::params::ldap_role_prefix,
-######xldeploy_authentication_providers = $xldeploy::params::xldeploy_authentication_providers,
+    generate a key on the xl-deploy server at the first puppet run there and distribute that to the clients when they do a puppet run. 
+    default: true
+######java_home  
+    set the java home that will be used 
+    default: RedHat => '/usr/lib/jvm/jre-1.7.0-openjdk.x86_64'
+             Debian => '/usr/lib/jvm/java-7-openjdk-amd64'
+######install_java
+    indicate if this module should take care of the java installation (version 1.7.0)
+    default: true
+######install_license
+    indicate if the xl-deploy license should be installed
+    default: true
+######enable_housekeeping
+    indicate if we want to switch rudimentary housekeeping on 
+    default: true
+######housekeeping_minute       
+    set the minute housekeeping should run (cron style type deal)
+    default: 5
+######housekeeping_hour
+    set the hour housekeeping should run (cron style type deal)
+    default: 2 (which makes 2am)
+######housekeeping_month
+    set the month housekeeping should run (cron again)
+    default: undef
+######housekeeping_monthday
+    set the monthday housekeeping should run (cron agian)
+    default: undef
+######housekeeping_weekday
+    set the weekday housekeeping should run (cron ftw)
+    default: undef
+######xldeploy_authentication_providers 
+    set the authentication providers that xldeploy should use (see xldeploy documentation) 
+    default: {'rememberMeAuthenticationProvider' => 'com.xebialabs.deployit.security.authentication.RememberMeAuthenticationProvider',
+                                        'jcrAuthenticationProvider' => 'com.xebialabs.deployit.security.authentication.JcrAuthenticationProvider'}
+######ldap_server_id                    
+    set the id of the ldap server to use (see xldeploy docu)
+    default: undef
+######ldap_server_url                  
+    set the url of the ldap server to use (see xldeploy docu)
+    default: undef
+######ldap_server_root  
+    set the sever_root of the ldap server to use (see xldeploy docs) 
+    default: undef
+######ldap_manager_dn
+    set the manager_dn for the ldap server (see xldeploy docs and your friendly local neighbourhood ldap admin)
+    default: undef
+######ldap_manager_password  
+    set the ldap_manager password 
+    default: undef
+######ldap_user_search_filter          
+    specify an ldap search filter (used to speed up ldap searches)
+    default: undef
+######ldap_user_search_base          
+    specify the ldap search_base (again to speed things up or limit the search ) 
+    default: undef
+######ldap_group_search_filter         
+    set the ldap_group_search filter
+    default: undef
+######ldap_group_search_base           
+    set the ldap group search base 
+    default: undef
+######ldap_role_prefix                 
+    specify the ldap role_prefix
+    default: undef
+
 ######repository_type                   = $xldeploy::params::repository_type,
 ######datastore_driver                  = $xldeploy::params::datastore_driver,
 ######datastore_url                     = $xldeploy::params::datastore_url,
@@ -237,6 +304,10 @@ usage
 ######custom_productname                = undef,
 ######custom_download_server_url        = undef,
 ######custom_download_cli_url           = undef,
+######custom_license_source               
+    specify a custom license source to be used to install the license from
+    this can either be an http url or a puppetfile url (see puppet documentation)
+    default: undef
 ######server_plugins                    = { }
     Example: server_plugins = { 'tomcat-plugin' => {'version' => '4.5.0', 'distribution' => true}, 'command2-plugin' => {'version' => '3.9.1-1', 'distribution' => false} }
 ######cis                               = { } ,

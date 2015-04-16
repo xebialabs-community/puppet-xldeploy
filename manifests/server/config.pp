@@ -27,10 +27,10 @@ class xldeploy::server::config (
   # Dependencies
   File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy default properties'
     ]
-  -> xldeploy_setup["default"]
+  -> Xldeploy_setup['default']
   -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
     , 'xldeploy.threads.min', 'xldeploy.threads.max' ]
-   #-> Exec['init xldeploy']
+  #-> Exec['init xldeploy']
 
   # Resource defaults
   File {

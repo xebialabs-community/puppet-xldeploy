@@ -13,6 +13,7 @@
 #
 class xldeploy::client (
   $http_bind_address                 = $xldeploy::params::http_bind_address,
+  $version                           = $xldeploy::params::version,
   $http_port                         = $xldeploy::params::http_port,
   $http_context_root                 = $xldeploy::params::http_context_root,
   $http_server_address               = $xldeploy::params::http_server_address,

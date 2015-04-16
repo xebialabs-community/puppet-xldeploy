@@ -16,8 +16,6 @@ class xldeploy::cli (
   $version                           = $xldeploy::params::version,
   $xldeploy_base_dir                 = $xldeploy::params::xldeploy_base_dir,
   $tmp_dir                           = $xldeploy::params::tmp_dir,
-  $install_type                      = $xldeploy::params::install_type,
-  $puppetfiles_xldeploy_source       = $xldeploy::params::puppetfiles_xldeploy_source,
   $download_user                     = $xldeploy::params::download_user,
   $download_password                 = $xldeploy::params::download_password,
   $download_proxy_url                = $xldeploy::params::download_proxy_url,
@@ -38,12 +36,12 @@ class xldeploy::cli (
   #we need to support the two different download urls for xldeploy and deployit
     if ($custom_download_cli_url == undef) {
       if str2bool($xld_community_edition) {
-        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-4.5.2-cli-free-edition.zip"
+        $download_cli_url    = "https://download.xebialabs.com/files/Generic/xl-deploy-${version}-cli-free-edition.zip"
       } else {
         if versioncmp($version , '3.9.90') > 0 {
-          $download_cli_url    = "https://tech.xebialabs.com/download/xl-deploy/${version}/xl-deploy-${version}-cli.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/xl-deploy/server/${version}/xl-deploy-${version}-cli.zip"
         }else {
-          $download_cli_url    = "https://tech.xebialabs.com/download/deployit/${version}/deployit-${version}-cli.zip"
+          $download_cli_url    = "https://dist.xebialabs.com/customer/deployit/server/${version}/deployit-${version}-cli.zip"
         }
       }
     } else {
@@ -83,7 +81,7 @@ class xldeploy::cli (
     }
 
     if ($custom_license_source == undef) {
-      $license_source      = 'https://tech.xebialabs.com/download/licenses/download/deployit-license.lic'
+      $license_source      = 'https://tech.xebialabs.com/customer/licenses/download/deployit-license.lic'
     } else {
       $license_source      = $custom_license_source
     }
