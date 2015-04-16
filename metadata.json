@@ -1,6 +1,6 @@
 {
   "name": "xebialabs-xldeploy",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": "xebialabs",
   "summary": "Puppet module for xldeploy",
   "license": "Apache V2.0",

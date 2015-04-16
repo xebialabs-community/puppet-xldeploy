@@ -41,7 +41,7 @@ describe 'xldeploy::server' do
       it { should contain_file('/etc/init.d/deployit').with_owner('root').with_group('root').with_mode('0700')}
       it { should contain_file('/opt/deployit/deployit-server').with_owner('deployit').with_group('deployit').with_ensure('link').with_target('/opt/deployit/deployit-3.9.4-server')}
       it { should contain_file('/opt/deployit/deployit-server/scripts').with_owner('deployit').with_group('deployit').with_ensure('directory')}
-      it { should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/deployit/3.9.4/deployit-3.9.4-server.zip')}
+      it { should contain_xldeploy_netinstall('https://dist.xebialabs.com/customer/deployit/server/3.9.4/deployit-3.9.4-server.zip')}
       it { should contain_file('/opt/deployit/deployit-server/conf/deployit.conf').with({:ensure => 'present',:owner =>'deployit',:group =>'deployit',:mode => '0640',:ignore => '.gitkeep'}) }
       it { should contain_file('xldeploy server plugins').with({:ensure => 'present',:owner =>'deployit',:group =>'deployit',:mode=>'0640',:ignore=>'.gitkeep',:recurse=>'true',:sourceselect=>'all',:source=>['puppet:///modules/xldeploy/plugins/generic','puppet:///modules/xldeploy/plugins/customer',"/opt/deployit/deployit-server/available-plugins"]})}
       it { should contain_file('xldeploy server hotfix').with({:ensure=>'present',:owner=>'deployit',:group=>'deployit',:mode=>'0640',:ignore=>'.gitkeep',:recurse=>'true',:purge=>'true',:source=>['puppet:///modules/xldeploy/hotfix/'],:path=>'/opt/deployit/deployit-server/hotfix'})}
@@ -77,7 +77,7 @@ describe 'xldeploy::server' do
       it { should contain_file('/etc/init.d/xl-deploy').with_owner('root').with_group('root').with_mode('0700')}
       it { should contain_file('/opt/xl-deploy/xl-deploy-server').with_owner('xldeploy').with_group('xldeploy').with_ensure('link').with_target('/opt/xl-deploy/xl-deploy-4.5.0-server')}
       it { should contain_file('/opt/xl-deploy/xl-deploy-server/scripts').with_owner('xldeploy').with_group('xldeploy').with_ensure('directory')}
-      it { should contain_xldeploy_netinstall('https://tech.xebialabs.com/download/xl-deploy/4.5.0/xl-deploy-4.5.0-server.zip')}
+      it { should contain_xldeploy_netinstall('https://dist.xebialabs.com/customer/xl-deploy/server/4.5.0/xl-deploy-4.5.0-server.zip')}
       it { should contain_file('/opt/xl-deploy/xl-deploy-server/conf/deployit.conf').with({:ensure => 'present',:owner => 'xldeploy',:group => 'xldeploy',:mode => '0640',:ignore => '.gitkeep'}) }
       it { should contain_file('xldeploy server plugins').with({:ensure => 'present',:owner => 'xldeploy',:group => 'xldeploy',:mode=>'0640',:ignore=>'.gitkeep',:recurse=>'true',:sourceselect=>'all',:source=>['puppet:///modules/xldeploy/plugins/generic','puppet:///modules/xldeploy/plugins/customer',"/opt/xl-deploy/xl-deploy-server/available-plugins"]})}
       it { should contain_file('xldeploy server hotfix').with({:ensure=>'present',:owner=>'xldeploy',:group=>'xldeploy',:mode=>'0640',:ignore=>'.gitkeep',:recurse=>'true',:purge=>'true',:source=>['puppet:///modules/xldeploy/hotfix/'],:path=>'/opt/xl-deploy/xl-deploy-server/hotfix'})}
@@ -101,6 +101,17 @@ describe 'xldeploy::server' do
       it { should contain_concat__fragment('security_authentication_manager').with_target('/opt/xl-deploy/xl-deploy-server/conf/deployit-security.xml')}
       it { should contain_concat__fragment('security_beans')}
       it { should_not contain_concat__fragment('security_ldapserver')}
+    end
+
+    context 'xldeloy with a license file supplied through puppetfiles' do
+
+      let(:params) {{ :custom_license_source   => 'puppet:///modules/xldeploy/licenses',
+                      :install_license  => 'true',
+                      :version => '4.5.0'
+                    }}
+
+      it { should contain_file('/opt/xl-deploy/xl-deploy-server/conf/deployit-license.lic').with_source('puppet:///modules/xldeploy/licenses')}
+
     end
  end
 

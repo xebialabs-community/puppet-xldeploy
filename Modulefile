@@ -1,5 +1,5 @@
 name 'puppet-xldeploy'
-version '1.2.5'
+version '1.2.6'
 author 'xebialabs'
 license 'Apache v2.0'
 project_page 'https://github.com/xebialabs/puppet-xldeploy.git'

@@ -2,9 +2,13 @@ fixtures:
   repositories:
     stdlib: http://github.com/puppetlabs/puppetlabs-stdlib.git
     inifile: http://github.com/puppetlabs/puppetlabs-inifile.git
-    concat: http://github.com/puppetlabs/puppetlabs-concat.git
+    concat:
+      repo: "http://github.com/puppetlabs/puppetlabs-concat.git"
+      ref: '1.1.0'
     puppetdbquery: http://github.com/dalen/puppet-puppetdbquery.git
-    sshkeys: http://github.com/jtopjian/puppet-sshkeys.git
+    sshkeys: 
+      repo: 'http://github.com/jtopjian/puppet-sshkeys.git'
+      ref: "0.5.0"
   symlinks:
     xldeploy: "#{source_dir}"
 
