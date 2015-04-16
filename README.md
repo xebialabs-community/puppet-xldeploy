@@ -132,7 +132,7 @@ From a potential xldeploy client machine using the module to register a ci in wi
 
   Both class parameters and types and providers are available for defining memberships,users, roles, dictionary_settings and role_permissions wich work in the same way as the above specified method for defining a ci.
 
-**running with a custom license source**
+**running with custom file sources**
 
 In some cases you may want to override the default urls provided by the module to download the various components used in the installation. 
 For both installation sources and licenses you can specify either a http or a puppetfiles url. 
