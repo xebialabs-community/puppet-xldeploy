@@ -8,7 +8,7 @@ describe 'xldeploy class' do
       pp = <<-EOS
       class { 'xldeploy::server':
         download_user => 'download',
-        download_password => 'wVyNZ3dsWwECn/R0kagG',
+        download_password => '',
         install_java          =>  true,
         install_license       =>  true,
         version               => '4.5.2',
