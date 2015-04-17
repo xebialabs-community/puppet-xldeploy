@@ -19,4 +19,4 @@ deploy:
     tags: true
     repo: xebialabs/puppet-xldeploy
 script:
-  - "rake test SPEC_OPTS='--format documentation'"
+  - "rake testf SPEC_OPTS='--format documentation'"

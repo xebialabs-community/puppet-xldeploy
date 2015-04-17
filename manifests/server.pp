@@ -131,7 +131,7 @@ class xldeploy::server (
   } else {
       $os_user = $custom_os_user
   }
-  
+
   if ($custom_os_group == undef) {
     if versioncmp($version , '3.9.90') > 0 {
       $os_group         = 'xldeploy'
@@ -165,13 +165,12 @@ class xldeploy::server (
       $rest_url = "${rest_protocol}${rest_user}:${rest_password}@${http_server_address}:${http_port}/${http_context_root}/deployit"
     }
   }
-  
-  
+
   $base_dir            = "${xldeploy_base_dir}/${productname}"
   $server_home_dir     = "${base_dir}/${productname}-server"
   $cli_home_dir        = "${base_dir}/${productname}-cli"
   $key_path            = "${server_home_dir}/keys"
-  
+
   # include validation class to check our input
   include xldeploy::server::validation
 

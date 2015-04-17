@@ -91,7 +91,7 @@ class xldeploy::cli::install (
               password       => $download_password,
             }
           }
-  
+
           Anchor['cli::install']
 
           -> xldeploy_netinstall{$download_cli_url:
@@ -100,34 +100,34 @@ class xldeploy::cli::install (
               destinationdir => $base_dir,
               proxy_url      => $download_proxy_url
             }
-  
+
           -> Anchor['cli::postinstall']
-  
+
         }
       /^puppet/ : {
           $cli_zipfile = "${productname}-${version}-cli.zip"
-  
+
           Anchor['cli::install']
-  
+
           -> file { "${tmp_dir}/${cli_zipfile}": source => $download_cli_url }
-  
+
           -> file { $cli_install_dir: ensure => directory }
-  
+
           -> exec { 'unpack cli file':
             command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
             creates => "${cli_install_dir}/bin",
             cwd     => $tmp_dir,
             user    => $os_user
           }
-  
+
           -> Anchor['cli::postinstall']
         }
       default : {
           fail 'either specify a valid http or puppetfiles(puppet:) url'
             }
     }
-  
-    
+
+
   file { $cli_home_dir:
     ensure => link,
     target => $cli_install_dir,
