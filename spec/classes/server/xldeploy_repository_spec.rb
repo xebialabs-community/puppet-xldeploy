@@ -45,4 +45,49 @@ describe 'xldeploy::server::repository' do
     }) }
   end
 
+  context 'with datastore_jdbc_driver_url set to a http address and repository_type set to database' do
+
+    let(:params) { {  :repository_type          => 'database',
+                      :datastore_jdbc_driver_url => 'http://some.driver.url/some_driver.jar',
+                      :server_home_dir          => '/opt/xldeploy/xldeploy-server',
+                      :os_group                 => 'xl-deploy',
+                      :os_user                  => 'xl-deploy'
+    } }
+
+    it { should contain_file('/opt/xldeploy/xldeploy-server/conf/jackrabbit-repository.xml')}
+    it { should contain_xldeploy_repo_driver_netinstall('http://some.driver.url/some_driver.jar').with_ensure('present').with_lib_dir('/opt/xldeploy/xldeploy-server/lib').with_owner('xl-deploy')}
+
+
+  end
+
+  context 'with repository set to standalone' do
+
+    let(:params) { {  :repository_type          => 'standalone',
+                      :os_group                 => 'xl-deploy',
+                      :server_home_dir          => '/opt/xldeploy/xldeploy-server',
+                      :os_user                  => 'xl-deploy'
+    } }
+
+    it { should contain_file('/opt/xldeploy/xldeploy-server/conf/jackrabbit-repository.xml')}
+    it { should_not contain_xldeploy_repo_driver_netinstall('http://some.driver.url/some_driver.jar')}
+
+
+  end
+
+  context 'with datastore_jdbc_driver_url set to a puppet url and repository_type set to database' do
+
+    let(:params) { {  :repository_type          => 'database',
+                      :datastore_jdbc_driver_url => 'puppet:///some.driver.url/some_driver.jar',
+                      :server_home_dir          => '/opt/xldeploy/xldeploy-server',
+                      :os_group                 => 'xl-deploy',
+                      :os_user                  => 'xl-deploy'
+    } }
+
+    it { should contain_file('/opt/xldeploy/xldeploy-server/conf/jackrabbit-repository.xml')}
+    it { should contain_file('/opt/xldeploy/xldeploy-server/lib/some_driver.jar').with_owner('xl-deploy')}
+
+
+  end
+
+
 end
