@@ -8,10 +8,11 @@ describe 'xldeploy class' do
       pp = <<-EOS
       class { 'xldeploy::server':
         download_user => 'download',
-        download_password => '',
+        download_password => '<change me>',
         install_java          =>  true,
         install_license       =>  true,
         version               => '4.5.2',
+        ssl                   => false,
       }
       EOS
 

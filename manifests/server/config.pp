@@ -113,7 +113,7 @@ class xldeploy::server::config (
 
     'xldeploy.ssl':
       setting => 'ssl',
-      value   => $ssl;
+      value   => bool2string($ssl);
 
     'xldeploy.http.bind.address':
       setting => 'http.bind.address',

@@ -8,6 +8,11 @@ class xldeploy::shared_prereq(
   $java_home
 ){
 
+  # make sure unzip is on the machine
+  if !defined(Package['unzip']) {
+    package{'unzip': ensure => 'present'}
+  }
+
   # install java packages if needed
   if str2bool($install_java) {
     case $::osfamily {
@@ -22,11 +27,6 @@ class xldeploy::shared_prereq(
           if !defined(Package[$java_packages]){
             package { $java_packages: ensure => present }
           }
-          $unzip_packages = ['unzip']
-          if !defined(Package[$unzip_packages]){
-            package { $unzip_packages: ensure => present }
-          }
-
       }
       default  : {
           fail("${::osfamily}:${::operatingsystem} not supported by this module")

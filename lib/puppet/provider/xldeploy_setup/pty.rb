@@ -19,19 +19,10 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
       input.each { |line|
         Puppet.debug line
 
-        # we do not want the password encryption key to be secured by a password because we can't work with that in puppet
-        if line_array[-1] =~ /The password encryption key is optionally secured by a password./
-          output.puts("\n") if line =~ /Please enter the password you wish to use/
-        end
 
-        if line_array[-2] =~ /The password encryption key is optionally secured by a password./
-          output.puts("\n") if line =~ /New password/
-        end
-
-        if line_array[-3] =~ /The password encryption key is optionally secured by a password./
-          output.puts("\n") if line =~ /Re-type password/
-        end
-
+        output.puts("\n") if (line =~ /Please enter the password you wish to use/) and line_array.grep(/The password encryption key is optionally secured by a password./)
+        output.puts("\n") if line =~ /New password/ and line_array.grep(/The password encryption key is optionally secured by a password./)
+        output.puts("\n") if line =~ /Re-type password/ and line_array.grep(/The password encryption key is optionally secured by a password./)
 
         if line =~ /Options are yes or no./
           output.puts('no') if line_array[-1] =~ /Default values are used for all properties. To make changes to the default properties, please answer no./
@@ -44,7 +35,8 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
         output.puts('yes') if line =~ /Are you sure you want to continue (yes or no)?/
         output.puts('no') if line =~ /selecting no will create an empty configuration/
         output.puts(resource[:admin_password]) if line =~ /Please enter the admin password you wish to use for XL Deploy Server/
-        output.puts(resource[:admin_password]) if line =~ /New password/
+        output.puts(resource[:admin_password]) if line =~ /New password/ and not line_array.grep(/The password encryption key is optionally secured by a password./)
+        output.puts(resource[:admin_password]) if line =~ /Re-type password/ and not line_array.grep(/The password encryption key is optionally secured by a password./)
         output.puts(resource[:http_bind_address]) if line =~ /What http bind address would you like the server to listen on/
         output.puts(resource[:http_port]) if line =~ /What http port number would you like the server to listen on/
         output.puts(resource[:http_context_root]) if line =~ /Enter the web context root where XL Deploy Server will run/
