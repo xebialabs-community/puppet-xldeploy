@@ -7,14 +7,11 @@ class xldeploy::server::repository(
   $os_group                          = $xldeploy::server::os_group,
   $server_home_dir                   = $xldeploy::server::server_home_dir,
   $repository_type                   = $xldeploy::server::repository_type,
-  $datastore_driver                  = $xldeploy::server::datastore_driver,
   $datastore_url                     = $xldeploy::server::datastore_url,
   $datastore_user                    = $xldeploy::server::datastore_user,
   $datastore_password                = $xldeploy::server::datastore_password,
   $datastore_databasetype            = $xldeploy::server::datastore_databasetype,
   $datastore_schema                  = $xldeploy::server::datastore_schema,
-  $datastore_persistencemanagerclass = $xldeploy::server::datastore_persistencemanagerclass,
-  $datastore_jdbc_driver_url         = $xldeploy::server::datastore_jdbc_driver_url,
   $download_proxy_url                = $xldeploy::server::download_proxy_url,
 ){
   # Resource defaults
@@ -53,8 +50,12 @@ class xldeploy::server::repository(
       }
       default : {}
     }
-    file { "${server_home_dir}/conf/jackrabbit-repository.xml":
-      content => template('xldeploy/repository/jackrabbit-repository-database.xml.erb')
+    case $datastore_databasetype {
+      /postgres/ : {
+        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+          content => template('xldeploy/repository/jackrabbit-repository-db-postgresql.xml.erb')
+        }
+      }
     }
   }
 }
