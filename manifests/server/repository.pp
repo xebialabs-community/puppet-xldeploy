@@ -52,31 +52,33 @@ class xldeploy::server::repository(
       default : {}
     }
     if $xldeploy_cluster_id == undef {
-    case $datastore_databasetype {
-      /postgres/ : {
-        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
-          content => template('xldeploy/repository/jackrabbit-repository-db-postgresql.xml.erb')
+      case $datastore_databasetype {
+        /postgres/ : {
+          file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+            content => template('xldeploy/repository/jackrabbit-repository-db-postgresql.xml.erb')
+          }
         }
-      }
-      /mysql/ : {
-        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
-          content => template('xldeploy/repository/jackrabbit-repository-db-mysql.xml.erb')
+        /mysql/ : {
+          file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+            content => template('xldeploy/repository/jackrabbit-repository-db-mysql.xml.erb')
+          }
         }
-      }
-      default : { fail "${datastore_databasetyp} not supported" }
-      }
-    } else {
-     /postgres/ : {
-        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
-          content => template('xldeploy/repository/jackrabbit-repository-db-postgresql-cluster.xml.erb')
+        default : { fail "${datastore_databasetyp} not supported" }
         }
-      }
-      /mysql/ : {
-        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
-          content => template('xldeploy/repository/jackrabbit-repository-db-mysql-cluster.xml.erb')
+      } else {
+      case $datastore_databasetype {
+        /postgres/ : {
+          file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+            content => template('xldeploy/repository/jackrabbit-repository-db-postgresql-cluster.xml.erb')
+          }
         }
-      }
-      default : { fail "${datastore_databasetyp} not supported" }
+        /mysql/ : {
+          file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+            content => template('xldeploy/repository/jackrabbit-repository-db-mysql-cluster.xml.erb')
+          }
+        }
+        default : { fail "${datastore_databasetyp} not supported" }
+        }
       }
     }
   }
