@@ -77,7 +77,7 @@
 </Versioning>
 
 <Cluster id="<%= @xldeploy_cluster_id %>" syncDelay="2000">
-    <Journal class="org.apache.jackrabbit.core.journal.PostgreSQLDatabaseJournal">
+    <Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
         <param name="revision" value="${rep.home}/revision" />
         <param name="driver" value="org.postgresql.Driver" />
         <param name="url" value="<%= @datastore_url %>" />
