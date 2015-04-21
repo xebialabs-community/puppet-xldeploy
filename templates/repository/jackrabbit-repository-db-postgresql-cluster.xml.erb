@@ -76,6 +76,16 @@
     </PersistenceManager>
 </Versioning>
 
+<Cluster id="<%= @xldeploy_cluster_id %>" syncDelay="2000">
+    <Journal class="org.apache.jackrabbit.core.journal.PostgreSQLDatabaseJournal">
+        <param name="revision" value="${rep.home}/revision" />
+        <param name="driver" value="org.postgresql.Driver" />
+        <param name="url" value="<%= @datastore_url %>" />
+        <param name="user" value="<%= @datastore_user %>" />
+        <param name="password" value="<%= @datastore_password %>" />
+        <param name="schemaObjectPrefix" value="JOURNAL_" />
+    </Journal>
+</Cluster>
 
     <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
         <param name="path" value="${rep.home}/repository/index" />

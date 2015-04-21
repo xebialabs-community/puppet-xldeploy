@@ -63,7 +63,6 @@ class xldeploy::server (
   $datastore_user                    = $xldeploy::params::datastore_user,
   $datastore_password                = $xldeploy::params::datastore_password,
   $datastore_databasetype            = $xldeploy::params::datastore_databasetype,
-  $datastore_schema                  = $xldeploy::params::datastore_schema,
   $datastore_persistencemanagerclass = $xldeploy::params::datastore_persistencemanagerclass,
   $datastore_jdbc_driver_url         = $xldeploy::params::datastore_jdbc_driver_url,
   $disable_firewall                  = $xldeploy::params::disable_firewall,
@@ -80,6 +79,7 @@ class xldeploy::server (
   $custom_os_user                    = undef,
   $custom_os_group                   = undef,
   $custom_license_source             = undef,
+  $xldeploy_cluster_id               = undef,
   $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,
@@ -87,7 +87,7 @@ class xldeploy::server (
   $roles                             = { } ,
   $dictionary_settings               = { } ,
   $role_permissions                  = { } ,
-  $xldeploy_default_settings         = { }
+  $xldeploy_default_settings         = { } ,
   ) inherits xldeploy::params {
   # composed variables
 

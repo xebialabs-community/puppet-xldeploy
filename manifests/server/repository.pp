@@ -12,8 +12,8 @@ class xldeploy::server::repository(
   $datastore_user                    = $xldeploy::server::datastore_user,
   $datastore_password                = $xldeploy::server::datastore_password,
   $datastore_databasetype            = $xldeploy::server::datastore_databasetype,
-  $datastore_schema                  = $xldeploy::server::datastore_schema,
   $download_proxy_url                = $xldeploy::server::download_proxy_url,
+  $xldeploy_cluster_id               = $xldeploy::server::xldeploy_cluster_id
 ){
   # Resource defaults
   File {
@@ -51,11 +51,32 @@ class xldeploy::server::repository(
       }
       default : {}
     }
+    if $xldeploy_cluster_id == undef {
     case $datastore_databasetype {
       /postgres/ : {
         file { "${server_home_dir}/conf/jackrabbit-repository.xml":
           content => template('xldeploy/repository/jackrabbit-repository-db-postgresql.xml.erb')
         }
+      }
+      /mysql/ : {
+        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+          content => template('xldeploy/repository/jackrabbit-repository-db-mysql.xml.erb')
+        }
+      }
+      default : { fail "${datastore_databasetyp} not supported" }
+      }
+    } else {
+     /postgres/ : {
+        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+          content => template('xldeploy/repository/jackrabbit-repository-db-postgresql-cluster.xml.erb')
+        }
+      }
+      /mysql/ : {
+        file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+          content => template('xldeploy/repository/jackrabbit-repository-db-mysql-cluster.xml.erb')
+        }
+      }
+      default : { fail "${datastore_databasetyp} not supported" }
       }
     }
   }
