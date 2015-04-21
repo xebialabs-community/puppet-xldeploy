@@ -7,6 +7,7 @@ class xldeploy::server::repository(
   $os_group                          = $xldeploy::server::os_group,
   $server_home_dir                   = $xldeploy::server::server_home_dir,
   $repository_type                   = $xldeploy::server::repository_type,
+  $datastore_jdbc_driver_url         = $xldeploy::server::datastore_jdbc_driver_url,
   $datastore_url                     = $xldeploy::server::datastore_url,
   $datastore_user                    = $xldeploy::server::datastore_user,
   $datastore_password                = $xldeploy::server::datastore_password,
