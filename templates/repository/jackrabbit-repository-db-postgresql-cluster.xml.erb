@@ -80,6 +80,7 @@
     <Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
         <param name="revision" value="${rep.home}/revision" />
         <param name="driver" value="org.postgresql.Driver" />
+        <param name="schema" value="postgresql"/>
         <param name="url" value="<%= @datastore_url %>" />
         <param name="user" value="<%= @datastore_user %>" />
         <param name="password" value="<%= @datastore_password %>" />
