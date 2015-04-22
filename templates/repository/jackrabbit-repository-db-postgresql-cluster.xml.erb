@@ -79,7 +79,7 @@
 <Cluster id="<%= @xldeploy_cluster_id %>" syncDelay="2000">
     <Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
         <param name="revision" value="${rep.home}/revision" />
-        <param name="driver" value="org.postgresql.Driver" />
+        <param name="driver" value="javax.naming.InitialContext" />
         <param name="schema" value="postgresql"/>
         <param name="url" value="<%= @datastore_url %>" />
         <param name="user" value="<%= @datastore_user %>" />
