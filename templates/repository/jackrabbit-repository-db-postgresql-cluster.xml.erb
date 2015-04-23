@@ -32,7 +32,7 @@
         </LoginModule>
     </Security>
 
-<Workspaces rootPath="${rep.home}/workspaces" defaultWorkspace="default" />
+<Workspaces rootPath="${rep.home}/workspaces_<%= @xldeploy_cluster_id %>" defaultWorkspace="default" />
 
 <Workspace name="${wsp.name}">
     <FileSystem class="org.apache.jackrabbit.core.fs.db.DbFileSystem">
@@ -52,7 +52,7 @@
     </PersistenceManager>
 
     <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
-        <param name="path" value="${wsp.home}/index" />
+        <param name="path" value="${wsp.home}/index_<%= @xldeploy_cluster_id %>" />
         <param name="supportHighlighting" value="true" />
     </SearchIndex>
 
@@ -89,7 +89,7 @@
 </Cluster>
 
     <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
-        <param name="path" value="${rep.home}/repository/index" />
+        <param name="path" value="${rep.home}/repository/index_<%= @xldeploy_cluster_id %>" />
         <param name="supportHighlighting" value="true" />
     </SearchIndex>
 </Repository>
