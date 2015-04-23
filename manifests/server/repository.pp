@@ -87,23 +87,23 @@ class xldeploy::server::repository(
       }
     }
 
-    if $xldeploy_cluster_id != undef {
-      case $xldeploy_cluster_role {
-        'master' : {
-          class { 'nfs::server':}
-          nfs::server::export{ "${server_home_dir}/${jcr_repository_path}":
-            ensure  => 'mounted',
-            bind    => 'rbind',
-            mount     => undef,
-            remounts  => false,
-            atboot    => true,
-            options   => '_netdev',
-            bindmount => undef,
-            nfstag     => undef,
-            clients => '10.0.0.0/24(rw,insecure,no_subtree_check,async,no_root_squash)'
-          }
+  if $xldeploy_cluster_id != undef {
+    case $xldeploy_cluster_role {
+      'master' : {
+        class { 'nfs::server':}
+        nfs::server::export{ "${server_home_dir}/${jcr_repository_path}":
+          ensure  => 'mounted',
+          bind    => 'rbind',
+          mount     => undef,
+          remounts  => false,
+          atboot    => true,
+          options   => '_netdev',
+          bindmount => undef,
+          nfstag     => undef,
+          clients => '10.0.0.0/24(rw,insecure,no_subtree_check,async,no_root_squash)'
         }
-        'slave'  : {
+      }
+      'slave'  : {
         if $use_exported_resources == true {
           include '::nfs::client'
           Nfs::Client::Mount <<| |>>{
@@ -115,9 +115,10 @@ class xldeploy::server::repository(
             share  => $xldeploy_cluster_nfs_repo
           }
         }
-        default  : {fail 'cluster role should be set'}
       }
+      default : { fail 'cluster role should be set' }
     }
   }
+}
 
 
