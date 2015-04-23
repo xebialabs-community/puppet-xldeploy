@@ -13,7 +13,12 @@ class xldeploy::server::repository(
   $datastore_password                = $xldeploy::server::datastore_password,
   $datastore_databasetype            = $xldeploy::server::datastore_databasetype,
   $download_proxy_url                = $xldeploy::server::download_proxy_url,
-  $xldeploy_cluster_id               = $xldeploy::server::xldeploy_cluster_id
+  $xldeploy_cluster_id               = $xldeploy::server::xldeploy_cluster_id,
+  $jcr_repository_path               = $xldeploy::server::jcr_repository_path,
+  $use_exported_resources            = $xldeploy::server::use_exported_resources,
+  $xldeploy_cluster_leader           = $xldeploy::server::xldeploy_cluster_leader,
+  $xldeploy_cluster_nfs_repo_share   = $xldeploy::server::xldeploy_cluster_nfs_repo_share,
+  $xldeploy_cluster_role             = $xldeploy::server::xldeploy_cluster_role
 ){
   # Resource defaults
   File {
@@ -79,6 +84,38 @@ class xldeploy::server::repository(
         }
         default : { fail "${datastore_databasetyp} not supported" }
         }
+      }
+    }
+
+    if $xldeploy_cluster_id != undef {
+      case $xldeploy_cluster_role {
+        'master' : {
+          class { 'nfs::server':}
+          nfs::server::export{ "${server_home_dir}/${jcr_repository_path}":
+            ensure  => 'mounted',
+            bind    => 'rbind',
+            mount     => undef,
+            remounts  => false,
+            atboot    => true,
+            options   => '_netdev',
+            bindmount => undef,
+            nfstag     => undef,
+            clients => '10.0.0.0/24(rw,insecure,no_subtree_check,async,no_root_squash)'
+          }
+        }
+        'slave'  : {
+        if $use_exported_resources == true {
+          include '::nfs::client'
+          Nfs::Client::Mount <<| |>>{
+            atboot    => true
+          }
+        } else {
+          define nfs::client::mount (
+            server => $xldeploy_cluster_leader,
+            share  => $xldeploy_cluster_nfs_repo
+          }
+        }
+        default  : {fail 'cluster role should be set'}
       }
     }
   }
