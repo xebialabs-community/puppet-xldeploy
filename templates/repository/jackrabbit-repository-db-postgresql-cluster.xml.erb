@@ -92,4 +92,5 @@
         <param name="path" value="${rep.home}/repository/index_<%= @xldeploy_cluster_id %>" />
         <param name="supportHighlighting" value="true" />
     </SearchIndex>
+    <RepositoryLockMechanism class="org.apache.jackrabbit.core.util.CooperativeFileLock" />
 </Repository>
