@@ -100,7 +100,7 @@ class xldeploy::server::repository(
           options   => '_netdev',
           bindmount => undef,
           nfstag     => undef,
-          clients => '10.0.0.0/24(rw,insecure,no_subtree_check,async,no_root_squash)'
+          clients => '*(rw,no_subtree_check)'
         }
       }
       'slave'  : {
@@ -112,7 +112,9 @@ class xldeploy::server::repository(
         } else {
           nfs::client::mount{ $xldeploy_cluster_nfs_repo_share:
             server => $xldeploy_cluster_leader,
-            share  => $xldeploy_cluster_nfs_repo_share
+            share  => $xldeploy_cluster_nfs_repo_share,
+            owner  => $os_user,
+            group  => $os_group
           }
         }
       }
