@@ -110,7 +110,7 @@ class xldeploy::server::repository(
             atboot    => true
           }
         } else {
-          define nfs::client::mount (
+          nfs::client::mount{ 'repository':
             server => $xldeploy_cluster_leader,
             share  => $xldeploy_cluster_nfs_repo
           }
