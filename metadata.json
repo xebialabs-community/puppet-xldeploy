@@ -14,6 +14,7 @@
     {"name":"puppetlabs/concat","version_requirement":">= 1.1.0"},
     {"name":"dalen/puppetdbquery","version_requirement":">= 1.4.0"},
     {"name":"jtopjian/sshkeys","version_requirement":"0.5.0"},
-    {"name":"puppetlabs/pe_gem","version_requirement":">= 0.1.0"}
+    {"name":"puppetlabs/pe_gem","version_requirement":">= 0.1.0"},
+    {"name":"echocat/nfs","version_requirement":">= 1.4.0"}
   ]
 }

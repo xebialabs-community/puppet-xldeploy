@@ -80,6 +80,7 @@ class xldeploy::server (
   $custom_os_group                   = undef,
   $custom_license_source             = undef,
   $xldeploy_cluster_id               = undef,
+  $xldeploy_cluster_leader           = false,
   $server_plugins                    = { } ,
   $cis                               = { } ,
   $memberships                       = { } ,

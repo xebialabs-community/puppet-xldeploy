@@ -6,9 +6,12 @@ fixtures:
       repo: "http://github.com/puppetlabs/puppetlabs-concat.git"
       ref: '1.1.0'
     puppetdbquery: http://github.com/dalen/puppet-puppetdbquery.git
-    sshkeys: 
+    sshkeys:
       repo: 'http://github.com/jtopjian/puppet-sshkeys.git'
-      ref: "0.5.0"
+    nfs:
+      repo: 'https://github.com/echocat/puppet-nfs.git'
+      ref: "1.4.0"
   symlinks:
     xldeploy: "#{source_dir}"
+
 
