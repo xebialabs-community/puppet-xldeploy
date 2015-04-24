@@ -183,8 +183,8 @@ class xldeploy::server (
     -> Class  [ 'xldeploy::shared_prereq' ]
     -> class  { 'xldeploy::server::install': }
     -> class  { 'xldeploy::server::install_sshkey': }
-    -> class  { 'xldeploy::server::config': }
     -> class  { 'xldeploy::server::repository': }
+    -> class  { 'xldeploy::server::config': }
     ~> class  { 'xldeploy::server::security': }
     ~> class  { 'xldeploy::server::service': }
     -> class  { 'xldeploy::server::post_config': }
