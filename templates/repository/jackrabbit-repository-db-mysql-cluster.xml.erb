@@ -77,7 +77,7 @@
     </PersistenceManager>
 </Versioning>
 
-<Cluster id="<%= @xldeploy_cluster_id %>" syncDelay="2000">
+<Cluster id="<%= @hostname %>" syncDelay="2000">
     <Journal class="org.apache.jackrabbit.core.journal.MySqlDatabaseJournal">
         <param name="revision" value="${rep.home}/revision" />
         <param name="driver" value="com.mysql.jdbc.Driver" />

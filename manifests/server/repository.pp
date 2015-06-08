@@ -13,7 +13,6 @@ class xldeploy::server::repository(
   $datastore_password                = $xldeploy::server::datastore_password,
   $datastore_databasetype            = $xldeploy::server::datastore_databasetype,
   $download_proxy_url                = $xldeploy::server::download_proxy_url,
-  $xldeploy_cluster_id               = $xldeploy::server::xldeploy_cluster_id,
   $jcr_repository_path               = $xldeploy::server::jcr_repository_path,
   $use_exported_resources            = $xldeploy::server::use_exported_resources,
   $xldeploy_cluster_leader           = $xldeploy::server::xldeploy_cluster_leader,
@@ -56,7 +55,7 @@ class xldeploy::server::repository(
       }
       default : {}
     }
-    if $xldeploy_cluster_id == undef {
+    if $xldeploy_cluster_role == undef {
       case $datastore_databasetype {
         /postgres/ : {
           file { "${server_home_dir}/conf/jackrabbit-repository.xml":
@@ -68,7 +67,7 @@ class xldeploy::server::repository(
             content => template('xldeploy/repository/jackrabbit-repository-db-mysql.xml.erb')
           }
         }
-        default : { fail "${datastore_databasetyp} not supported" }
+        default : { fail "${datastore_databasetype} not supported" }
         }
       } else {
       case $datastore_databasetype {
@@ -82,25 +81,25 @@ class xldeploy::server::repository(
             content => template('xldeploy/repository/jackrabbit-repository-db-mysql-cluster.xml.erb')
           }
         }
-        default : { fail "${datastore_databasetyp} not supported" }
+        default : { fail "${datastore_databasetype} not supported" }
         }
       }
     }
 
-  if $xldeploy_cluster_id != undef {
+  if $xldeploy_cluster_role != undef {
     case $xldeploy_cluster_role {
       'master' : {
         class { 'nfs::server':}
         nfs::server::export{ "${server_home_dir}/${jcr_repository_path}":
-          ensure  => 'mounted',
-          bind    => 'rbind',
+          ensure    => 'mounted',
+          bind      => 'rbind',
           mount     => undef,
           remounts  => false,
           atboot    => true,
           options   => '_netdev',
           bindmount => undef,
-          nfstag     => undef,
-          clients => '*(rw,no_subtree_check)'
+          nfstag    => undef,
+          clients   => '*(rw,no_subtree_check)'
         }
       }
       'slave'  : {

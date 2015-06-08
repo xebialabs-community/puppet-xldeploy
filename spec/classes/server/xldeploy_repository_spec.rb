@@ -29,12 +29,11 @@ describe 'xldeploy::server::repository' do
         :os_group                          => 'xldeploy',
         :server_home_dir                   => '/opt/xldeploy/xldeploy-server',
         :repository_type                   => 'database',
-        :datastore_driver                  => 'org.postgresql.Driver',
         :datastore_url                     => 'jdbc:postgresql://localhost:5432/xldeploy',
         :datastore_user                    => 'xldeploy',
         :datastore_password                => 'xldeploy',
-        :datastore_databasetype            => 'postgresql',
-        :datastore_schema                  => 'postgresql',
+        :datastore_databasetype            => 'postgres',
+        :datastore_schema                  => 'postgres',
         :datastore_persistencemanagerclass => 'org.apache.jackrabbit.core.persistence.pool.PostgreSQLPersistenceManager',
     } }
     it { should contain_file('/opt/xldeploy/xldeploy-server/conf/jackrabbit-repository.xml').with({

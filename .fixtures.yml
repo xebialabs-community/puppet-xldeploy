@@ -8,6 +8,7 @@ fixtures:
     puppetdbquery: http://github.com/dalen/puppet-puppetdbquery.git
     sshkeys:
       repo: 'http://github.com/jtopjian/puppet-sshkeys.git'
+      ref: '0.5.0'
     nfs:
       repo: 'https://github.com/echocat/puppet-nfs.git'
       ref: "1.4.0"

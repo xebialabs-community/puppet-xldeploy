@@ -76,7 +76,7 @@
     </PersistenceManager>
 </Versioning>
 
-<Cluster id="<%= @xldeploy_cluster_id %>" syncDelay="2000">
+<Cluster id="<%= @hostname %>" syncDelay="2000">
     <Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
         <param name="revision" value="${rep.home}/revision" />
         <param name="driver" value="org.postgresql.Driver" />
@@ -89,7 +89,7 @@
 </Cluster>
 
     <SearchIndex class="org.apache.jackrabbit.core.query.lucene.SearchIndex">
-        <param name="path" value="${rep.home}/repository/index_<%= @xldeploy_cluster_id %>" />
+        <param name="path" value="${rep.home}/repository/index_<%= @hostname %>" />
         <param name="supportHighlighting" value="true" />
     </SearchIndex>
     <RepositoryLockMechanism class="org.apache.jackrabbit.core.util.CooperativeFileLock" />
