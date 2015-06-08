@@ -79,6 +79,7 @@
 
 <Cluster id="<%= @hostname %>" syncDelay="2000">
     <Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
+        <param name="schema" value="mysql" />
         <param name="revision" value="${rep.home}/revision" />
         <param name="driver" value="com.mysql.jdbc.Driver" />
         <param name="url" value="<%= @datastore_url %>" />
