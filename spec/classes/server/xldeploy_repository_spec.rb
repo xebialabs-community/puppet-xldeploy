@@ -23,7 +23,7 @@ describe 'xldeploy::server::repository' do
      }) }
 
     end
- 
+
   context 'with repository set to standalone' do
 
     let(:params) { {  :repository_type          => 'standalone',
