@@ -11,7 +11,7 @@ if File.exist?('/etc/xl-deploy/deployit.conf')
     when /0.0.0.0|localhost/
       settings['xldeploy.server.address'] = Facter.value('fqdn') || Facter.value('ipaddress')
     else
-      settings['xldeploy.server.address'] = settings['http.bind.address']
+      settings['xldeploy.server.address'] = settings['http.bind.address'].chomp
   end
 
 
@@ -22,37 +22,37 @@ if File.exist?('/etc/xl-deploy/deployit.conf')
 
   Facter.add("xldeploy_bind_dn") do
       setcode do
-        settings['http.bind.address']
+        settings['http.bind.address'].chomp
       end
   end
 
   Facter.add("xldeploy_http_port") do
       setcode do
-        settings['http.port']
+        settings['http.port'].chomp
       end
   end
 
   Facter.add("xldeploy_context_root") do
       setcode do
-        settings['http.context.root']
+        settings['http.context.root'].chomp
       end
   end
 
   Facter.add("xldeploy_ssl") do
       setcode do
-        settings['ssl']
+        settings['ssl'].chomp
       end
   end
 
   Facter.add("xldeploy_server_address") do
     setcode do
-      settings['xldeploy.server.address']
+      settings['xldeploy.server.address'].chomp
     end
   end
 
   Facter.add("xldeploy_rest_url") do
     setcode do
-      settings['xldeploy.rest.url']
+      settings['xldeploy.rest.url'].chomp
     end
   end
 end
