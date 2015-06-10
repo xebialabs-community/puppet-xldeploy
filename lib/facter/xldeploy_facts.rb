@@ -1,7 +1,7 @@
 settings = {}
 
-if File.exist?('/etc/xldeploy/xldeploy.conf')
-    File.open('/etc/xldeploy/xldeploy.conf').each do |line|
+if File.exist?('/etc/xl-deploy/deployit.conf')
+    File.open('/etc/xl-deploy/deployit.conf').each do |line|
       key, value = line.split '=' , 2
       settings[key] = value
     end
