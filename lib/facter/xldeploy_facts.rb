@@ -55,4 +55,9 @@ if File.exist?('/etc/xl-deploy/deployit.conf')
       settings['xldeploy.rest.url'].chomp
     end
   end
+  Facter.add("xldeploy_encrypted_password") do
+    setcode do
+      settings['admin.password'].chomp
+    end
+  end
 end
