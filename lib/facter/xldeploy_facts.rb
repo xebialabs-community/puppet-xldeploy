@@ -11,7 +11,7 @@ if File.exist?('/etc/xl-deploy/deployit.conf')
     when /0.0.0.0|localhost/
       settings['xldeploy.server.address'] = Facter.value('fqdn') || Facter.value('ipaddress')
     else
-      settings['xldeploy.server.address'] = settings['http.bind.address'].chomp
+      settings['xldeploy.server.address'] = settings['http.bind.address']
   end
 
 
