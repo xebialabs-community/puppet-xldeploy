@@ -97,17 +97,17 @@ class xldeploy::server::config (
     admin_password    => $admin_password
   }
 
-  if $xldeploy_encrypted_password == undef {
+  if $::xldeploy_encrypted_password == undef {
     ini_setting {
       'xldeploy.admin.password':
       setting => 'admin.password',
-      value   => $xlr_admin_password
+      value   => $admin_password
     }
   } else {
     ini_setting {
       'xldeploy.admin.password':
       setting => 'admin.password',
-      value   => $xldeploy_encrypted_password
+      value   => $::xldeploy_encrypted_password
     }
   }
   # ini settings
