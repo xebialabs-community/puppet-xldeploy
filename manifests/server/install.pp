@@ -37,7 +37,6 @@ class xldeploy::server::install (
   -> anchor{'server::postinstall':}
   -> File['conf dir link', 'log dir link']
   -> File[$server_home_dir]
-  -> File["/etc/init.d/${productname}"]
   -> anchor{'server::installend':}
 
 
@@ -64,54 +63,6 @@ class xldeploy::server::install (
   }
 
 
-  # check the install_type and act accordingly
-#  case $install_type {
-#    'puppetfiles' : {
-#
-#    $server_zipfile = "${productname}-${version}-server.zip"
-#
-#    Anchor['server::install']
-#
-#    -> file { "${tmp_dir}/${server_zipfile}": source => "${puppetfiles_xldeploy_source}/${server_zipfile}" }
-#
-#    -> file { $server_install_dir: ensure => directory }
-#
-#    -> exec { 'unpack server file':
-#      command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
-#      creates => "${server_install_dir}/bin",
-#      cwd     => $tmp_dir,
-#      user    => $os_user
-#    }
-#
-#    -> Anchor['server::postinstall']
-#  }
-#    'download'    : {
-#
-#
-#
-#      if str2bool($xld_community_edition) == false {
-#        Xldeploy_netinstall{
-#          user           => $download_user,
-#          password       => $download_password,
-#        }
-#      }
-#
-#      Anchor['server::install']
-#
-#      -> notify{"xld_community_edition ${xld_community_edition}": withpath => true }
-#
-#      -> xldeploy_netinstall{$download_server_url:
-#          owner          => $os_user,
-#          group          => $os_group,
-#          destinationdir => $base_dir,
-#          proxy_url      => $download_proxy_url
-#        }
-#
-#      -> Anchor['server::postinstall']
-#    }
-#    default       : {
-#    }
-#  }
 
   case $download_server_url {
     /^http/ : {
@@ -177,12 +128,23 @@ class xldeploy::server::install (
   # the template uses the following variables:
   # @os_user
   # @server_install_dir
-  file { "/etc/init.d/${productname}":
-    content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0700'
+  if versioncmp($version , '4.9.99') < 0 {
+    File[$server_home_dir] ->
+
+    file { "/etc/init.d/${productname}":
+      content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700'
+    }
+
+    -> anchor{'server::installend':}
+  } else {
+    File[$server_home_dir] ->
+    exec {"echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
+    -> anchor{'server::installend':}
   }
+
 
   # setup homedir
   file { $server_home_dir:
