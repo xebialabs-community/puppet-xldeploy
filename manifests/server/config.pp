@@ -158,7 +158,7 @@ class xldeploy::server::config (
     }
   } else {
     Xldeploy_setup['default'] ->
-    exec {"/bin/echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
+    exec {"/bin/echo ${os_user}|${server_home_dir}/bin/install-service.sh":}
   }
 
 
