@@ -139,7 +139,7 @@ class xldeploy::server::install (
     -> Anchor['server::installend']
   } else {
     File[$server_home_dir] ->
-    exec {"echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
+    exec {"/bin/echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
     -> Anchor['server::installend']
   }
 
