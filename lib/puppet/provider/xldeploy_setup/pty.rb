@@ -10,7 +10,14 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
             :chgrp    => '/bin/chgrp'
 
   def create
-    command = "/bin/su - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/run.sh -setup\'"
+
+    if File.exists?("#{resource[:homedir]}/bin/run.sh")
+      command = "/bin/su - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/run.sh -setup\'"
+    elsif File.exists?("#{resource[:homedir]}/bin/server.sh")
+      command = "/bin/su - #{resource[:owner]} -c \'#{resource[:homedir]}/bin/server.sh -setup\'"
+    else
+      raise Puppet::Error, "xldeploy executable not found"
+    end
 
     PTY.spawn(command) do |input, output, pid|
 

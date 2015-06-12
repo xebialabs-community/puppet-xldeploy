@@ -1,0 +1,100 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides: xl-deploy
+# Required-Start: LanmanServer
+# Required-Stop: LanmanServer
+# Default-Start:  2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: yajsw wrapper for XL Deploy Server
+# Description: Automatically deploy your applications to any environment without scripts or agents
+### END INIT INFO
+# config: /opt/xl-deploy/xl-deploy-5.0.0-server/conf/xld-wrapper-linux.conf
+# pidfile: /var/run/wrapper.xl-deploy.pid
+# apppidfile: /var/run/wrapper.java.xl-deploy.pid
+#-----------------------------------------------------------------------------
+# YAJSW sh script template.  Suitable for starting and stopping
+#  wrapped daemon on POSIX platforms.
+#-----------------------------------------------------------------------------
+
+xldeploy_home=$(dirname /opt/xl-deploy/xl-deploy-5.0.0-server/conf/xld-wrapper-linux.conf)
+w_start_cmd_modified=""
+for word in java -Dwrapper.pidfile=/var/run/wrapper.xl-deploy.pid -Dwrapper.service=true -Dwrapper.visible=false -Djna_tmpdir=/opt/xl-deploy/xl-deploy-server/serviceWrapper/tmp -Dxldeploy_home=/opt/xl-deploy/xl-deploy-server -Duser=xldeploy -Djava_exe=java -Xmx20m -server -jar /opt/xl-deploy/xl-deploy-5.0.0-server/serviceWrapper/wrapper.jar -tx /opt/xl-deploy/xl-deploy-5.0.0-server/conf/xld-wrapper-linux.conf; do
+    case "$word" in
+        java|*/java)
+            w_start_cmd_modified="$w_start_cmd_modified $word -Djava.util.logging.config.file=$xldeploy_home/conf/logging.properties"
+            ;;
+        *)
+            w_start_cmd_modified="$w_start_cmd_modified $word"
+            ;;
+    esac
+done
+w_stop_cmd_modified=""
+for word in java -Dwrapper.pidfile=/var/run/wrapper.xl-deploy.pid -Dwrapper.service=true -Dwrapper.visible=false -Djna_tmpdir=/opt/xl-deploy/xl-deploy-server/serviceWrapper/tmp -Dxldeploy_home=/opt/xl-deploy/xl-deploy-server -Duser=xldeploy -Djava_exe=java -Xmx20m -server -jar /opt/xl-deploy/xl-deploy-5.0.0-server/serviceWrapper/wrapper.jar -px /opt/xl-deploy/xl-deploy-5.0.0-server/conf/xld-wrapper-linux.conf; do
+    case "$word" in
+        java|*/java)
+            w_stop_cmd_modified="$w_stop_cmd_modified $word -Djava.util.logging.config.file=$xldeploy_home/conf/logging.properties"
+            ;;
+        *)
+            w_stop_cmd_modified="$w_stop_cmd_modified $word"
+            ;;
+    esac
+done
+
+status() {
+    if [ -f /var/run/wrapper.xl-deploy.pid ]; then
+        echo "XL Deploy Server is running."
+    else
+        echo "XL Deploy Server is not running."
+    fi
+}
+
+stopit() {
+    if [ "$(id -u)" != "0" ]; then
+        echo "This action must be run as root" 1>&2
+        exit 1
+    fi
+    echo "Stopping xl-deploy ..."
+	 $w_stop_cmd_modified
+}
+
+startit() {
+    if [ "$(id -u)" != "0" ]; then
+        echo "This action must be run as root" 1>&2
+        exit 1
+    fi
+    echo "Starting xl-deploy ..."
+     $w_start_cmd_modified
+}
+
+
+case "$1" in
+    'start')
+        startit
+        ;;
+
+    'stop')
+        stopit
+        ;;
+
+    'restart')
+        stopit
+        startit
+        ;;
+
+
+    'force-reload')
+        stopit
+        startit
+        ;;
+
+    'status')
+        status
+        ;;
+
+    *)
+        echo "Usage: $0 { start | stop | restart | status }"
+        exit 1
+        ;;
+esac
+
+exit $?
