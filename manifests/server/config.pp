@@ -145,23 +145,22 @@ class xldeploy::server::config (
       value   => $xld_max_threads;
   }
 
-#  if str2bool($xldeploy_init_repo) {
-#    exec { 'init xldeploy':
-#      creates     => "${server_home_dir}/${jcr_repository_path}",
-#      command     => "${server_home_dir}/bin/server.sh -setup -reinitialize -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
-#      user        => $os_user,
-#      environment => ["JAVA_HOME=${java_home}"]
-#    }
-#  } else {
-#    exec { 'init xldeploy':
-#      creates     => "${server_home_dir}/${jcr_repository_path}",
-#      command     => "${server_home_dir}/bin/server.sh -setup -force -setup-defaults ${server_home_dir}/conf/deployit.conf",
-#      user        => $os_user,
-#      environment => ["JAVA_HOME=${java_home}"]
-#    }
-#  }
-
   create_resources('xldeploy::resources::defaultsetting', $xldeploy_default_settings)
+
+
+  if versioncmp($version , '4.9.99') < 0 {
+    Xldeploy_setup['default'] ->
+    file { "/etc/init.d/${productname}":
+      content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700'
+    }
+  } else {
+    Xldeploy_setup['default'] ->
+    exec {"/bin/echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
+  }
+
 
 }
 

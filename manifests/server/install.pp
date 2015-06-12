@@ -124,24 +124,6 @@ class xldeploy::server::install (
     target => "${server_install_dir}/conf"
   }
 
-  # put the init script in place
-  # the template uses the following variables:
-  # @os_user
-  # @server_install_dir
-  if versioncmp($version , '4.9.99') < 0 {
-    File[$server_home_dir] ->
-    file { "/etc/init.d/${productname}":
-      content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0700'
-    }
-    -> Anchor['server::installend']
-  } else {
-    File[$server_home_dir] ->
-    exec {"/bin/echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
-    -> Anchor['server::installend']
-  }
 
 
   # setup homedir
