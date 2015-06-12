@@ -130,19 +130,17 @@ class xldeploy::server::install (
   # @server_install_dir
   if versioncmp($version , '4.9.99') < 0 {
     File[$server_home_dir] ->
-
     file { "/etc/init.d/${productname}":
       content => template("xldeploy/xldeploy-initd-${::osfamily}.erb"),
       owner   => 'root',
       group   => 'root',
       mode    => '0700'
     }
-
-    -> anchor{'server::installend':}
+    -> Anchor['server::installend']
   } else {
     File[$server_home_dir] ->
     exec {"echo ${os_user}|${server_install_dir}/bin/install-service.sh":}
-    -> anchor{'server::installend':}
+    -> Anchor['server::installend']
   }
 
 
