@@ -99,7 +99,7 @@ class xldeploy::server::validation (
   }
 
   if $xldeploy::server::xld_community_edition == true {
-    if versioncmp($xldeploy::server::version , '4.5.0') > 0 {fail "this version ${xldeploy::server::version} is not available as community edition"}
+    if versioncmp($xldeploy::server::version , '4.5.3') > 0 {fail "this version ${xldeploy::server::version} is not available as community edition"}
     if $xldeploy::server::custom_license_source == nil { fail 'use of the community edition requires a custom license source, one can be obtaind from http://xebialabs.com/download/xl-deploy/'}
   }
 }
