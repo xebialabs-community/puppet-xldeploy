@@ -105,7 +105,13 @@ class xldeploy::cli::install (
 
         }
       /^puppet/ : {
-          $cli_zipfile = "${productname}-${version}-cli.zip"
+          if str2bool($xld_community_edition) {
+            $cli_zipfile = "${productname}-${version}-cli-free-edition.zip"
+            $cli_unzip_dir = "${productname}-${version}-cli-free-edition"
+          } else {
+            $cli_zipfile = "${productname}-${version}-cli.zip"
+            $cli_unzip_dir = "${productname}-${version}-cli"
+          }
 
           Anchor['cli::install']
 
@@ -114,7 +120,7 @@ class xldeploy::cli::install (
           -> file { $cli_install_dir: ensure => directory }
 
           -> exec { 'unpack cli file':
-            command => "/usr/bin/unzip ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-cli/* ${cli_install_dir}",
+            command => "/usr/bin/unzip -o ${tmp_dir}/${cli_zipfile};/bin/cp -rp ${tmp_dir}/${cli_unzip_dir}/* ${cli_install_dir}",
             creates => "${cli_install_dir}/bin",
             cwd     => $tmp_dir,
             user    => $os_user
