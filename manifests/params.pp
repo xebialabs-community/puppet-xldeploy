@@ -17,7 +17,7 @@ class xldeploy::params {
 
 
 
-  $version         = '4.5.0'
+  $version         = '4.5.3'
   $tmp_dir         = '/var/tmp'
   $server          = true
   $import_ssh_key  = false
