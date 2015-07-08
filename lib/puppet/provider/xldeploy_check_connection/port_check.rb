@@ -48,7 +48,7 @@ Puppet::Type.type(:xldeploy_check_connection).provide(:port_check) do
       # If `#create` is called, that means that `#exists?` returned false, which
       # means that the connection could not be established... so we need to
       # cause a failure here.
-      raise Puppet::Error, "Unable to connect! (#{resource[:host]}:#{resource[:port]})"
+      raise Puppet::Error, "Unable to connect! (#{resource[:rest_url]}})"
     end
 
 end
