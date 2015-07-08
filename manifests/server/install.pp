@@ -87,8 +87,14 @@ class xldeploy::server::install (
 
       }
     /^puppet/ : {
-        $server_zipfile = "${productname}-${version}-server.zip"
-
+        if str2bool($xld_community_edition) {
+          $server_zipfile = "${productname}-${version}-server-free-edition.zip"
+          $server_unzip_dir = "${productname}-${version}-server-free-edition"
+        } else {
+          $server_zipfile = "${productname}-${version}-server.zip"
+          $server_unzip_dir = "${productname}-${version}-server"
+        }
+        
         Anchor['server::install']
 
         -> file { "${tmp_dir}/${server_zipfile}": source => $download_server_url }
@@ -96,10 +102,10 @@ class xldeploy::server::install (
         -> file { $server_install_dir: ensure => directory }
 
         -> exec { 'unpack server file':
-          command => "/usr/bin/unzip ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${productname}-${version}-server/* ${server_install_dir}",
+          command => "/usr/bin/unzip -o ${tmp_dir}/${server_zipfile};/bin/cp -rp ${tmp_dir}/${server_unzip_dir}/* ${server_install_dir}",
           creates => "${server_install_dir}/bin",
           cwd     => $tmp_dir,
-          user    => $os_user
+          user    => $os_user,
         }
 
         -> Anchor['server::postinstall']
