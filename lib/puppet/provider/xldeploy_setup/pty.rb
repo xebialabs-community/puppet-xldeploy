@@ -33,7 +33,7 @@ Puppet::Type.type(:xldeploy_setup).provide(:pty)  do
 
         if line =~ /Options are yes or no./
           output.puts('no') if line_array[-1] =~ /Default values are used for all properties. To make changes to the default properties, please answer no./
-          output.puts('yes') if line_array[-1] =~ /Would you like to enable SSL/
+          output.puts(yes_or_no(resource[:ssl])) if line_array[-1] =~ /Would you like to enable SSL/
           output.puts('no') if line_array[-1] =~ /Would you like to enable mutual SSL/
           output.puts('yes') if line_array[-1] =~ /Self-signed certificates do not work correctly with some versions of the Flash Player and some browsers!/
           output.puts('yes') if line_array[-1] =~ /Do you want to initialize the JCR repository/
