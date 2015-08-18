@@ -54,7 +54,7 @@ class Environment_members < Xldeploy
         environment_properties["dictionaries"].concat(@dictionaries)
       end
 
-      env_xml = to_xml(@environment, "udm.Environment", environment_properties)
+      env_xml = to_xml(@environment, @environment_type, environment_properties)
       if environment_exists?
         rest_put "repository/ci/#{@environment}", env_xml
       else
@@ -70,7 +70,7 @@ class Environment_members < Xldeploy
     @members.each {|m| environment_properties['members'].delete(m)}
     @dictionaries.each {|d| environment_properties['dictionaries'].delete(d)}
 
-    env_xml = to_xml(@environment, "udm.Environment", environment_properties)
+    env_xml = to_xml(@environment, @environment_type, environment_properties)
 
     if environment_exists?
       rest_put "repository/ci/#{@environment}", env_xml

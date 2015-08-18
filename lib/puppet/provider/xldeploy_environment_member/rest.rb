@@ -35,6 +35,6 @@ Puppet::Type.type(:xldeploy_environment_member).provide :rest do
   private
 
   def environment_members
-    Environment_members.new(resource[:rest_url], resource[:env], resource[:members], resource[:dictionaries], resource[:ssl], resource[:verify_ssl])
+    Environment_members.new(resource[:rest_url], resource[:env], resource[:members], resource[:dictionaries], resource[:environment_type], resource[:ssl], resource[:verify_ssl])
   end
 end

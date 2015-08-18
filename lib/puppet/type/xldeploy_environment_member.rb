@@ -95,6 +95,12 @@ Puppet::Type.newtype(:xldeploy_environment_member) do
   newparam(:rest_url) do
     desc 'The rest url for making changes to XL Deploy'
   end
+
+  newparam(:environment_type) do
+    desc 'environment type, default udm.Environment'
+    defaultto 'udm.Environment'
+  end
+
   newparam(:ssl) do
     desc 'indicate if ssl should be used'
 
