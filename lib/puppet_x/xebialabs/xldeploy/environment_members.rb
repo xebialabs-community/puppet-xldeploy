@@ -4,11 +4,12 @@ require File.join(File.dirname(__FILE__), 'xldeploy')
 class Environment_members < Xldeploy
 
 
-  def initialize(rest_url, environment, members, dictionaries, ssl = false , verify_ssl = true)
+  def initialize(rest_url, environment, members, dictionaries, environment_type, ssl = false , verify_ssl = true)
     super(rest_url, ssl, verify_ssl)
     @environment = environment
     @members = members
     @dictionaries = dictionaries
+    @environment_type = environment_type
     @current_environment_properties = get_environment
   end
 
