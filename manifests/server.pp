@@ -183,7 +183,7 @@ class xldeploy::server (
   # to serve or not to server
 
   anchor    { 'xldeploy::server::begin': }
-    -> Class  [ 'xldeploy::shared_prereq' ]
+    -> Class['xldeploy::shared_prereq']
     -> class  { 'xldeploy::server::install': }
     -> class  { 'xldeploy::server::install_sshkey': }
     -> class  { 'xldeploy::server::repository': }
