@@ -9,7 +9,7 @@ class xldeploy::shared_prereq(
 ){
 
   # make sure unzip is on the machine
-  if !defined(Package['unzip']) {
+  if !defined("Package['unzip']") {
     package{'unzip': ensure => 'present'}
   }
 
@@ -18,13 +18,13 @@ class xldeploy::shared_prereq(
     case $::osfamily {
       'RedHat' : {
           $java_packages = ['java-1.7.0-openjdk']
-          if !defined(Package[$java_packages]){
+          if !defined("Package[$java_packages]"){
             package { $java_packages: ensure => present }
           }
       }
       'Debian' : {
           $java_packages = ['openjdk-7-jdk']
-          if !defined(Package[$java_packages]){
+          if !defined("Package[$java_packages]"){
             package { $java_packages: ensure => present }
           }
       }
