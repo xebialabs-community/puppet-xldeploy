@@ -1,0 +1,30 @@
+    <bean id="unanimousBased" class="org.springframework.security.access.vote.UnanimousBased">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+                <bean class="com.xebialabs.deployit.security.LoginPermissionVoter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="basicAuthenticationFilter"
+          class="com.xebialabs.deployit.security.authentication.BasicAuthWithRememberMeFilter">
+        <constructor-arg ref="authenticationManager"/>
+        <constructor-arg ref="basicAuthenticationEntryPoint"/>
+    </bean>
+
+    <bean id="basicAuthenticationEntryPoint"
+          class="com.xebialabs.deployit.security.authentication.BasicAuthenticationEntryPoint"
+          p:realmName="Deployit"/>
+
+    <security:http security="none" pattern="/deployit/internal/download/**" create-session="never"/>
+    <security:http security="none" pattern="/deployit/internal/configuration/**" create-session="never"/>
+
+    <security:http realm="Deployit" access-decision-manager-ref="unanimousBased" entry-point-ref="basicAuthenticationEntryPoint" create-session="never">
+        <!-- The download url has no security access set -->
+        <security:intercept-url pattern="/deployit/**" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/api/**" access="IS_AUTHENTICATED_FULLY"/>
+        <security:custom-filter position="BASIC_AUTH_FILTER" ref="basicAuthenticationFilter"/>
+        <security:session-management session-fixation-protection="none"/>
+    </security:http>
+

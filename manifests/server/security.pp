@@ -46,12 +46,32 @@ class xldeploy::server::security(
       content => template('xldeploy/security/security-header-pre4.xml.erb'),
       order   => '10',
     }
-  } else {
+  } elsif versioncmp($version , '4.5.90') < 0 {
     concat::fragment{'security_header':
       ensure  => present,
       target  => $security_config_file,
-      content => template('xldeploy/security/security-header-post4.xml.erb'),
+      content => template('xldeploy/security/security-header-post51.xml.erb'),
       order   => '10',
+    }
+    concat::fragment{'httpsecurity':
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-httpsecurity-pre51.xml.erb'),
+      order   => '50',
+    }
+  }
+  else {
+    concat::fragment{'security_header':
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-header-post51.xml.erb'),
+      order   => '10',
+    }
+    concat::fragment{'httpsecurity':
+      ensure  => present,
+      target  => $security_config_file,
+      content => template('xldeploy/security/security-httpsecurity-post51.xml.erb'),
+      order   => '50',
     }
   }
 
@@ -85,4 +105,5 @@ class xldeploy::server::security(
     content => template('xldeploy/security/security-authentication-manager.xml.erb'),
     order   => '40',
   }
+
 }
