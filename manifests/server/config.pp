@@ -21,6 +21,7 @@ class xldeploy::server::config (
   $xldeploy_init_repo                = $xldeploy::server::xldeploy_init_repo,
   $xld_max_threads                   = $xldeploy::server::xld_max_threads,
   $xld_min_threads                   = $xldeploy::server::xld_min_threads,
+  $productname                       = $xldeploy::server::productname,
 ) {
 
 
