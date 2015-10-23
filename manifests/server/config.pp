@@ -26,13 +26,19 @@ class xldeploy::server::config (
 
 
   # Dependencies
+  if versioncmp($version , '4.5.90') < 0 {
   File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix', 'xldeploy default properties'
     ]
   -> Xldeploy_setup['default']
   -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
     , 'xldeploy.threads.min', 'xldeploy.threads.max' ]
-  #-> Exec['init xldeploy']
-
+  } else {
+  File["${server_home_dir}/conf/deployit.conf", 'xldeploy server plugins', 'xldeploy server ext', 'xldeploy server hotfix lib', 'xldeploy server hotfix plugins', 'xldeploy default properties'
+    ]
+  -> Xldeploy_setup['default']
+  -> Ini_setting['xldeploy.http.port', 'xldeploy.jcr.repository.path', 'xldeploy.ssl', 'xldeploy.http.bind.address', 'xldeploy.http.context.root', 'xldeploy.importable.packages.path', 'xldeploy.admin.password'
+    , 'xldeploy.threads.min', 'xldeploy.threads.max' ]
+  }
   # Resource defaults
   File {
     owner  => $os_user,
@@ -64,11 +70,26 @@ class xldeploy::server::config (
     path         => "${server_home_dir}/plugins",
   }
 
-  file { 'xldeploy server hotfix':
-    source  => 'puppet:///modules/xldeploy/hotfix/',
-    recurse => true,
-    purge   => true,
-    path    => "${server_home_dir}/hotfix",
+  if versioncmp($version , '4.5.90') < 0 {
+    file { 'xldeploy server hotfix':
+      source  => 'puppet:///modules/xldeploy/hotfix/45',
+      recurse => true,
+      purge   => true,
+      path    => "${server_home_dir}/hotfix",
+    }
+  } else {
+    file { 'xldeploy server hotfix lib':
+      source  => 'puppet:///modules/xldeploy/hotfix/5/lib',
+      recurse => true,
+      purge   => true,
+      path    => "${server_home_dir}/hotfix/lib",
+    }
+    file { 'xldeploy server hotfix plugins':
+      source  => 'puppet:///modules/xldeploy/hotfix/5/plugins',
+      recurse => true,
+      purge   => true,
+      path    => "${server_home_dir}/hotfix/plugins",
+    }
   }
 
   file { 'xldeploy server ext':
