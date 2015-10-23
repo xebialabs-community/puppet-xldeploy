@@ -159,7 +159,9 @@ class xldeploy::server::config (
     }
   } else {
     Xldeploy_setup['default'] ->
-    exec {"/bin/echo ${os_user}|${server_home_dir}/bin/install-service.sh":}
+    exec {"/bin/echo ${os_user}|${server_home_dir}/bin/install-service.sh":
+      unless => "/usr/bin/test -f /etc/init.d/${productname}",
+    }
   }
 
 
