@@ -57,12 +57,17 @@ class xldeploy::server::repository(
     }
     if $xldeploy_cluster_role == undef {
       case $datastore_databasetype {
-        /postgres/ : {
+        'postgres' : {
           file { "${server_home_dir}/conf/jackrabbit-repository.xml":
             content => template('xldeploy/repository/jackrabbit-repository-db-postgresql.xml.erb')
           }
         }
-        /mysql/ : {
+        'postgresandfile' : {
+          file { "${server_home_dir}/conf/jackrabbit-repository.xml":
+            content => template('xldeploy/repository/jackrabbit-repository-db-postgresqlandfile.xml.erb')
+          }
+        }
+        'mysql' : {
           file { "${server_home_dir}/conf/jackrabbit-repository.xml":
             content => template('xldeploy/repository/jackrabbit-repository-db-mysql.xml.erb')
           }
@@ -71,12 +76,12 @@ class xldeploy::server::repository(
         }
       } else {
       case $datastore_databasetype {
-        /postgres/ : {
+        'postgres' : {
           file { "${server_home_dir}/conf/jackrabbit-repository.xml":
             content => template('xldeploy/repository/jackrabbit-repository-db-postgresql-cluster.xml.erb')
           }
         }
-        /mysql/ : {
+        'mysql' : {
           file { "${server_home_dir}/conf/jackrabbit-repository.xml":
             content => template('xldeploy/repository/jackrabbit-repository-db-mysql-cluster.xml.erb')
           }
