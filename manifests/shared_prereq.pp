@@ -9,7 +9,7 @@ class xldeploy::shared_prereq(
 ){
 
   # make sure unzip is on the machine
-  if !defined("Package['unzip']") {
+  if !defined(Package['unzip']) {
     package{'unzip': ensure => 'present'}
   }
 
