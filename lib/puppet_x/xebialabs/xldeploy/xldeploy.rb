@@ -45,7 +45,7 @@ class Xldeploy
                 when 'delete' then Net::HTTP::Delete.new(uri.request_uri)
               end
 
-    request.basic_auth(uri.user, uri.password) if uri.user and uri.password
+    request.basic_auth(uri.user, URI.unescape(uri.password)) if uri.user and uri.password
     request.body = body unless body == ''
     request.content_type = 'application/xml'
 
