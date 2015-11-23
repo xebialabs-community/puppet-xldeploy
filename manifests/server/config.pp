@@ -18,6 +18,7 @@ class xldeploy::server::config (
   $java_home                         = $xldeploy::server::java_home,
   $rest_url                          = $xldeploy::server::rest_url,
   $xldeploy_default_settings         = $xldeploy::server::xldeploy_default_settings,
+  $xldeploy_wrapper_settings         = $xldeploy::server::xldeploy_wrapper_settings,
   $xldeploy_init_repo                = $xldeploy::server::xldeploy_init_repo,
   $xld_max_threads                   = $xldeploy::server::xld_max_threads,
   $xld_min_threads                   = $xldeploy::server::xld_min_threads,
@@ -168,6 +169,7 @@ class xldeploy::server::config (
   }
 
   create_resources('xldeploy::resources::defaultsetting', $xldeploy_default_settings)
+  create_resources('xldeploy::resources::wrappersetting', $xldeploy_wrapper_settings)
 
 
   if versioncmp($version , '4.9.99') < 0 {
