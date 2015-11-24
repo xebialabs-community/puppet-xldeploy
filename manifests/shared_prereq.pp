@@ -9,24 +9,18 @@ class xldeploy::shared_prereq(
 ){
 
   # make sure unzip is on the machine
-  if !defined("Package['unzip']") {
-    package{'unzip': ensure => 'present'}
-  }
+  ensure_packages(['unzip'])
 
   # install java packages if needed
   if str2bool($install_java) {
     case $::osfamily {
       'RedHat' : {
           $java_packages = ['java-1.7.0-openjdk']
-          if !defined("Package[$java_packages]"){
-            package { $java_packages: ensure => present }
-          }
+          ensure_packages($java_packages)
       }
       'Debian' : {
           $java_packages = ['openjdk-7-jdk']
-          if !defined("Package[$java_packages]"){
-            package { $java_packages: ensure => present }
-          }
+          ensure_packages($java_packages)
       }
       default  : {
           fail("${::osfamily}:${::operatingsystem} not supported by this module")
