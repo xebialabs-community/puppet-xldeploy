@@ -90,6 +90,7 @@ class xldeploy::server (
   $dictionary_settings               = { } ,
   $role_permissions                  = { } ,
   $xldeploy_default_settings         = { } ,
+  $xldeploy_wrapper_settings         = { } ,
   ) inherits xldeploy::params {
   # composed variables
 
