@@ -29,10 +29,12 @@ class xldeploy::client::config(
                 require  => Xldeploy_check_connection['client']}
 
   # Check connection
-  xldeploy_check_connection{'client':
-    rest_url => $rest_url
+  if $use_exported_resources == true {
+    xldeploy_check_connection{ 'client':
+      rest_url => $rest_url
+    }
   }
-
+  
   create_resources(xldeploy::client::config_ci, $cis, $defaults)
 
   create_resources(xldeploy::client::config_members, $memberships, $defaults)
