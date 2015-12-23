@@ -21,18 +21,23 @@ class xldeploy::server::post_config (
   $defaults = { rest_url => $rest_url,
                 require  => Xldeploy_check_connection['default']}
 
+  unless empty($cis) and
+         empty($membership) and
+         empty($dictionary_settings) and
+         empty($users) and
+         empty($roles) {
   # Check connection
-  xldeploy_check_connection{'default':
-    rest_url => $rest_url
-  }
+    xldeploy_check_connection{ 'default':
+      rest_url => $rest_url
+    }
 
   # config stuff in xldeploy
-  create_resources(xldeploy_ci, $cis, $defaults)
-  create_resources(xldeploy_environment_member, $memberships, $defaults)
-  create_resources(xldeploy_dictionary_entry, $dictionary_settings, $defaults)
-  create_resources(xldeploy_user, $users, $defaults)
-  create_resources(xldeploy_role, $roles, $defaults)
-
+    create_resources(xldeploy_ci, $cis, $defaults)
+    create_resources(xldeploy_environment_member, $memberships, $defaults)
+    create_resources(xldeploy_dictionary_entry, $dictionary_settings, $defaults)
+    create_resources(xldeploy_user, $users, $defaults)
+    create_resources(xldeploy_role, $roles, $defaults)
+  }
 
   # handle exported resources
   if str2bool($use_exported_resources) {
