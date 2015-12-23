@@ -30,7 +30,7 @@ Puppet::Type.type(:xldeploy_check_connection).provide(:port_check) do
 
       unless success
         while (Time.now - start_time) < timeout
-          Puppet.notice("unable to reach #{resource[:rest_url]} ")
+          Puppet.notice("unable to reach xldeploy server")
           sleep 2
           success = xldeploy.reachable?
           break if success
