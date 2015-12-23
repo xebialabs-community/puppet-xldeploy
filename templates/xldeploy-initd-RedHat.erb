@@ -55,7 +55,7 @@ start() {
     echo
     exit 1
   else
-	/bin/su - $RUNNINGUSER -c 'export JAVA_HOME=<%= @java_home %>;/bin/sh <%= @server_home_dir %>/bin/server.sh 
+	/bin/su - $RUNNINGUSER -c 'export JAVA_HOME=<%= @java_home %>;/bin/sh <%= @server_home_dir %>/bin/server.sh
 	sleep 3
 	PID=$(ps -fu $RUNNINGUSER | grep $PROG | awk '{print $2}')
     if [ "$PID" != "" ]

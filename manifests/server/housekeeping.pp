@@ -15,6 +15,7 @@ class xldeploy::server::housekeeping (
   $housekeeping_month    = $xldeploy::server::housekeeping_month,
   $housekeeping_monthday = $xldeploy::server::housekeeping_monthday,
   $housekeeping_weekday  = $xldeploy::server::housekeeping_weekday,
+  $enable_housekeeping   = $xldeploy::server::enable_housekeeping
 ) {
 
   file { "${server_home_dir}/scripts/xldeploy-housekeeping.sh":
