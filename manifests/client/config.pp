@@ -24,7 +24,7 @@ class xldeploy::client::config(
   $use_exported_keys      = $xldeploy::client::use_exported_keys,
   $os_user                = $xldeploy::client::os_user,){
 
- 
+
   # Check connection
   if $use_exported_resources != true {
     xldeploy_check_connection{ 'client':

@@ -27,9 +27,7 @@ class xldeploy::server::post_config (
          empty($users) and
          empty($roles) {
   # Check connection
-    xldeploy_check_connection{ 'default':
-      rest_url => $rest_url
-    }
+    ensure_resource('xldeploy_check_connection', 'default', {'rest_url' => $rest_url})
 
   # config stuff in xldeploy
     create_resources(xldeploy_ci, $cis, $defaults)
@@ -42,8 +40,7 @@ class xldeploy::server::post_config (
   # handle exported resources
   if str2bool($use_exported_resources) {
 
-
-    Xldeploy_check_connection['Default']
+    ensure_resource('xldeploy_check_connection', 'default', {'rest_url' => $rest_url})
 
     #import exported configuration items
     -> Xldeploy::Client::Exported_ci <<| |>> {
