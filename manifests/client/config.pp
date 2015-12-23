@@ -26,10 +26,10 @@ class xldeploy::client::config(
 
   # set rest_url as a default to use with configurable stuff
   $defaults = { rest_url => $rest_url,
-                require  => Xldeploy_check_connection['default']}
+                require  => Xldeploy_check_connection['client']}
 
   # Check connection
-  xldeploy_check_connection{'default':
+  xldeploy_check_connection{'client':
     rest_url => $rest_url
   }
 
