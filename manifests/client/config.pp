@@ -24,15 +24,17 @@ class xldeploy::client::config(
   $use_exported_keys      = $xldeploy::client::use_exported_keys,
   $os_user                = $xldeploy::client::os_user,){
 
-  # set rest_url as a default to use with configurable stuff
-  $defaults = { rest_url => $rest_url,
-                require  => Xldeploy_check_connection['client']}
-
+ 
   # Check connection
   if $use_exported_resources != true {
     xldeploy_check_connection{ 'client':
       rest_url => $rest_url
     }
+
+    $defaults = { rest_url => $rest_url,
+      require  => Xldeploy_check_connection['client']}
+  } else {
+    $defaults = { rest_url => $rest_url}
   }
 
   create_resources(xldeploy::client::config_ci, $cis, $defaults)
