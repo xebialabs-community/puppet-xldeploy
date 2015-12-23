@@ -25,10 +25,7 @@ class xldeploy::client::user(
   # Resources
 
   #user and group
-
-  group{$os_group:
-    ensure => 'present'
-  }
+  ensure_resource('group', $os_group, { 'ensure' => 'present' })
 
   user{ $os_user :
     ensure     => present,
