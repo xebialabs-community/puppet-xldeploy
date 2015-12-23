@@ -17,7 +17,7 @@ define xldeploy::client::config_members(
 
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent
   if str2bool($use_exported_resources) {
-    @@xldeploy::client::exported_members{"${::hostname}_${name}":
+    @@xldeploy::client::exported_members{"${::hostname}__${name}":
       env          => $env,
       dictionaries => $dictionaries,
       members      => $members,

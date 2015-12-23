@@ -22,7 +22,7 @@ define xldeploy::client::exported_role(
 ){
 
 
-  $role_name = split($name, '_')
+  $role_name = split($name, '__')
 
 
   if !defined(Xldeploy_role[$role_name[1]]) {

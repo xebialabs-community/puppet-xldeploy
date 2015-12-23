@@ -24,7 +24,7 @@ define xldeploy::client::exported_ci(
 ){
 
 
-  $ci_id = split($name, '_')
+  $ci_id = split($name, '__')
 
 
   if !defined(Xldeploy_ci[$ci_id[1]]) {

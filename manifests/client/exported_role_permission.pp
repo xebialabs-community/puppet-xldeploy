@@ -23,7 +23,7 @@ define xldeploy::client::exported_role_permission(
 ){
 
 
-  $name_id = split($name, '_')
+  $name_id = split($name, '__')
 
   if !defined(Xldeploy_role_permission[$name_id[1]]) {
     xldeploy_role_permission{$name_id[1]:

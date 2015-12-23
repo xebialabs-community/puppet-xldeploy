@@ -24,7 +24,7 @@ define xldeploy::client::config_user(
 
   # if the age exceeds the export_maxage and remove_when_expired is set to true then set ensure to absent
   if str2bool($use_exported_resources) {
-    @@xldeploy::client::exported_user{"${::hostname}_${id}":
+    @@xldeploy::client::exported_user{"${::hostname}__${id}":
       password => $password,
       rest_url => $rest_url
     }

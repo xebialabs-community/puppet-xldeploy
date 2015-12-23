@@ -18,7 +18,7 @@ define xldeploy::client::exported_dictionary_entry(
 ){
 
 
-  $dict_id = split($name, '_')
+  $dict_id = split($name, '__')
 
 
 

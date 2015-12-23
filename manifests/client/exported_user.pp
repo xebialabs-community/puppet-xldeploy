@@ -17,7 +17,7 @@ define xldeploy::client::exported_user(
 ){
 
 
-  $user_name = split($name, '_')
+  $user_name = split($name, '__')
 
 
   if !defined(Xldeploy_user[$user_name[1]]) {
