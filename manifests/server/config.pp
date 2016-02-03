@@ -182,6 +182,11 @@ class xldeploy::server::config (
     }
   } else {
     Xldeploy_setup['default'] ->
+    ini_setting { 'forkhack':
+      path    => "${server_home_dir}/conf/xld-wrapper-linux.conf",
+      setting => 'wrapper.fork_hack',
+      value   => 'true',
+    } ->
     exec {"/bin/echo ${os_user}|${server_home_dir}/bin/install-service.sh":
       unless => "/usr/bin/test -f /etc/init.d/${productname}",
     }
