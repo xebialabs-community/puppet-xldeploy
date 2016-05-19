@@ -184,7 +184,7 @@ class xldeploy::server (
   # to serve or not to server
 
   anchor    { 'xldeploy::server::begin': }
-    -> Class['xldeploy::shared_prereq']
+    -> Class['Xldeploy::Shared_prereq']
     -> class  { 'xldeploy::server::install': }
     -> class  { 'xldeploy::server::install_sshkey': }
     -> class  { 'xldeploy::server::repository': }
@@ -194,15 +194,16 @@ class xldeploy::server (
     -> class  { 'xldeploy::server::post_config': }
     -> anchor { 'xldeploy::server::end': }
 
-  class{'xldeploy::shared_prereq':
-    base_dir     => $base_dir,
-    os_user      => $os_user,
-    os_group     => $os_group,
-    os_user_home => $server_home_dir,
-    install_java => $install_java,
-    java_home    => $java_home
-  }
-
+  if !defined(Class['Xldeploy::Shared_prereq']) {
+    class{'xldeploy::shared_prereq':
+      base_dir     => $base_dir,
+      os_user      => $os_user,
+      os_group     => $os_group,
+      os_user_home => $server_home_dir,
+      install_java => $install_java,
+      java_home    => $java_home
+    }
+ }
   if str2bool($enable_housekeeping)  {
 
     Class['xldeploy::server::service'] -> class { 'xldeploy::server::housekeeping': } -> Class['xldeploy::server::post_config']
