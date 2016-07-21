@@ -9,6 +9,9 @@ class xldeploy::server::config (
   $os_user                           = $xldeploy::server::os_user,
   $os_group                          = $xldeploy::server::os_group,
   $ssl                               = $xldeploy::server::ssl,
+  $keystorepassword                  = $xldeploy::server::keystorepassword,
+  $keypassword                       = $xldeploy::server::keypassword,
+  $keystorepath                      = $xldeploy::server::keystorepath,
   $http_bind_address                 = $xldeploy::server::http_bind_address,
   $http_port                         = $xldeploy::server::http_port,
   $http_context_root                 = $xldeploy::server::http_context_root,
@@ -147,6 +150,18 @@ class xldeploy::server::config (
       setting => 'ssl',
       value   => bool2string($ssl);
 
+    'xldeploy.keystore.path':
+      setting => 'keystore.path',
+      value   => $keystorepath;
+
+    'xldeploy.keystore.keystorepassword':
+      setting => 'keystore.password',
+      value   => $keystorepassword;
+
+    'xldeploy.keystore.keypassword':
+      setting => 'keystore.keypassword',
+      value   => $keypassword;
+
     'xldeploy.http.bind.address':
       setting => 'http.bind.address',
       value   => $http_bind_address;
@@ -194,4 +209,3 @@ class xldeploy::server::config (
 
 
 }
-

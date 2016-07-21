@@ -24,6 +24,9 @@ class xldeploy::params {
   $xldeploy_base_dir  = '/opt'
   $xldeploy_init_repo = true
   $ssl                      = false
+  $keystorepassword         = 'changeit'
+  $keystorepath             = 'conf/keystore.jks'
+  $keypassword              = 'changeit'
   $verify_ssl               = true
   $http_bind_address        = '0.0.0.0'
   $http_server_address      = $::fqdn
@@ -102,4 +105,3 @@ class xldeploy::params {
   # manage_keys
   $manage_keys                  = true
 }
-
