@@ -31,10 +31,13 @@ class xldeploy::client::config(
       rest_url => $rest_url
     }
 
-    $defaults = { rest_url => $rest_url,
-      require  => Xldeploy_check_connection['client']}
-  } else {
-    $defaults = { rest_url => $rest_url}
+    $defaults = { 
+      rest_url => $rest_url,
+      require  => Xldeploy_check_connection['client']
+    }
+  } 
+  else {
+    $defaults = { rest_url => $rest_url }
   }
 
   create_resources(xldeploy::client::config_ci, $cis, $defaults)
@@ -48,8 +51,5 @@ class xldeploy::client::config(
   create_resources(xldeploy::client::config_role_permission, $role_permissions, $defaults)
 
   create_resources(xldeploy::client::config_dictionary_entry, $dictionary_settings, $defaults)
-
-
-
 
 }

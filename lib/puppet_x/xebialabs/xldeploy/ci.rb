@@ -133,6 +133,6 @@ class Ci < Xldeploy
   end
 
   def parent
-    Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory')
+    Ci.new(rest_url,Pathname.new(id).dirname.to_s, 'core.Directory', {}, ssl, verify_ssl)
   end
 end

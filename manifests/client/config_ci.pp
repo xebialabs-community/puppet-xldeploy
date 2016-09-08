@@ -31,17 +31,23 @@ define xldeploy::client::config_ci(
       type               => $type,
       properties         => $properties,
       rest_url           => $rest_url,
+      ssl                => $ssl,
+      verify_ssl         => $verifySsl,
       discovery          => $discovery,
       discovery_max_wait => $discovery_max_wait
     }
 
-  }else{
+  }
+  else {
     xldeploy_ci{ $name:
       ensure             => $ensure,
       type               => $type,
       properties         => $properties,
       discovery          => $discovery,
       discovery_max_wait => $discovery_max_wait,
-      rest_url           => $rest_url }
+      rest_url           => $rest_url,
+      ssl                => $ssl,
+      verify_ssl         => $verifySsl
     }
+  }
 }
