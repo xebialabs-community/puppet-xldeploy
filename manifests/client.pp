@@ -44,10 +44,10 @@ class xldeploy::client (
 
   # composed variables
 
-  if str2bool($::ssl) {
+  if str2bool($ssl) {
     $rest_protocol = 'https://'
     # Check certificate validation
-    $verifySsl = str2bool($::verifySsl)
+    $verifySsl = str2bool($verifySsl)
   } else {
     $rest_protocol = 'http://'
   }
