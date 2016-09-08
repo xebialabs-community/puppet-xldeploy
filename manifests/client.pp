@@ -46,8 +46,6 @@ class xldeploy::client (
 
   if str2bool($ssl) {
     $rest_protocol = 'https://'
-    # Check certificate validation
-    $verifySsl = str2bool($verifySsl)
   } else {
     $rest_protocol = 'http://'
   }
