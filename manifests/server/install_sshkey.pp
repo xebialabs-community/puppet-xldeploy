@@ -12,14 +12,12 @@ class xldeploy::server::install_sshkey(
   if $manage_keys {
     # flow
     Xldeploy::Resources::Defaultsetting['overthere.SshHost.privateKeyFile']
-    -> Sshkeys::Create_key[$os_user]
+    -> Sshkeys::Create_Ssh_key[$os_user]
 
     # call a nice little parser function to generate a random passphrase
     $keyfile_passphrase = random_passphrase()
 
-    sshkeys::create_key { $os_user:
-      home        => $server_home_dir,
-      manage_home => false,
+    sshkeys::create_ssh_key { $os_user:
       passphrase  => $keyfile_passphrase,
       notify      => Xldeploy::Resources::Defaultsetting['overthere.SshHost.passphrase']
     }
