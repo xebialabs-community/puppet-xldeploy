@@ -3,11 +3,10 @@ env:
 - PUPPET_GEM_VERSION=3.6
 - PUPPET_GEM_VERSION=3.7
 notifications:
-  hipchat:
-    rooms:
-      secure: OoKJMDdxaVJJBeLSyGN1Yf3ks189c5rZ2wj8OtlqkHtYlWDr8ViumJTMxWFNl5EUbx+BKCMArTsx9u4ahYvdJzaDLNaKD0l4hXQ6NdxrziI8y2boQdAeRXzPK02jRo3b3GG3Nmia7k5xkXF7Oztb5kT/q5hPM+Lbrq+CEGmi60U=
-after_script: "bundle exec rake build"
-before_deploy: "puppet module build"
+  slack:
+    secure: SCTPSOUxffuqCEFZXNffNAPoBLwP21n5foxIpDx7tAVW+HKL2KLVZ7pAXU4vxraid6S+df6uGIBFUwcRUnOvTmEK5cos63FtKsco/GgRvtWHbJxnGbuFfY7jkDp+imwGRG8J9pNjoZB63y+nmq6PhS3mgQQZDrDrgnwkx+uICgI=
+after_script: bundle exec rake build
+before_deploy: puppet module build
 deploy:
   provider: releases
   api_key:
@@ -19,4 +18,4 @@ deploy:
     tags: true
     repo: xebialabs/puppet-xldeploy
 script:
-  - "rake test SPEC_OPTS='--format documentation'"
+- rake test SPEC_OPTS='--format documentation'
