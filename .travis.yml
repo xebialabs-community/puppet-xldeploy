@@ -11,7 +11,7 @@ before_deploy: "puppet module build"
 deploy:
   provider: releases
   api_key:
-    secure: mNUgeZTU9Pff8ECKGg25rbriah62TkHUBF01o26PMvXnF1P59Eho5+K9+M4NJftiXVipDbDTgWq6/vr6k20IEXqBXtnj3Ez9PM89vEtW4lQRhIdc3aOO5MzTifk/zOAAaLftbwW6gkZ1/dw23zNMLTVkIMntnxk2/vTlex5noDU=
+    secure: gt3Nm5gKBKGtYSJAA5vRA9f3StLf6wz2UgWSjyzvQuXDGXEArcI6bQCbIRV1+2KaeDul86kTS8Xt7N4SO7/mmogdHZ7XAw7Y5MuRSNFMCk3ch5VUbOTT8vuBhX7UGr41j3EJndfRilHyDmi7DfT0L4kmieiqgODuH9yEJ+ux3FY=
   file: pkg/puppet-xldeploy-1.2.3.tar.gz
   skip_cleanup: true
   on:
