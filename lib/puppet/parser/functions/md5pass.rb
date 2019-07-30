@@ -28,6 +28,7 @@ module Puppet::Parser::Functions
     # get the cache from file if the file exists
     cache = YAML.load_file('/var/tmp/md5pass_cache.yaml') if File.exists?(cache_file)
     cache = {} if cache == nil
+    cache = {} if cache == false
 
     result = cache[value] if cache.has_key?(value)
     result = `/usr/bin/openssl passwd -1 -salt #{salt} #{value}`.strip() if result == nil
